@@ -1,18 +1,18 @@
 <p align="center">
-  <a href="CHANGE_GITHUB_LINK">
+  <a href="https://github.com/durashere/cook-me-pls">
     <img src="public/1440x768.png" alt="Overview screenshot" >
   </a>
-  <h3 align="center">CHANGE_PROJECT_NAME</h3>
+  <h3 align="center">Cook me pls</h3>
 
   <p align="center">
-    CHANGE_PROJECT DESCRIPTION
+    A hobby recipe app made for me and my friends
     <br />
     <br />
-    <a href="CHANGE_DEPLOYED_DEMO_LINK">View Demo</a>
+    <a href="#">View Demo</a>
     ·
-    <a href="CHANGE_GITHUB_ISSUES_LINK">Report Bug</a>
+    <a href="https://github.com/durashere/cook-me-pls">Report Bug</a>
     ·
-    <a href="CHANGE_GITHUB_ISSUES_LINK">Request Feature</a>
+    <a href="https://github.com/durashere/cook-me-pls">Request Feature</a>
   </p>
 </p>
 
@@ -39,7 +39,7 @@ To get a local copy up and running follow these simple example steps.
 
 1. Clone the repo
    ```sh
-   git clone CHANGE_GITHUB_LINK
+   git clone https://github.com/durashere/cook-me-pls
    ```
 2. Install packages
    ```sh
