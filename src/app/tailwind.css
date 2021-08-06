@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply font-poppins;
+  }
+  body {
+    @apply text-gray-700 bg-gray-100;
+  }
+}
+
+@layer components {
+  .input {
+    @apply block placeholder-gray-300 transition-all border-none rounded-md shadow-sm outline-none ring-1 hover:ring-yellow-300 ring-gray-200 focus:ring focus:ring-yellow-200;
+  }
+
+  .button {
+    @apply flex items-center justify-center p-2 transition bg-gray-100 rounded-md shadow-sm focus:outline-none ring-1 ring-gray-300 whitespace-nowrap hover:bg-gray-200 focus:ring focus:ring-yellow-200;
+  }
+
+  .icon {
+    @apply flex items-center justify-center w-10 h-10 p-2 select-none focus:outline-none;
+  }
+
+  .spinner {
+    animation: rotate 2s linear infinite;
+    z-index: 2;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -25px 0 0 -25px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .path {
+    /* stroke: #f59e0b; */
+    stroke: #374151;
+    stroke-linecap: round;
+    animation: dash 1.5s ease-in-out infinite;
+  }
+
+  @keyframes rotate {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes dash {
+    0% {
+      stroke-dasharray: 1, 150;
+      stroke-dashoffset: 0;
+    }
+    50% {
+      stroke-dasharray: 90, 150;
+      stroke-dashoffset: -35;
+    }
+    100% {
+      stroke-dasharray: 90, 150;
+      stroke-dashoffset: -124;
+    }
+  }
+}
