@@ -17,7 +17,7 @@ const handler = async (req, res) => {
         const ingredient = await Ingredient.findById(ingredientId);
         res.status(200).json(ingredient);
       } catch (error) {
-        res.status(500).json(error.message);
+        res.status(500).json(error);
       }
       break;
 
@@ -28,7 +28,7 @@ const handler = async (req, res) => {
         });
         res.status(200).json(updatedIngredient);
       } catch (error) {
-        res.status(500).json(error.message);
+        res.status(500).json(error);
       }
       break;
 
@@ -37,7 +37,7 @@ const handler = async (req, res) => {
         await Ingredient.findByIdAndDelete(ingredientId);
         res.status(204).json();
       } catch (error) {
-        res.status(500).json(error.message);
+        res.status(500).json(error);
       }
       break;
 

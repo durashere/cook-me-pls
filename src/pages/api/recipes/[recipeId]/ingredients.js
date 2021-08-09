@@ -18,7 +18,7 @@ const handler = async (req, res) => {
         const recipeIngredients = recipe.ingredients;
         res.status(200).json(recipeIngredients);
       } catch (error) {
-        res.status(500).json(error.message);
+        res.status(500).json(error);
       }
       break;
 
@@ -27,7 +27,7 @@ const handler = async (req, res) => {
         const newRecipeIngredient = await Recipe.create(body);
         res.status(201).json(newRecipeIngredient);
       } catch (error) {
-        res.status(500).json(error.message);
+        res.status(500).json(error);
       }
       break;
 

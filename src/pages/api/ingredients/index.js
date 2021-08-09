@@ -16,18 +16,16 @@ const handler = async (req, res) => {
         }).sort({ name: 1 });
         res.status(200).json(ingredients);
       } catch (error) {
-        res.status(500).json(error.message);
+        res.status(500).json(error);
       }
       break;
 
     case 'POST':
       try {
-        console.log(body);
-
         const newIngredient = await Ingredient.create(body);
         res.status(201).json(newIngredient);
       } catch (error) {
-        res.status(500).json(error.message);
+        res.status(500).json(error);
       }
       break;
 

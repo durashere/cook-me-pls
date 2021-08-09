@@ -17,7 +17,7 @@ const handler = async (req, res) => {
         }).sort({ name: 1 });
         res.status(200).json(recipes);
       } catch (error) {
-        res.status(500).json(error.message);
+        res.status(500).json(error);
       }
       break;
 
@@ -26,7 +26,7 @@ const handler = async (req, res) => {
         const newRecipe = await Recipe.create(body);
         res.status(201).json(newRecipe);
       } catch (error) {
-        res.status(500).json(error.message);
+        res.status(500).json(error);
       }
       break;
 
