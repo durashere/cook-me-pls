@@ -10,6 +10,7 @@ import RecipeFormIngredients from '@/modules/recipes/components/form/RecipeFormI
 import RecipeFormSteps from '@/modules/recipes/components/form/RecipeFormSteps';
 import useRecipe from '@/modules/recipes/hooks/useRecipe';
 import useRecipeUpdate from '@/modules/recipes/hooks/useRecipeUpdate';
+import useRecipeDelete from '../../hooks/useRecipeDelete';
 
 const RecipeEdit = () => {
   const {
@@ -21,11 +22,18 @@ const RecipeEdit = () => {
 
   const { mutate: updateRecipe } = useRecipeUpdate();
 
+  const { mutate: deleteRecipe } = useRecipeDelete();
+
   const { register, control, handleSubmit, reset } = useForm({ defaultValues: recipe });
 
   useEffect(() => {
     reset(recipe);
   }, [reset, recipe]);
+
+  const onDelete = () => {
+    deleteRecipe(recipe._id);
+    push(`/`);
+  };
 
   const onSubmit = (data) => {
     updateRecipe({ _id: recipe._id, ...data });
@@ -51,6 +59,9 @@ const RecipeEdit = () => {
           <a className="border-transparent shadow-none button">Cancel</a>
         </Link>
         <div className="flex gap-4">
+          <button className="text-red-500 button ring-red-500" onClick={onDelete} type="button">
+            Delete
+          </button>
           <input className="cursor-pointer button" type="submit" />
         </div>
       </div>
