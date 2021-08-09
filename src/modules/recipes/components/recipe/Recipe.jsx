@@ -21,7 +21,12 @@ const Recipe = () => {
 
   return (
     <div className="space-y-8">
-      <RecipeHeader name={recipe.name} cookTime={recipe.cookTime} difficulty={recipe.difficulty} />
+      <RecipeHeader
+        cookTime={recipe.cookTime}
+        difficulty={recipe.difficulty}
+        imageUrl={recipe.imageUrl}
+        name={recipe.name}
+      />
 
       <RecipeSection label="ingredients">
         <RecipeIngredients ingredients={recipe.ingredients} />

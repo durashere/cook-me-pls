@@ -15,15 +15,15 @@ RecipeDetailsItem.propTypes = {
   icon: PropTypes.string.isRequired,
 };
 
-const RecipeHeader = ({ name, cookTime, difficulty }) => {
+const RecipeHeader = ({ difficulty, cookTime, imageUrl, name }) => {
   return (
     <div className="overflow-hidden rounded-md shadow-sm">
       <div className="relative pb-2/3">
         <Image
-          src="https://via.placeholder.com/640x480?text=Image"
+          alt="Picture of the dish"
           layout="fill"
           objectFit="cover"
-          alt="Picture of the dish"
+          src={imageUrl}
           unoptimized
         />
       </div>
@@ -39,10 +39,13 @@ const RecipeHeader = ({ name, cookTime, difficulty }) => {
   );
 };
 
+RecipeHeader.defaultProps = { imageUrl: 'https://via.placeholder.com/640x427?text=Image' };
+
 RecipeHeader.propTypes = {
-  name: PropTypes.string.isRequired,
   cookTime: PropTypes.string.isRequired,
   difficulty: PropTypes.string.isRequired,
+  imageUrl: PropTypes.string,
+  name: PropTypes.string.isRequired,
 };
 
 export default RecipeHeader;

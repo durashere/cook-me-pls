@@ -6,6 +6,9 @@ const recipeSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  imageUrl: {
+    type: String,
+  },
   cookTime: { type: String, enum: COOK_TIMES, required: true },
   difficulty: {
     type: String,

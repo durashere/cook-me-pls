@@ -6,13 +6,13 @@ import Loader from '@/components/Loader';
 import useDebounce from '@/hooks/useDebounce';
 import useRecipes from '@/modules/recipes/hooks/useRecipes';
 
-const Recipe = ({ recipe }) => {
+const Recipe = ({ recipeId, cookTime, difficulty, imageUrl, name }) => {
   return (
-    <Link href={`/recipes/${recipe._id}`}>
+    <Link href={`/recipes/${recipeId}`}>
       <li className="overflow-hidden bg-white rounded-md shadow-sm cursor-pointer">
         <div className="relative pb-2/3">
           <Image
-            src="https://via.placeholder.com/640x480?text=Image"
+            src={imageUrl}
             layout="fill"
             objectFit="cover"
             alt="Picture of the dish"
@@ -20,13 +20,13 @@ const Recipe = ({ recipe }) => {
           />
         </div>
         <div className="p-4 space-y-4">
-          <h2 className="h-full text-2xl font-medium line-clamp-3">{recipe.name}</h2>
+          <h2 className="h-full text-2xl font-medium line-clamp-3">{name}</h2>
           <div className="flex gap-2 whitespace-nowrap">
             <h3 className="px-2 text-yellow-500 border border-yellow-500 rounded-md shadow-sm">
-              {recipe.cookTime}
+              {cookTime}
             </h3>
             <h3 className="px-2 text-yellow-500 border border-yellow-500 rounded-md shadow-sm">
-              {recipe.difficulty}
+              {difficulty}
             </h3>
           </div>
         </div>
@@ -35,13 +35,14 @@ const Recipe = ({ recipe }) => {
   );
 };
 
+Recipe.defaultProps = { imageUrl: 'https://via.placeholder.com/640x427?text=Image' };
+
 Recipe.propTypes = {
-  recipe: PropTypes.shape({
-    _id: PropTypes.string,
-    cookTime: PropTypes.string,
-    difficulty: PropTypes.string,
-    name: PropTypes.string,
-  }).isRequired,
+  recipeId: PropTypes.string.isRequired,
+  cookTime: PropTypes.string.isRequired,
+  difficulty: PropTypes.string.isRequired,
+  imageUrl: PropTypes.string,
+  name: PropTypes.string.isRequired,
 };
 
 const RecipeList = ({ searchQuery }) => {
@@ -60,7 +61,14 @@ const RecipeList = ({ searchQuery }) => {
   return (
     <ul className="grid gap-8 sm:grid-cols-2">
       {recipes.map((recipe) => (
-        <Recipe recipe={recipe} key={recipe._id} />
+        <Recipe
+          cookTime={recipe.cookTime}
+          difficulty={recipe.difficulty}
+          imageUrl={recipe.imageUrl}
+          key={recipe._id}
+          name={recipe.name}
+          recipeId={recipe._id}
+        />
       ))}
     </ul>
   );

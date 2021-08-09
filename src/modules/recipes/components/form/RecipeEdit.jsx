@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 import Loader from '@/components/Loader';
 import RecipeFormDetails from '@/modules/recipes/components/form/RecipeFormDetails';
+import RecipeFormImage from '@/modules/recipes/components/form/RecipeFormImage';
 import RecipeFormIngredients from '@/modules/recipes/components/form/RecipeFormIngredients';
 import RecipeFormSteps from '@/modules/recipes/components/form/RecipeFormSteps';
 import useRecipe from '@/modules/recipes/hooks/useRecipe';
@@ -37,6 +38,8 @@ const RecipeEdit = () => {
 
   return (
     <form className="relative px-4 space-y-8" onSubmit={handleSubmit(onSubmit)}>
+      <RecipeFormImage recipeId={recipe._id} />
+
       <RecipeFormDetails register={register} />
 
       <RecipeFormIngredients control={control} register={register} />
