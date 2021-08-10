@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "deploy": "git pull && yarn build",
     "start": "next start -p 3003"
   },
   "dependencies": {
