@@ -18,13 +18,17 @@ const ingredientSchema = new mongoose.Schema({
   },
 });
 
-// ingredientSchema.pre('save', async function () {
-//   function capitalize(text) {
-//     return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
-//   }
+ingredientSchema.pre('save', async function () {
+  // function capitalize(text) {
+  //   return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+  // }
 
-//   this.name = await capitalize(this.name);
-// });
+  function lowercase(text) {
+    return text.toLowerCase();
+  }
+
+  this.name = await lowercase(this.name);
+});
 
 const Ingredient = mongoose.models.Ingredient || mongoose.model('Ingredient', ingredientSchema);
 
