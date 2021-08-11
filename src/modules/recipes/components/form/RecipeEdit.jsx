@@ -56,13 +56,13 @@ const RecipeEdit = () => {
 
       <div className="flex justify-between">
         <Link href={`/recipes/${recipe._id}`}>
-          <a className="border-transparent shadow-none button">Cancel</a>
+          <a className="border-transparent shadow-none button">Anuluj</a>
         </Link>
         <div className="flex gap-4">
           <button className="text-red-500 button ring-red-500" onClick={onDelete} type="button">
-            Delete
+            Usuń
           </button>
-          <input className="cursor-pointer button" type="submit" />
+          <input className="cursor-pointer button" type="submit" value="Zapisz" />
         </div>
       </div>
     </form>

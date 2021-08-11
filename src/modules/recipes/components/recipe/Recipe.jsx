@@ -28,11 +28,11 @@ const Recipe = () => {
         name={recipe.name}
       />
 
-      <RecipeSection label="ingredients">
+      <RecipeSection label="składniki">
         <RecipeIngredients ingredients={recipe.ingredients} />
       </RecipeSection>
 
-      <RecipeSection label="steps">
+      <RecipeSection label="przygotowanie">
         <RecipeSteps steps={recipe.steps} />
       </RecipeSection>
 

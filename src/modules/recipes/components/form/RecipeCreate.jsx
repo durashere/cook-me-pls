@@ -29,10 +29,10 @@ const RecipeCreate = () => {
 
       <div className="flex justify-between">
         <Link href="/">
-          <a className="border-transparent shadow-none button">Cancel</a>
+          <a className="border-transparent shadow-none button">Anuluj</a>
         </Link>
         <div className="flex gap-4">
-          <input className="cursor-pointer button" type="submit" />
+          <input value="Utwórz" className="cursor-pointer button" type="submit" />
         </div>
       </div>
     </form>

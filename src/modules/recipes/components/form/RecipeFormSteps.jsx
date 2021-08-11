@@ -20,7 +20,7 @@ const RecipeFormSteps = ({ control, register }) => {
   const onStepRemove = (index) => removeStep(index);
 
   return (
-    <RecipeSection label="steps">
+    <RecipeSection label="przygotowanie">
       {editSteps.length > 0 && (
         <ul className="space-y-4">
           {editSteps.map((step, index) => (
@@ -30,6 +30,7 @@ const RecipeFormSteps = ({ control, register }) => {
                 defaultValue={step.instruction}
                 fullWidth
                 name={`steps.${index}.instruction`}
+                placeholder="Opis kroku..."
                 register={register}
                 required
               />

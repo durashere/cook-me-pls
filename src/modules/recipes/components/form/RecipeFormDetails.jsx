@@ -7,21 +7,21 @@ import Select from '@/components/Select';
 
 const RecipeFormDetails = ({ register }) => {
   return (
-    <RecipeSection label="details">
-      <Input fullWidth label="Name" name="name" register={register} required />
+    <RecipeSection label="sczegóły">
+      <Input fullWidth name="name" placeholder="Nazwa przepisu..." register={register} required />
       <Select
         fullWidth
-        label="Difficulty"
         name="difficulty"
         options={DIFFICULTIES}
+        placeholder="Trudność przepisu..."
         register={register}
         required
       />
       <Select
         fullWidth
-        label="Cook time"
         name="cookTime"
         options={COOK_TIMES}
+        placeholder="Czas..."
         register={register}
         required
       />

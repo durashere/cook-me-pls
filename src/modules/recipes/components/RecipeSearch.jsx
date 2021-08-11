@@ -13,7 +13,7 @@ const RecipeSearch = ({ searchQuery, setSearchQuery }) => {
         <input
           className="w-full pr-8 truncate input"
           onChange={handleSearch}
-          placeholder="Search for a recipe..."
+          placeholder="Szukaj przepisu..."
           type="text"
           value={searchQuery}
         />

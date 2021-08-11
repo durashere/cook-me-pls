@@ -19,7 +19,7 @@ const RecipeFormIngredients = ({ control, register }) => {
   });
 
   return (
-    <RecipeSection label="ingredients">
+    <RecipeSection label="składniki">
       {editIngredients.length > 0 && (
         <ul className="space-y-4">
           {editIngredients.map((ingredient, index) => (
@@ -30,6 +30,7 @@ const RecipeFormIngredients = ({ control, register }) => {
                   defaultValue={ingredient.quantity}
                   fullWidth
                   name={`ingredients.${index}.quantity`}
+                  placeholder="Ilość..."
                   register={register}
                   type="number"
                 />
@@ -37,6 +38,7 @@ const RecipeFormIngredients = ({ control, register }) => {
                   defaultValue={ingredient.unit}
                   name={`ingredients.${index}.unit`}
                   options={UNITS}
+                  placeholder="Jednostka..."
                   register={register}
                   required
                 />

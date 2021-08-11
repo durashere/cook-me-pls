@@ -27,7 +27,7 @@ const RecipeFormIngredientsAutocomplete = ({ append, editIngredients }) => {
       <input
         className="w-full pr-12 input"
         onChange={(e) => setSearchQuery(e.target.value)}
-        placeholder="Search for ingredients..."
+        placeholder="Szukaj składnika..."
         type="text"
         value={searchQuery}
       />

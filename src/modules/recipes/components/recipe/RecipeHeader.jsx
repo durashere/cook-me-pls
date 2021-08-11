@@ -31,7 +31,7 @@ const RecipeHeader = ({ difficulty, cookTime, imageUrl, name }) => {
         <h1 className="text-4xl font-bold text-center">{name}</h1>
         <div className="grid grid-flow-col gap-4 select-none auto-cols-fr">
           <RecipeDetailsItem icon="schedule">{cookTime}</RecipeDetailsItem>
-          <RecipeDetailsItem icon="people">servings</RecipeDetailsItem>
+          <RecipeDetailsItem icon="people">1 porcja</RecipeDetailsItem>
           <RecipeDetailsItem icon="bar_chart">{difficulty}</RecipeDetailsItem>
         </div>
       </div>

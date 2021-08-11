@@ -29,16 +29,28 @@ const IngredientCreate = () => {
       {createMode ? (
         <form className="flex items-end gap-2" onSubmit={handleSubmit(onSubmit)}>
           <div className="flex flex-col w-full gap-2">
-            <Input required fullWidth name="name" placeholder="Name" register={register} />
+            <Input
+              fullWidth
+              name="name"
+              placeholder="Nazwa składnika..."
+              register={register}
+              required
+            />
             <Input
               fullWidth
               name="quantity"
-              placeholder="Quantity"
+              placeholder="Domyślna ilość..."
               register={register}
               required
               type="number"
             />
-            <Select options={UNITS} fullWidth name="unit" register={register} />
+            <Select
+              fullWidth
+              name="unit"
+              options={UNITS}
+              placeholder="Domyślna jednostka..."
+              register={register}
+            />
           </div>
           <div className="flex flex-col gap-2">
             <button className="button material-icons-outlined" type="button" onClick={onCancel}>
@@ -51,7 +63,7 @@ const IngredientCreate = () => {
         </form>
       ) : (
         <div className="flex items-center justify-between">
-          <h1 className="ml-2 text-2xl font-medium">Ingredients</h1>
+          <h1 className="ml-2 text-2xl font-medium">Składniki</h1>
           <button
             className="button material-icons-outlined"
             onClick={() => setCreateMode(!createMode)}

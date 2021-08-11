@@ -31,13 +31,13 @@ const RecipeFormImage = ({ recipeId }) => {
   };
 
   return (
-    <RecipeSection label="Image">
+    <RecipeSection label="zdjęcie">
       <div className="flex items-center justify-between">
         {statusRecipeImageUpdate === 'idle' && (
           <>
             <input onChange={handleFileSelect} accept="image/*" type="file" />
-            <button className="button" type="button" onClick={handleImageUpload}>
-              Upload
+            <button className="button" onClick={handleImageUpload} type="button">
+              Wyślij
             </button>
           </>
         )}
