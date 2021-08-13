@@ -1,27 +1,19 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import RecipeSection from '@/modules/recipes/components/RecipeSection';
 import useRecipeImageUpdate from '@/modules/recipes/hooks/useRecipeImageUpdate';
+import Loader from '@/components/Loader';
 
 const RecipeFormImage = ({ recipeId }) => {
   const { push } = useRouter();
 
-  const [selectedImage, setSelectedImage] = useState();
-
   const { mutateAsync: updateRecipeImage, status: statusRecipeImageUpdate } =
     useRecipeImageUpdate(recipeId);
 
-  const handleFileSelect = (e) => {
-    setSelectedImage(e.target.files[0]);
-  };
-
-  const handleImageUpload = async () => {
-    if (!selectedImage) return;
-
+  const handleImageUpload = async (image) => {
     const formData = new FormData();
-    formData.append('image', selectedImage);
+    formData.append('image', image);
 
     const updatedRecipe = await updateRecipeImage(formData);
 
@@ -34,17 +26,25 @@ const RecipeFormImage = ({ recipeId }) => {
     <RecipeSection label="zdjęcie">
       <div className="flex items-center justify-between">
         {statusRecipeImageUpdate === 'idle' && (
-          <>
-            <input onChange={handleFileSelect} accept="image/*" type="file" />
-            <button className="button" onClick={handleImageUpload} type="button">
-              Wyślij
-            </button>
-          </>
+          <div className="w-full text-center">
+            <div className="flex flex-col">
+              <span className="rotate-90 material-icons-outlined">smartphone</span>
+              <span className="font-medium">Dodaj zdjęcie w pozycji horyzontalnej</span>
+            </div>
+            <input
+              onChange={(e) => handleImageUpload(e.target.files[0])}
+              className="w-full mt-4 button"
+              accept="image/*"
+              type="file"
+            />
+          </div>
         )}
-        {statusRecipeImageUpdate === 'loading' && (
-          <div>
-            <p>The image is being set...</p>
-            <p>Please wait...</p>
+        {statusRecipeImageUpdate !== 'idle' && (
+          <div className="w-full">
+            <div className="relative p-10">
+              <Loader />
+            </div>
+            <div className="font-medium text-center">To może chwilę potrwać...</div>
           </div>
         )}
       </div>
