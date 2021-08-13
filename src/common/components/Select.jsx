@@ -7,50 +7,58 @@ const Select = ({
   fullWidth,
   label,
   name,
+  onChange,
   options,
   placeholder,
   register,
   required,
-}) => (
-  <div className={classNames({ 'w-full': fullWidth })}>
-    {label && (
-      <label htmlFor={name}>
-        <span className="capitalize">{label}</span>
-      </label>
-    )}
-    <select
-      className={classNames('input', {
-        'mt-1': label,
-        'w-full': fullWidth,
-      })}
-      defaultValue={defaultValue || ''}
-      name={name}
-      required={required}
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...register(name, { required })}
-    >
-      {placeholder && (
-        <option value="" disabled>
-          {placeholder}
-        </option>
+  value,
+}) => {
+  const registerProps = register && { ...register(name, { required }) };
+
+  return (
+    <div className={classNames({ 'w-full': fullWidth })}>
+      {label && (
+        <label htmlFor={name}>
+          <span className="capitalize">{label}</span>
+        </label>
       )}
-      {options.map((option) => (
-        <option key={option} value={option}>
-          {option}
-        </option>
-      ))}
-    </select>
-  </div>
-);
+      <select
+        className={classNames('input', {
+          'mt-1': label,
+          'w-full': fullWidth,
+        })}
+        defaultValue={onChange ? undefined : defaultValue || ''}
+        name={name}
+        onChange={onChange}
+        required={required}
+        value={value}
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...registerProps}
+      >
+        {placeholder && (
+          <option value="" disabled>
+            {placeholder}
+          </option>
+        )}
+        {options.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+};
 
 Select.propTypes = {
   defaultValue: PropTypes.string,
   fullWidth: PropTypes.bool,
   label: PropTypes.string,
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
   placeholder: PropTypes.string,
-  register: PropTypes.func.isRequired,
+  register: PropTypes.func,
   required: PropTypes.bool,
 };
 
@@ -58,7 +66,9 @@ Select.defaultProps = {
   defaultValue: undefined,
   fullWidth: false,
   label: undefined,
+  name: undefined,
   placeholder: undefined,
+  register: undefined,
   required: false,
 };
 

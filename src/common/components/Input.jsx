@@ -8,11 +8,15 @@ const Input = ({
   fullWidth,
   label,
   name,
+  onChange,
   placeholder,
   register,
   required,
   type,
+  value,
 }) => {
+  const registerProps = register && { ...register(name, { required }) };
+
   return (
     <div className={classNames({ 'w-full': fullWidth })}>
       {label && (
@@ -28,11 +32,13 @@ const Input = ({
         defaultValue={defaultValue}
         disabled={disabled}
         name={name}
+        onChange={onChange}
         placeholder={placeholder}
         required={required}
         type={type}
+        value={value}
         // eslint-disable-next-line react/jsx-props-no-spreading
-        {...register(name, { required })}
+        {...registerProps}
       />
     </div>
   );
@@ -43,9 +49,9 @@ Input.propTypes = {
   disabled: PropTypes.bool,
   fullWidth: PropTypes.bool,
   label: PropTypes.string,
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   placeholder: PropTypes.string,
-  register: PropTypes.func.isRequired,
+  register: PropTypes.func,
   required: PropTypes.bool,
   type: PropTypes.string,
 };
@@ -55,7 +61,9 @@ Input.defaultProps = {
   disabled: false,
   fullWidth: false,
   label: undefined,
+  name: undefined,
   placeholder: undefined,
+  register: undefined,
   required: false,
   type: 'text',
 };
