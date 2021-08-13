@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/durashere/cook-me-pls">
-    <img src="public/1440x768.png" alt="Overview screenshot" >
+    <img src="public/1440x900.png" alt="Overview screenshot" >
   </a>
   <h3 align="center">Cook me pls</h3>
 
