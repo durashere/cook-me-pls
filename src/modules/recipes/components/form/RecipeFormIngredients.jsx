@@ -55,8 +55,8 @@ const RecipeFormIngredients = ({ control, register }) => {
         </ul>
       )}
       <RecipeFormIngredientsAutocomplete
-        append={appendIngredient}
-        editIngredients={editIngredients}
+        appendIngredient={appendIngredient}
+        usedIngredients={editIngredients}
       />
     </RecipeSection>
   );
