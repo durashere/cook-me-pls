@@ -7,9 +7,9 @@ import useIngredients from '@/modules/ingredients/hooks/useIngredients';
 const RecipeFormIngredientsAutocomplete = ({ append, editIngredients }) => {
   const [searchQuery, setSearchQuery] = useState('');
 
-  const debouncedSearchQuery = useDebounce(searchQuery, 500);
+  const { value: searchQueryDebounced } = useDebounce(searchQuery, 500);
 
-  const { data: ingredients, status: statusIngredients } = useIngredients(debouncedSearchQuery);
+  const { data: ingredients, status: statusIngredients } = useIngredients(searchQueryDebounced);
 
   const usedIngredients = editIngredients.map((ingredient) => ingredient._id);
 
