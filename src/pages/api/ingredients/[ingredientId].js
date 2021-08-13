@@ -35,7 +35,7 @@ const handler = async (req, res) => {
     case 'DELETE':
       try {
         await Ingredient.findByIdAndDelete(ingredientId);
-        res.status(204).json();
+        res.status(204);
       } catch (error) {
         res.status(500).json(error);
       }
