@@ -1,5 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
+import cloudinary from 'cloudinary';
+
 import dbConnect from '@/backend/mongoose';
 
 import Recipe from '@/backend/models/recipe';
@@ -35,6 +37,7 @@ const handler = async (req, res) => {
     case 'DELETE':
       try {
         await Recipe.findByIdAndDelete(recipeId);
+        await cloudinary.v2.uploader.destroy(`cook-me-pls/${recipeId}`, { invalidate: true });
         res.status(204);
       } catch (error) {
         res.status(500).json(error);
