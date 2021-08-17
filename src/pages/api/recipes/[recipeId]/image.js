@@ -20,13 +20,14 @@ const handler = async (req, res) => {
             .send('You are unauthorized to access the requested resource. Please log in.');
         }
 
-        const recipe = await Recipe.findById(recipeId);
+        const recipe = await Recipe.findById(recipeId).populate('author');
+        const recipeJSON = JSON.parse(JSON.stringify(recipe));
 
-        if (session.user._id !== recipe.author?._id) {
+        if (session.user._id !== recipeJSON.author?._id) {
           res.status(403).send('Your account is not authorized to access the requested resource.');
         }
 
-        if (session.user._id === recipe.author?._id) {
+        if (session.user._id === recipeJSON.author?._id) {
           const form = formidable({ keepExtensions: true, maxFileSize: 5 * 1024 * 1024 });
 
           const formFiles = await new Promise((resolve, reject) => {
