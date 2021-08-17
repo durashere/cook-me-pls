@@ -1,12 +1,13 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import PropTypes from 'prop-types';
+import { Provider } from 'next-auth/client';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import Head from 'next/head';
+import PropTypes from 'prop-types';
 
 import DefaultLayout from '@/layouts/default/components/DefaultLayout';
 
 import '@/app/tailwind.css';
-import Head from 'next/head';
 
 function CustomApp({ Component, pageProps }) {
   const queryClient = new QueryClient();
@@ -17,12 +18,14 @@ function CustomApp({ Component, pageProps }) {
         <title>Cook me pls</title>
       </Head>
 
-      <QueryClientProvider client={queryClient}>
-        <DefaultLayout>
-          <Component {...pageProps} />
-        </DefaultLayout>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
+      <Provider session={pageProps.session}>
+        <QueryClientProvider client={queryClient}>
+          <DefaultLayout>
+            <Component {...pageProps} />
+          </DefaultLayout>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+      </Provider>
     </>
   );
 }
