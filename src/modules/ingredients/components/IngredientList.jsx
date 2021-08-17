@@ -29,7 +29,7 @@ const IngredientListItem = ({ ingredient }) => {
   return (
     <li className="flex items-center gap-2">
       {editMode ? (
-        <form className="flex items-center gap-2" onSubmit={handleSubmit(onSubmit)}>
+        <form className="flex items-center w-full gap-2" onSubmit={handleSubmit(onSubmit)}>
           <Input fullWidth name="quantity" register={register} required type="number" />
           <Select name="unit" options={UNITS} register={register} />
           <button className="button material-icons-outlined" type="button" onClick={onCancel}>
