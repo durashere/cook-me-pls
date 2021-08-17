@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/client';
 import Link from 'next/link';
 
 import Loader from '@/components/Loader';
@@ -9,14 +10,15 @@ import RecipeFormImage from '@/modules/recipes/components/form/RecipeFormImage';
 import RecipeFormIngredients from '@/modules/recipes/components/form/RecipeFormIngredients';
 import RecipeFormSteps from '@/modules/recipes/components/form/RecipeFormSteps';
 import useRecipe from '@/modules/recipes/hooks/useRecipe';
+import useRecipeDelete from '@/modules/recipes/hooks/useRecipeDelete';
 import useRecipeUpdate from '@/modules/recipes/hooks/useRecipeUpdate';
-import useRecipeDelete from '../../hooks/useRecipeDelete';
 
 const RecipeEdit = () => {
   const {
     push,
     query: { recipeId },
   } = useRouter();
+  const [session] = useSession();
 
   const { data: recipe, status: statusRecipe } = useRecipe(recipeId);
 
@@ -41,6 +43,11 @@ const RecipeEdit = () => {
   };
 
   if (statusRecipe === 'idle' || statusRecipe === 'loading') {
+    return <Loader />;
+  }
+
+  if (session.user._id !== recipe.author?._id) {
+    push(`/recipes/${recipe._id}`);
     return <Loader />;
   }
 

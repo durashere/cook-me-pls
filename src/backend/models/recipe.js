@@ -3,6 +3,11 @@ import mongoose from 'mongoose';
 
 const recipeSchema = new mongoose.Schema(
   {
+    author: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: 'User',
+      required: true,
+    },
     name: {
       type: String,
       required: true,

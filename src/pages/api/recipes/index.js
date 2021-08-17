@@ -15,7 +15,9 @@ const handler = async (req, res) => {
 
         const recipes = await Recipe.find({
           $or: [{ name: regex }, { difficulty: regex }, { cookTime: regex }],
-        }).sort({ name: 1 });
+        })
+          .sort({ name: 1 })
+          .populate('author');
         res.status(200).json(recipes);
       } catch (error) {
         res.status(500).json(error);
@@ -31,7 +33,7 @@ const handler = async (req, res) => {
         }
 
         if (session) {
-          const newRecipe = await Recipe.create(body);
+          const newRecipe = await Recipe.create({ ...body, author: session.user._id });
           res.status(201).json(newRecipe);
         }
       } catch (error) {

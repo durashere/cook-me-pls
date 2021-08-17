@@ -16,7 +16,7 @@ const handler = async (req, res) => {
   switch (method) {
     case 'GET':
       try {
-        const recipe = await Recipe.findById(recipeId);
+        const recipe = await Recipe.findById(recipeId).populate('author');
         res.status(200).json(recipe);
       } catch (error) {
         res.status(500).send(error);
@@ -31,7 +31,11 @@ const handler = async (req, res) => {
             .send('You are unauthorized to access the requested resource. Please log in.');
         }
 
-        if (session) {
+        if (session.user._id !== body.author?._id) {
+          res.status(403).send('Your account is not authorized to access the requested resource.');
+        }
+
+        if (session.user._id === body.author?._id) {
           const updatedRecipe = await Recipe.findByIdAndUpdate(recipeId, body, {
             new: true,
           });
@@ -50,7 +54,11 @@ const handler = async (req, res) => {
             .send('You are unauthorized to access the requested resource. Please log in.');
         }
 
-        if (session) {
+        if (session.user._id !== body.author?._id) {
+          res.status(403).send('Your account is not authorized to access the requested resource.');
+        }
+
+        if (session.user._id === body.author?._id) {
           await Recipe.findByIdAndDelete(recipeId);
           await cloudinary.v2.uploader.destroy(`cook-me-pls/${recipeId}`, { invalidate: true });
           res.status(204);

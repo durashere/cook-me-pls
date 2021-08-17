@@ -24,7 +24,7 @@ const Recipe = () => {
   return (
     <>
       <div className="space-y-8">
-        {!loading && session && (
+        {!loading && session.user._id === recipe.author?._id && (
           <Link href={`/recipes/${recipeId}/edit`}>
             <a className="button">Edytuj</a>
           </Link>
@@ -35,6 +35,7 @@ const Recipe = () => {
           difficulty={recipe.difficulty}
           imageUrl={recipe.imageUrl}
           name={recipe.name}
+          author={recipe.author}
         />
 
         <RecipeSection label="składniki">
