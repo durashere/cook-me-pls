@@ -1,5 +1,4 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-
+import { getSession } from 'next-auth/client';
 import cloudinary from 'cloudinary';
 
 import dbConnect from '@/backend/mongoose';
@@ -12,6 +11,7 @@ const handler = async (req, res) => {
     method,
     query: { recipeId },
   } = req;
+  const session = await getSession({ req });
 
   switch (method) {
     case 'GET':
@@ -25,10 +25,18 @@ const handler = async (req, res) => {
 
     case 'PATCH':
       try {
-        const updatedRecipe = await Recipe.findByIdAndUpdate(recipeId, body, {
-          new: true,
-        });
-        res.status(200).json(updatedRecipe);
+        if (!session) {
+          res
+            .status(401)
+            .send('You are unauthorized to access the requested resource. Please log in.');
+        }
+
+        if (session) {
+          const updatedRecipe = await Recipe.findByIdAndUpdate(recipeId, body, {
+            new: true,
+          });
+          res.status(200).json(updatedRecipe);
+        }
       } catch (error) {
         res.status(500).json(error);
       }
@@ -36,16 +44,24 @@ const handler = async (req, res) => {
 
     case 'DELETE':
       try {
-        await Recipe.findByIdAndDelete(recipeId);
-        await cloudinary.v2.uploader.destroy(`cook-me-pls/${recipeId}`, { invalidate: true });
-        res.status(204);
+        if (!session) {
+          res
+            .status(401)
+            .send('You are unauthorized to access the requested resource. Please log in.');
+        }
+
+        if (session) {
+          await Recipe.findByIdAndDelete(recipeId);
+          await cloudinary.v2.uploader.destroy(`cook-me-pls/${recipeId}`, { invalidate: true });
+          res.status(204);
+        }
       } catch (error) {
         res.status(500).json(error);
       }
       break;
 
     default:
-      res.status(422).json('req_method_not_supported');
+      res.status(422).json('This method type is not currently supported.');
       break;
   }
 };

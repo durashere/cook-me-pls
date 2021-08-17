@@ -8,7 +8,7 @@ import RecipeFormSteps from '@/modules/recipes/components/form/RecipeFormSteps';
 import useRecipeCreate from '@/modules/recipes/hooks/useRecipeCreate';
 
 const RecipeCreate = () => {
-  const router = useRouter();
+  const { push } = useRouter();
 
   const { mutate: createRecipe } = useRecipeCreate();
 
@@ -16,7 +16,7 @@ const RecipeCreate = () => {
 
   const onSubmit = (data) => {
     createRecipe(data);
-    router.push('/');
+    push('/');
   };
 
   return (

@@ -1,17 +1,19 @@
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/client';
 import Link from 'next/link';
 
-import useRecipe from '@/modules/recipes/hooks/useRecipe';
 import Loader from '@/components/Loader';
-import RecipeSteps from '@/modules/recipes/components/recipe/RecipeSteps';
-import RecipeIngredients from '@/modules/recipes/components/recipe/RecipeIngredients';
 import RecipeHeader from '@/modules/recipes/components/recipe/RecipeHeader';
+import RecipeIngredients from '@/modules/recipes/components/recipe/RecipeIngredients';
 import RecipeSection from '@/modules/recipes/components/RecipeSection';
+import RecipeSteps from '@/modules/recipes/components/recipe/RecipeSteps';
+import useRecipe from '@/modules/recipes/hooks/useRecipe';
 
 const Recipe = () => {
   const {
     query: { recipeId },
   } = useRouter();
+  const [session, loading] = useSession();
 
   const { data: recipe, status: statusRecipe } = useRecipe(recipeId);
 
@@ -20,26 +22,30 @@ const Recipe = () => {
   }
 
   return (
-    <div className="space-y-8">
-      <RecipeHeader
-        cookTime={recipe.cookTime}
-        difficulty={recipe.difficulty}
-        imageUrl={recipe.imageUrl}
-        name={recipe.name}
-      />
+    <>
+      <div className="space-y-8">
+        {!loading && session && (
+          <Link href={`/recipes/${recipeId}/edit`}>
+            <a className="button">Edytuj</a>
+          </Link>
+        )}
 
-      <RecipeSection label="składniki">
-        <RecipeIngredients ingredients={recipe.ingredients} />
-      </RecipeSection>
+        <RecipeHeader
+          cookTime={recipe.cookTime}
+          difficulty={recipe.difficulty}
+          imageUrl={recipe.imageUrl}
+          name={recipe.name}
+        />
 
-      <RecipeSection label="przygotowanie">
-        <RecipeSteps steps={recipe.steps} />
-      </RecipeSection>
+        <RecipeSection label="składniki">
+          <RecipeIngredients ingredients={recipe.ingredients} />
+        </RecipeSection>
 
-      <Link href={`/recipes/${recipeId}/edit`}>
-        <a className="rounded-md material-icons-outlined button">edit</a>
-      </Link>
-    </div>
+        <RecipeSection label="przygotowanie">
+          <RecipeSteps steps={recipe.steps} />
+        </RecipeSection>
+      </div>
+    </>
   );
 };
 

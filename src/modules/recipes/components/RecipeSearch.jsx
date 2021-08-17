@@ -1,14 +1,19 @@
+import { useSession } from 'next-auth/client';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 
 const RecipeSearch = ({ searchQuery, setSearchQuery }) => {
+  const [session, loading] = useSession();
+
   const handleSearch = (e) => setSearchQuery(e.target.value);
 
   return (
     <div className="flex items-center gap-2">
-      <Link href="/ingredients">
-        <a className="material-icons-outlined button">settings</a>
-      </Link>
+      {!loading && session && (
+        <Link href="/ingredients">
+          <a className="material-icons-outlined button">settings</a>
+        </Link>
+      )}
       <div className="relative w-full">
         <input
           className="w-full pr-8 truncate input"
@@ -21,9 +26,11 @@ const RecipeSearch = ({ searchQuery, setSearchQuery }) => {
           search
         </span>
       </div>
-      <Link href="/recipes/create">
-        <a className="material-icons-outlined button">add</a>
-      </Link>
+      {!loading && session && (
+        <Link href="/recipes/create">
+          <a className="material-icons-outlined button">add</a>
+        </Link>
+      )}
     </div>
   );
 };

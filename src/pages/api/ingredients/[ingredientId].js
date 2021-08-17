@@ -1,4 +1,4 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { getSession } from 'next-auth/client';
 
 import dbConnect from '@/backend/mongoose';
 
@@ -10,12 +10,21 @@ const handler = async (req, res) => {
     method,
     query: { ingredientId },
   } = req;
+  const session = await getSession({ req });
 
   switch (method) {
     case 'GET':
       try {
-        const ingredient = await Ingredient.findById(ingredientId);
-        res.status(200).json(ingredient);
+        if (!session) {
+          res
+            .status(401)
+            .send('You are unauthorized to access the requested resource. Please log in.');
+        }
+
+        if (session) {
+          const ingredient = await Ingredient.findById(ingredientId);
+          res.status(200).json(ingredient);
+        }
       } catch (error) {
         res.status(500).json(error);
       }
@@ -23,10 +32,18 @@ const handler = async (req, res) => {
 
     case 'PATCH':
       try {
-        const updatedIngredient = await Ingredient.findByIdAndUpdate(ingredientId, body, {
-          new: true,
-        });
-        res.status(200).json(updatedIngredient);
+        if (!session) {
+          res
+            .status(401)
+            .send('You are unauthorized to access the requested resource. Please log in.');
+        }
+
+        if (session) {
+          const updatedIngredient = await Ingredient.findByIdAndUpdate(ingredientId, body, {
+            new: true,
+          });
+          res.status(200).json(updatedIngredient);
+        }
       } catch (error) {
         res.status(500).json(error);
       }
@@ -34,15 +51,23 @@ const handler = async (req, res) => {
 
     case 'DELETE':
       try {
-        await Ingredient.findByIdAndDelete(ingredientId);
-        res.status(204);
+        if (!session) {
+          res
+            .status(401)
+            .send('You are unauthorized to access the requested resource. Please log in.');
+        }
+
+        if (session) {
+          await Ingredient.findByIdAndDelete(ingredientId);
+          res.status(204);
+        }
       } catch (error) {
         res.status(500).json(error);
       }
       break;
 
     default:
-      res.status(422).json('req_method_not_supported');
+      res.status(405).json('This method type is not currently supported.');
       break;
   }
 };

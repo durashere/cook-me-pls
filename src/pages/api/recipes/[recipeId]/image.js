@@ -1,5 +1,4 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-
+import { getSession } from 'next-auth/client';
 import cloudinary from 'cloudinary';
 import formidable from 'formidable';
 
@@ -10,59 +9,68 @@ const handler = async (req, res) => {
     method,
     query: { recipeId },
   } = req;
+  const session = await getSession({ req });
 
   switch (method) {
     case 'PATCH':
       try {
-        const form = formidable({ keepExtensions: true, maxFileSize: 5 * 1024 * 1024 });
+        if (!session) {
+          res
+            .status(401)
+            .send('You are unauthorized to access the requested resource. Please log in.');
+        }
 
-        const formFiles = await new Promise((resolve, reject) => {
-          form.parse(req, (parseError, fields, files) => {
-            if (parseError) {
-              reject(parseError);
-              return res
-                .status(400)
-                .json({ message: 'There was an error uploading image', error: parseError });
-            }
+        if (session) {
+          const form = formidable({ keepExtensions: true, maxFileSize: 5 * 1024 * 1024 });
 
-            return resolve(files);
+          const formFiles = await new Promise((resolve, reject) => {
+            form.parse(req, (parseError, fields, files) => {
+              if (parseError) {
+                reject(parseError);
+                return res
+                  .status(400)
+                  .json({ message: 'There was an error uploading image', error: parseError });
+              }
+
+              return resolve(files);
+            });
           });
-        });
 
-        const uploadResult = await cloudinary.v2.uploader.upload(
-          formFiles.image.path,
-          {
-            folder: 'cook-me-pls',
-            public_id: recipeId,
-            width: 640,
-            crop: 'scale',
-          },
-          async (uploadError, result) => {
-            if (uploadError) {
-              return res
-                .status(400)
-                .json({ message: 'There was an error uploading image', error: uploadError });
+          const uploadResult = await cloudinary.v2.uploader.upload(
+            formFiles.image.path,
+            {
+              folder: 'cook-me-pls',
+              public_id: recipeId,
+              width: 640,
+              crop: 'scale',
+            },
+            async (uploadError, result) => {
+              if (uploadError) {
+                return res
+                  .status(400)
+                  .json({ message: 'There was an error uploading image', error: uploadError });
+              }
+              return result;
             }
-            return result;
-          }
-        );
+          );
 
-        const updatedRecipe = await Recipe.findByIdAndUpdate(
-          recipeId,
-          { imageUrl: uploadResult.url },
-          {
-            new: true,
-          }
-        );
+          const updatedRecipe = await Recipe.findByIdAndUpdate(
+            recipeId,
+            { imageUrl: uploadResult.url },
+            {
+              new: true,
+            }
+          );
 
-        res.status(200).json(updatedRecipe);
+          res.status(200).json(updatedRecipe);
+        }
       } catch (error) {
         res.status(500).json(error);
       }
       break;
 
     default:
-      res.status(422).json('req_method_not_supported');
+      res.status(405).json('This method type is not currently supported.');
       break;
   }
 };
