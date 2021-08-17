@@ -1,23 +1,26 @@
 import { UNITS } from '@/app/constants';
 import mongoose from 'mongoose';
 
-const ingredientSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    unique: true,
+const ingredientSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    quantity: {
+      type: Number,
+      required: true,
+      default: 1,
+    },
+    unit: {
+      type: String,
+      enum: UNITS,
+      required: true,
+    },
   },
-  quantity: {
-    type: Number,
-    required: true,
-    default: 1,
-  },
-  unit: {
-    type: String,
-    enum: UNITS,
-    required: true,
-  },
-});
+  { timestamps: true }
+);
 
 ingredientSchema.pre('save', async function () {
   // function capitalize(text) {
