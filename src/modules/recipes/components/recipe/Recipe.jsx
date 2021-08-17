@@ -24,7 +24,7 @@ const Recipe = () => {
   return (
     <>
       <div className="space-y-8">
-        {!loading && session.user._id === recipe.author?._id && (
+        {!loading && session?.user._id === recipe.author?._id && (
           <Link href={`/recipes/${recipeId}/edit`}>
             <a className="button">Edytuj</a>
           </Link>

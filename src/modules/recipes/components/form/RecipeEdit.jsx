@@ -18,7 +18,7 @@ const RecipeEdit = () => {
     push,
     query: { recipeId },
   } = useRouter();
-  const [session] = useSession();
+  const [session, loading] = useSession();
 
   const { data: recipe, status: statusRecipe } = useRecipe(recipeId);
 
@@ -46,7 +46,7 @@ const RecipeEdit = () => {
     return <Loader />;
   }
 
-  if (session.user._id !== recipe.author?._id) {
+  if (!loading && session?.user._id !== recipe.author?._id) {
     push(`/recipes/${recipe._id}`);
     return <Loader />;
   }
