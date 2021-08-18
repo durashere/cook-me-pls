@@ -1,75 +1,54 @@
-import { getSession } from 'next-auth/client';
+import nextConnect from 'next-connect';
 
 import dbConnect from '@/backend/mongoose';
-
 import Ingredient from '@/backend/models/ingredient';
+import protect from '@/backend/middleware/protect';
 
-const handler = async (req, res) => {
-  const {
-    body,
-    method,
-    query: { ingredientId },
-  } = req;
-  const session = await getSession({ req });
+const handler = nextConnect();
 
-  switch (method) {
-    case 'GET':
-      try {
-        if (!session) {
-          res
-            .status(401)
-            .send('You are unauthorized to access the requested resource. Please log in.');
-        }
+handler.get(protect(), async (req, res) => {
+  try {
+    const {
+      query: { ingredientId },
+    } = req;
 
-        if (session) {
-          const ingredient = await Ingredient.findById(ingredientId);
-          res.status(200).json(ingredient);
-        }
-      } catch (error) {
-        res.status(500).json(error);
-      }
-      break;
+    const ingredient = await Ingredient.findById(ingredientId);
 
-    case 'PATCH':
-      try {
-        if (!session) {
-          res
-            .status(401)
-            .send('You are unauthorized to access the requested resource. Please log in.');
-        }
-
-        if (session) {
-          const updatedIngredient = await Ingredient.findByIdAndUpdate(ingredientId, body, {
-            new: true,
-          });
-          res.status(200).json(updatedIngredient);
-        }
-      } catch (error) {
-        res.status(500).json(error);
-      }
-      break;
-
-    case 'DELETE':
-      try {
-        if (!session) {
-          res
-            .status(401)
-            .send('You are unauthorized to access the requested resource. Please log in.');
-        }
-
-        if (session) {
-          await Ingredient.findByIdAndDelete(ingredientId);
-          res.status(204);
-        }
-      } catch (error) {
-        res.status(500).json(error);
-      }
-      break;
-
-    default:
-      res.status(405).json('This method type is not currently supported.');
-      break;
+    return res.status(200).json(ingredient);
+  } catch (error) {
+    return res.status(500).json({ message: 'Unexpected internal server error.' });
   }
-};
+});
+
+handler.patch(protect(), async (req, res) => {
+  try {
+    const {
+      body,
+      query: { ingredientId },
+    } = req;
+
+    const updatedIngredient = await Ingredient.findByIdAndUpdate(ingredientId, body, {
+      new: true,
+    });
+
+    return res.status(200).json(updatedIngredient);
+  } catch (error) {
+    return res.status(500).json({ message: 'Unexpected internal server error.' });
+  }
+});
+
+handler.delete(protect(), async (req, res) => {
+  try {
+    const {
+      query: { ingredientId },
+    } = req;
+
+    await Ingredient.findByIdAndDelete(ingredientId);
+
+    return res.status(204);
+  } catch (error) {
+    return res.status(500).json({ message: 'Unexpected internal server error.' });
+  }
+});
 
 export default dbConnect(handler);

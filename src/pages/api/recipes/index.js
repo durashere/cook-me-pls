@@ -1,50 +1,39 @@
-import { getSession } from 'next-auth/client';
+import nextConnect from 'next-connect';
 
 import dbConnect from '@/backend/mongoose';
-
+import protect from '@/backend/middleware/protect';
 import Recipe from '@/backend/models/recipe';
 
-const handler = async (req, res) => {
-  const { body, method, query } = req;
-  const session = await getSession({ req });
+const handler = nextConnect();
 
-  switch (method) {
-    case 'GET':
-      try {
-        const regex = new RegExp(query.searchQuery, 'i');
+handler.get(async (req, res) => {
+  try {
+    const { query } = req;
 
-        const recipes = await Recipe.find({
-          $or: [{ name: regex }, { difficulty: regex }, { cookTime: regex }],
-        })
-          .sort({ name: 1 })
-          .populate('author');
-        res.status(200).json(recipes);
-      } catch (error) {
-        res.status(500).json(error);
-      }
-      break;
+    const regex = new RegExp(query.searchQuery, 'i');
 
-    case 'POST':
-      try {
-        if (!session) {
-          res
-            .status(401)
-            .send('You are unauthorized to access the requested resource. Please log in.');
-        }
+    const recipes = await Recipe.find({
+      $or: [{ name: regex }, { difficulty: regex }, { cookTime: regex }],
+    })
+      .sort({ name: 1 })
+      .populate('author');
 
-        if (session) {
-          const newRecipe = await Recipe.create({ ...body, author: session.user._id });
-          res.status(201).json(newRecipe);
-        }
-      } catch (error) {
-        res.status(500).json(error);
-      }
-      break;
-
-    default:
-      res.status(405).json('This method type is not currently supported.');
-      break;
+    return res.status(200).json(recipes);
+  } catch (error) {
+    return res.status(500).json({ message: 'Unexpected internal server error.' });
   }
-};
+});
+
+handler.post(protect(), async (req, res) => {
+  try {
+    const { body } = req;
+
+    const newRecipe = await Recipe.create({ ...body, author: req.user._id });
+
+    return res.status(201).json(newRecipe);
+  } catch (error) {
+    return res.status(500).json({ message: 'Unexpected internal server error.' });
+  }
+});
 
 export default dbConnect(handler);

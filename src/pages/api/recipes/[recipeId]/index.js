@@ -1,77 +1,73 @@
-import { getSession } from 'next-auth/client';
 import cloudinary from 'cloudinary';
+import nextConnect from 'next-connect';
 
 import dbConnect from '@/backend/mongoose';
-
+import protect from '@/backend/middleware/protect';
 import Recipe from '@/backend/models/recipe';
 
-const handler = async (req, res) => {
-  const {
-    body,
-    method,
-    query: { recipeId },
-  } = req;
-  const session = await getSession({ req });
+const handler = nextConnect();
 
-  switch (method) {
-    case 'GET':
-      try {
-        const recipe = await Recipe.findById(recipeId).populate('author');
-        res.status(200).json(recipe);
-      } catch (error) {
-        res.status(500).send(error);
-      }
-      break;
+handler.get(async (req, res) => {
+  try {
+    const {
+      query: { recipeId },
+    } = req;
 
-    case 'PATCH':
-      try {
-        if (!session) {
-          res
-            .status(401)
-            .send('You are unauthorized to access the requested resource. Please log in.');
-        }
+    const recipe = await Recipe.findById(recipeId).populate('author');
 
-        if (session.user._id !== body.author?._id) {
-          res.status(403).send('Your account is not authorized to access the requested resource.');
-        }
-
-        if (session.user._id === body.author?._id) {
-          const updatedRecipe = await Recipe.findByIdAndUpdate(recipeId, body, {
-            new: true,
-          });
-          res.status(200).json(updatedRecipe);
-        }
-      } catch (error) {
-        res.status(500).json(error);
-      }
-      break;
-
-    case 'DELETE':
-      try {
-        if (!session) {
-          res
-            .status(401)
-            .send('You are unauthorized to access the requested resource. Please log in.');
-        }
-
-        if (session.user._id !== body.author?._id) {
-          res.status(403).send('Your account is not authorized to access the requested resource.');
-        }
-
-        if (session.user._id === body.author?._id) {
-          await Recipe.findByIdAndDelete(recipeId);
-          await cloudinary.v2.uploader.destroy(`cook-me-pls/${recipeId}`, { invalidate: true });
-          res.status(204);
-        }
-      } catch (error) {
-        res.status(500).json(error);
-      }
-      break;
-
-    default:
-      res.status(422).json('This method type is not currently supported.');
-      break;
+    return res.status(200).json(recipe);
+  } catch (error) {
+    return res.status(500).json({ message: 'Unexpected internal server error.' });
   }
-};
+});
+
+handler.patch(protect(), async (req, res) => {
+  try {
+    const {
+      body,
+      user,
+      query: { recipeId },
+    } = req;
+
+    if (user._id.toString() !== body.author._id.toString()) {
+      return res
+        .status(403)
+        .send('Your account is not authorized to access the requested resource.');
+    }
+
+    const updatedRecipe = await Recipe.findByIdAndUpdate(recipeId, body, {
+      new: true,
+    });
+
+    return res.status(200).json(updatedRecipe);
+  } catch (error) {
+    return res.status(500).json({ message: 'Unexpected internal server error.' });
+  }
+});
+
+handler.delete(protect(), async (req, res) => {
+  try {
+    const {
+      user,
+      query: { recipeId },
+    } = req;
+
+    const currentRecipe = await Recipe.findById(recipeId).populate('author');
+
+    if (user._id.toString() !== currentRecipe.author._id.toString()) {
+      return res
+        .status(403)
+        .send('Your account is not authorized to access the requested resource.');
+    }
+
+    await Recipe.findByIdAndDelete(recipeId);
+
+    await cloudinary.v2.uploader.destroy(`cook-me-pls/${recipeId}`, { invalidate: true });
+
+    return res.status(204);
+  } catch (error) {
+    return res.status(500).json({ message: 'Unexpected internal server error.' });
+  }
+});
 
 export default dbConnect(handler);
