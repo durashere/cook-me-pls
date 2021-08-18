@@ -67,7 +67,9 @@ const RecipeList = ({ searchQuery }) => {
   }
 
   if (statusRecipes === 'success' && !recipes.length) {
-    return <div className="p-4 mt-4 text-center bg-white rounded-md shadow-sm">Nothing found</div>;
+    return (
+      <div className="p-4 mt-4 text-center bg-white rounded-md shadow-sm">Nic nie znaleziono</div>
+    );
   }
 
   return (
