@@ -56,10 +56,12 @@ Select.propTypes = {
   fullWidth: PropTypes.bool,
   label: PropTypes.string,
   name: PropTypes.string,
+  onChange: PropTypes.func,
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
   placeholder: PropTypes.string,
   register: PropTypes.func,
   required: PropTypes.bool,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 Select.defaultProps = {
@@ -67,9 +69,11 @@ Select.defaultProps = {
   fullWidth: false,
   label: undefined,
   name: undefined,
+  onChange: undefined,
   placeholder: undefined,
   register: undefined,
   required: false,
+  value: undefined,
 };
 
 export default Select;

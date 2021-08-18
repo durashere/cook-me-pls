@@ -50,10 +50,12 @@ Input.propTypes = {
   fullWidth: PropTypes.bool,
   label: PropTypes.string,
   name: PropTypes.string,
+  onChange: PropTypes.func,
   placeholder: PropTypes.string,
   register: PropTypes.func,
   required: PropTypes.bool,
   type: PropTypes.string,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 
 Input.defaultProps = {
@@ -62,10 +64,12 @@ Input.defaultProps = {
   fullWidth: false,
   label: undefined,
   name: undefined,
+  onChange: undefined,
   placeholder: undefined,
   register: undefined,
   required: false,
   type: 'text',
+  value: undefined,
 };
 
 export default Input;
