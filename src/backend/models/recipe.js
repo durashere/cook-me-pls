@@ -1,4 +1,4 @@
-import { COOK_TIMES, DIFFICULTIES, UNITS } from '@/app/constants';
+import { TIMES, DIFFICULTIES, UNITS } from '@/app/constants';
 import mongoose from 'mongoose';
 
 const recipeSchema = new mongoose.Schema(
@@ -15,7 +15,7 @@ const recipeSchema = new mongoose.Schema(
     imageUrl: {
       type: String,
     },
-    cookTime: { type: String, enum: COOK_TIMES, required: true },
+    cookTime: { type: String, enum: TIMES, required: true },
     difficulty: {
       type: String,
       enum: DIFFICULTIES,

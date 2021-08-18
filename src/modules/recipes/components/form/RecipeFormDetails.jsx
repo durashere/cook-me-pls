@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import { COOK_TIMES, DIFFICULTIES } from '@/app/constants';
+import { TIMES, DIFFICULTIES } from '@/app/constants';
 import Input from '@/components/Input';
 import RecipeSection from '@/modules/recipes/components/RecipeSection';
 import Select from '@/components/Select';
@@ -20,7 +20,7 @@ const RecipeFormDetails = ({ register }) => {
       <Select
         fullWidth
         name="cookTime"
-        options={COOK_TIMES}
+        options={TIMES}
         placeholder="Czas..."
         register={register}
         required
