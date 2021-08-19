@@ -58,65 +58,57 @@ const RecipeFormIngredientsAutocomplete = ({ appendIngredient, usedIngredients }
         search
       </span>
 
-      {statusIngredients !== 'idle' &&
-        statusIngredients !== 'loading' &&
-        !searchQueryLoading &&
-        !unusedIngredients.find(
-          (ingredient) => ingredient.name.toLowerCase() === searchQuery.toLowerCase()
-        ) &&
-        !ingredients.find(
-          (ingredient) => ingredient.name.toLowerCase() === searchQuery.toLowerCase()
-        ) && (
-          <div className="absolute hidden w-full overflow-hidden bg-white rounded-md bottom-12 ring-1 ring-gray-300 group-focus-within:block">
-            {statusIngredients === 'success' &&
-              searchQuery !== '' &&
-              !ingredients.find(
-                (ingredient) => ingredient.name.toLowerCase() === searchQuery.toLowerCase()
-              ) && (
-                <div className="flex flex-col">
-                  <span className="p-4 font-medium bg-gray-100">Utwórz nowy składnik:</span>
-                  <div className="p-4">
-                    <span className="capitalize">{searchQuery}</span>
-                    <div className="flex gap-4 mt-1">
-                      <Input
-                        fullWidth
-                        onChange={(e) =>
-                          setTempIngredient({ ...tempIngredient, quantity: e.target.value })
-                        }
-                        placeholder="Ilość"
-                        type="number"
-                        value={tempIngredient.quantity}
-                      />
-                      <Select
-                        onChange={(e) =>
-                          setTempIngredient({ ...tempIngredient, unit: e.target.value })
-                        }
-                        options={UNITS}
-                        placeholder="Jednostka"
-                        value={tempIngredient.unit}
-                      />
-                      <Button icon="add" onClick={handleCreateIngredient} />
-                    </div>
+      {statusIngredients !== 'idle' && statusIngredients !== 'loading' && !searchQueryLoading && (
+        <div className="absolute hidden w-full overflow-hidden bg-white rounded-md top-12 ring-1 ring-gray-300 group-focus-within:block">
+          {statusIngredients === 'success' && unusedIngredients?.length > 0 && (
+            <div className="flex flex-col">
+              <span className="p-4 font-medium bg-gray-100">Wybierz składnik z listy:</span>
+              <ul className="p-4 space-y-2 overflow-y-auto max-h-44">
+                {unusedIngredients?.map((ingredient) => (
+                  <li key={ingredient._id}>
+                    <Button fullWidth onClick={() => handleAppendIngredient(ingredient)}>
+                      <span className="capitalize">{ingredient.name}</span>
+                    </Button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {statusIngredients === 'success' &&
+            searchQuery !== '' &&
+            !ingredients.find(
+              (ingredient) => ingredient.name.toLowerCase() === searchQuery.toLowerCase()
+            ) && (
+              <div className="flex flex-col">
+                <span className="p-4 font-medium bg-gray-100">Utwórz nowy składnik:</span>
+                <div className="p-4">
+                  <span className="capitalize">{searchQuery}</span>
+                  <div className="flex gap-4 mt-1">
+                    <Input
+                      fullWidth
+                      onChange={(e) =>
+                        setTempIngredient({ ...tempIngredient, quantity: e.target.value })
+                      }
+                      placeholder="Ilość"
+                      type="number"
+                      value={tempIngredient.quantity}
+                    />
+                    <Select
+                      onChange={(e) =>
+                        setTempIngredient({ ...tempIngredient, unit: e.target.value })
+                      }
+                      options={UNITS}
+                      placeholder="Jednostka"
+                      value={tempIngredient.unit}
+                    />
+                    <Button icon="add" onClick={handleCreateIngredient} />
                   </div>
                 </div>
-              )}
-
-            {statusIngredients === 'success' && unusedIngredients?.length > 0 && (
-              <div className="flex flex-col">
-                <span className="p-4 font-medium bg-gray-100">Wybierz składnik z listy:</span>
-                <ul className="p-4 space-y-2 overflow-y-auto max-h-44">
-                  {unusedIngredients?.map((ingredient) => (
-                    <li key={ingredient._id}>
-                      <Button fullWidth onClick={() => handleAppendIngredient(ingredient)}>
-                        <span className="capitalize">{ingredient.name}</span>
-                      </Button>
-                    </li>
-                  ))}
-                </ul>
               </div>
             )}
-          </div>
-        )}
+        </div>
+      )}
     </div>
   );
 };
