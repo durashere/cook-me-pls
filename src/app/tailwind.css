@@ -16,10 +16,6 @@
     @apply block placeholder-gray-300 transition-all border-none rounded-md shadow-sm outline-none ring-1 hover:ring-yellow-300 ring-gray-200 focus:ring focus:ring-yellow-200;
   }
 
-  .icon {
-    @apply flex items-center justify-center w-10 h-10 p-2 select-none focus:outline-none;
-  }
-
   .spinner {
     animation: rotate 2s linear infinite;
     z-index: 2;

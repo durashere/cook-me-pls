@@ -54,7 +54,7 @@ const RecipeFormIngredientsAutocomplete = ({ appendIngredient, usedIngredients }
         type="text"
         value={searchQuery}
       />
-      <span className="absolute top-0 right-0 text-gray-300 pointer-events-none icon material-icons-outlined">
+      <span className="absolute top-0 right-0 p-2 text-gray-300 pointer-events-none material-icons-outlined">
         search
       </span>
 
