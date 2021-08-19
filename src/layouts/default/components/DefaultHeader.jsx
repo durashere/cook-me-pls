@@ -2,6 +2,8 @@ import { signIn, signOut, useSession } from 'next-auth/client';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import Button from '@/components/Button';
+
 const DefaultHeader = () => {
   const [session, loading] = useSession();
 
@@ -21,29 +23,20 @@ const DefaultHeader = () => {
         </div>
       </Link>
 
-      {!loading && !session && (
-        <>
-          <button className="button" type="button" onClick={() => signIn('facebook')}>
-            Zaloguj
-          </button>
-        </>
-      )}
+      {!loading && !session && <Button onClick={() => signIn('facebook')}>Zaloguj</Button>}
 
       {!loading && session && (
-        <>
-          <button className="p-0 overflow-hidden button" type="button" onClick={() => signOut()}>
-            <div className="relative w-10 h-10">
-              <Image
-                src={session.user.image}
-                layout="fill"
-                objectFit="cover"
-                alt="User avatar"
-                unoptimized
-              />
-            </div>
-            <span className="hidden mx-2 font-medium sm:block">{session.user.name}</span>
-          </button>
-        </>
+        <Button onClick={() => signOut()}>
+          <div className="relative w-10 h-10 -m-2 overflow-hidden rounded-md">
+            <Image
+              src={session.user.image}
+              layout="fill"
+              objectFit="cover"
+              alt="User avatar"
+              unoptimized
+            />
+          </div>
+        </Button>
       )}
     </header>
   );

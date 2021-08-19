@@ -1,6 +1,7 @@
 import { useFieldArray } from 'react-hook-form';
 import PropTypes from 'prop-types';
 
+import Button from '@/components/Button';
 import Input from '@/components/Input';
 import RecipeSection from '@/modules/recipes/components/RecipeSection';
 
@@ -34,20 +35,12 @@ const RecipeFormSteps = ({ control, register }) => {
                 register={register}
                 required
               />
-              <button
-                className="button material-icons-outlined"
-                onClick={() => onStepRemove(index)}
-                type="button"
-              >
-                delete
-              </button>
+              <Button icon="delete" onClick={() => onStepRemove(index)} />
             </li>
           ))}
         </ul>
       )}
-      <button className="w-full button material-icons-outlined" onClick={onStepAdd} type="button">
-        add
-      </button>
+      <Button fullWidth icon="add" onClick={onStepAdd} />
     </RecipeSection>
   );
 };

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { UNITS } from '@/app/constants';
+import Button from '@/components/Button';
 import Input from '@/components/Input';
 import Loader from '@/components/Loader';
 import Select from '@/components/Select';
@@ -32,25 +33,15 @@ const IngredientListItem = ({ ingredient }) => {
         <form className="flex items-center w-full gap-2" onSubmit={handleSubmit(onSubmit)}>
           <Input fullWidth name="quantity" register={register} required type="number" />
           <Select name="unit" options={UNITS} register={register} />
-          <button className="button material-icons-outlined" type="button" onClick={onCancel}>
-            close
-          </button>
-          <button className="button material-icons-outlined" type="submit">
-            done
-          </button>
+          <Button icon="close" onClick={onCancel} />
+          <Button htmlType="submit" icon="done" />
         </form>
       ) : (
         <div className="flex items-center w-full gap-2">
           <div className="w-full h-full p-2 capitalize bg-white rounded-md shadow-sm">
             {ingredient.name}
           </div>
-          <button
-            className="button material-icons-outlined"
-            onClick={() => setEditMode(!editMode)}
-            type="button"
-          >
-            edit
-          </button>
+          <Button icon="edit" onClick={() => setEditMode(!editMode)} />
         </div>
       )}
     </li>

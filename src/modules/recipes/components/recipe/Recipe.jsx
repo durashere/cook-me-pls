@@ -25,9 +25,9 @@ const Recipe = () => {
     <>
       <div className="space-y-8">
         {!loading && session?.user._id === recipe.author?._id && (
-          <Link href={`/recipes/${recipeId}/edit`}>
-            <a className="button">Edytuj</a>
-          </Link>
+          <div className="p-2 text-center">
+            <Link href={`/recipes/${recipeId}/edit`}>Edytuj</Link>
+          </div>
         )}
 
         <RecipeHeader

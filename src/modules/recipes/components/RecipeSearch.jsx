@@ -11,7 +11,7 @@ const RecipeSearch = ({ searchQuery, setSearchQuery }) => {
     <div className="flex items-center gap-2">
       {!loading && session && (
         <Link href="/ingredients">
-          <a className="material-icons-outlined button">settings</a>
+          <a className="p-2 material-icons-outlined">settings</a>
         </Link>
       )}
       <div className="relative w-full">
@@ -28,7 +28,7 @@ const RecipeSearch = ({ searchQuery, setSearchQuery }) => {
       </div>
       {!loading && session && (
         <Link href="/recipes/create">
-          <a className="material-icons-outlined button">add</a>
+          <a className="p-2 material-icons-outlined">add</a>
         </Link>
       )}
     </div>

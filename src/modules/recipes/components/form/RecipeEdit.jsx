@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/client';
 import Link from 'next/link';
 
+import Button from '@/components/Button';
 import Loader from '@/components/Loader';
 import RecipeFormDetails from '@/modules/recipes/components/form/RecipeFormDetails';
 import RecipeFormImage from '@/modules/recipes/components/form/RecipeFormImage';
@@ -63,13 +64,15 @@ const RecipeEdit = () => {
 
       <div className="flex justify-between">
         <Link href={`/recipes/${recipe._id}`}>
-          <a className="border-transparent shadow-none button">Anuluj</a>
+          <a className="p-2">Anuluj</a>
         </Link>
         <div className="flex gap-4">
-          <button className="text-red-500 button ring-red-500" onClick={onDelete} type="button">
+          <Button onClick={onDelete} type="danger">
             Usuń
-          </button>
-          <input className="cursor-pointer button" type="submit" value="Zapisz" />
+          </Button>
+          <Button htmlType="submit" type="primary">
+            Zapisz
+          </Button>
         </div>
       </div>
     </form>

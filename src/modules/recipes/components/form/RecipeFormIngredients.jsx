@@ -2,6 +2,7 @@ import { useFieldArray } from 'react-hook-form';
 import PropTypes from 'prop-types';
 
 import { UNITS } from '@/app/constants';
+import Button from '@/components/Button';
 import Input from '@/components/Input';
 import RecipeFormIngredientsAutocomplete from '@/modules/recipes/components/form/RecipeFormIngredientsAutocomplete';
 import RecipeSection from '@/modules/recipes/components/RecipeSection';
@@ -42,13 +43,7 @@ const RecipeFormIngredients = ({ control, register }) => {
                   register={register}
                   required
                 />
-                <button
-                  className="button material-icons-outlined"
-                  onClick={() => removeIngredient(index)}
-                  type="button"
-                >
-                  delete
-                </button>
+                <Button icon="delete" onClick={() => removeIngredient(index)} />
               </div>
             </li>
           ))}

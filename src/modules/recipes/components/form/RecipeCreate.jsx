@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
+import Button from '@/components/Button';
 import RecipeFormDetails from '@/modules/recipes/components/form/RecipeFormDetails';
 import RecipeFormIngredients from '@/modules/recipes/components/form/RecipeFormIngredients';
 import RecipeFormSteps from '@/modules/recipes/components/form/RecipeFormSteps';
@@ -29,11 +30,11 @@ const RecipeCreate = () => {
 
       <div className="flex justify-between">
         <Link href="/">
-          <a className="border-transparent shadow-none button">Anuluj</a>
+          <a className="p-2">Anuluj</a>
         </Link>
-        <div className="flex gap-4">
-          <input value="Utwórz" className="cursor-pointer button" type="submit" />
-        </div>
+        <Button htmlType="submit" type="primary">
+          Utwórz
+        </Button>
       </div>
     </form>
   );

@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import useDebounce from '@/hooks/useDebounce';
-import useIngredients from '@/modules/ingredients/hooks/useIngredients';
-import useIngredientCreate from '@/modules/ingredients/hooks/useIngredientCreate';
-import Select from '@/components/Select';
 import { UNITS } from '@/app/constants';
+import Button from '@/components/Button';
 import Input from '@/components/Input';
+import Select from '@/components/Select';
+import useDebounce from '@/hooks/useDebounce';
+import useIngredientCreate from '@/modules/ingredients/hooks/useIngredientCreate';
+import useIngredients from '@/modules/ingredients/hooks/useIngredients';
 
 const RecipeFormIngredientsAutocomplete = ({ appendIngredient, usedIngredients }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -66,15 +67,15 @@ const RecipeFormIngredientsAutocomplete = ({ appendIngredient, usedIngredients }
         !ingredients.find(
           (ingredient) => ingredient.name.toLowerCase() === searchQuery.toLowerCase()
         ) && (
-          <div className="absolute hidden w-full overflow-hidden bg-white rounded-md bottom-12 ring-1 ring-gray-400 group-focus-within:block">
+          <div className="absolute hidden w-full overflow-hidden bg-white rounded-md bottom-12 ring-1 ring-gray-300 group-focus-within:block">
             {statusIngredients === 'success' &&
               searchQuery !== '' &&
               !ingredients.find(
                 (ingredient) => ingredient.name.toLowerCase() === searchQuery.toLowerCase()
               ) && (
                 <div className="flex flex-col">
-                  <span className="p-4 font-medium bg-gray-300">Utwórz nowy składnik:</span>
-                  <div className="p-4 bg-gray-100">
+                  <span className="p-4 font-medium bg-gray-100">Utwórz nowy składnik:</span>
+                  <div className="p-4">
                     <span className="capitalize">{searchQuery}</span>
                     <div className="flex gap-4 mt-1">
                       <Input
@@ -94,13 +95,7 @@ const RecipeFormIngredientsAutocomplete = ({ appendIngredient, usedIngredients }
                         placeholder="Jednostka"
                         value={tempIngredient.unit}
                       />
-                      <button
-                        className="material-icons-outlined button"
-                        onClick={handleCreateIngredient}
-                        type="button"
-                      >
-                        add
-                      </button>
+                      <Button icon="add" onClick={handleCreateIngredient} />
                     </div>
                   </div>
                 </div>
@@ -108,18 +103,13 @@ const RecipeFormIngredientsAutocomplete = ({ appendIngredient, usedIngredients }
 
             {statusIngredients === 'success' && unusedIngredients?.length > 0 && (
               <div className="flex flex-col">
-                <span className="p-4 font-medium bg-gray-300">Wybierz składnik z listy:</span>
-                <ul className="p-4 space-y-2 overflow-y-auto bg-gray-100 max-h-44">
+                <span className="p-4 font-medium bg-gray-100">Wybierz składnik z listy:</span>
+                <ul className="p-4 space-y-2 overflow-y-auto max-h-44">
                   {unusedIngredients?.map((ingredient) => (
                     <li key={ingredient._id}>
-                      <button
-                        className="justify-between w-full p-0 px-4 rounded-none button"
-                        onClick={() => handleAppendIngredient(ingredient)}
-                        type="button"
-                      >
+                      <Button fullWidth onClick={() => handleAppendIngredient(ingredient)}>
                         <span className="capitalize">{ingredient.name}</span>
-                        <span className="text-gray-400 icon material-icons-outlined">add</span>
-                      </button>
+                      </Button>
                     </li>
                   ))}
                 </ul>

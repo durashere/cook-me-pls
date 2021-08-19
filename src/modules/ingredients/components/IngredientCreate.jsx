@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 
 import { UNITS } from '@/app/constants';
+import Button from '@/components/Button';
 import Input from '@/components/Input';
 import Select from '@/components/Select';
 import useIngredientCreate from '@/modules/ingredients/hooks/useIngredientCreate';
@@ -53,24 +54,14 @@ const IngredientCreate = () => {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <button className="button material-icons-outlined" type="button" onClick={onCancel}>
-              close
-            </button>
-            <button className="button material-icons-outlined" type="submit">
-              done
-            </button>
+            <Button icon="close" onClick={onCancel} />
+            <Button htmlType="submit" icon="done" />
           </div>
         </form>
       ) : (
         <div className="flex items-center justify-between">
           <h1 className="ml-2 text-2xl font-medium">Składniki</h1>
-          <button
-            className="button material-icons-outlined"
-            onClick={() => setCreateMode(!createMode)}
-            type="button"
-          >
-            add
-          </button>
+          <Button icon="add" onClick={() => setCreateMode(!createMode)} />
         </div>
       )}
     </>
