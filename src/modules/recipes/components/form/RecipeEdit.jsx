@@ -33,12 +33,12 @@ const RecipeEdit = () => {
     reset(recipe);
   }, [reset, recipe]);
 
-  const onDelete = () => {
+  const handleDelete = () => {
     deleteRecipe(recipe._id);
     push(`/`);
   };
 
-  const onSubmit = (data) => {
+  const handleUpdateRecipe = (data) => {
     updateRecipe({ _id: recipe._id, ...data });
     push(`/recipes/${recipe._id}`);
   };
@@ -53,7 +53,7 @@ const RecipeEdit = () => {
   }
 
   return (
-    <form className="relative px-4 space-y-8" onSubmit={handleSubmit(onSubmit)}>
+    <form className="relative px-4 space-y-8" onSubmit={handleSubmit(handleUpdateRecipe)}>
       <RecipeFormImage recipeId={recipe._id} />
 
       <RecipeFormDetails register={register} />
@@ -67,7 +67,7 @@ const RecipeEdit = () => {
           <a className="p-2">Anuluj</a>
         </Link>
         <div className="flex gap-4">
-          <Button onClick={onDelete} type="danger">
+          <Button onClick={handleDelete} type="danger">
             Usuń
           </Button>
           <Button htmlType="submit" type="primary">

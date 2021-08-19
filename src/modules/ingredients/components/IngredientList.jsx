@@ -17,12 +17,14 @@ const IngredientListItem = ({ ingredient }) => {
 
   const { handleSubmit, register, reset } = useForm({ defaultValues: ingredient });
 
-  const onCancel = () => {
+  const handleToggleEditMode = () => setEditMode(!editMode);
+
+  const handleCancel = () => {
     setEditMode(!editMode);
     reset(ingredient);
   };
 
-  const onSubmit = (data) => {
+  const handleUpdateIngredient = (data) => {
     updateIngredient(data);
     setEditMode(!editMode);
   };
@@ -30,10 +32,13 @@ const IngredientListItem = ({ ingredient }) => {
   return (
     <li className="flex items-center gap-2">
       {editMode ? (
-        <form className="flex items-center w-full gap-2" onSubmit={handleSubmit(onSubmit)}>
+        <form
+          className="flex items-center w-full gap-2"
+          onSubmit={handleSubmit(handleUpdateIngredient)}
+        >
           <Input fullWidth name="quantity" register={register} required type="number" />
           <Select name="unit" options={UNITS} register={register} />
-          <Button icon="close" onClick={onCancel} />
+          <Button icon="close" onClick={handleCancel} />
           <Button htmlType="submit" icon="done" />
         </form>
       ) : (
@@ -41,7 +46,7 @@ const IngredientListItem = ({ ingredient }) => {
           <div className="w-full h-full p-2 capitalize bg-white rounded-md shadow-sm">
             {ingredient.name}
           </div>
-          <Button icon="edit" onClick={() => setEditMode(!editMode)} />
+          <Button icon="edit" onClick={handleToggleEditMode} />
         </div>
       )}
     </li>

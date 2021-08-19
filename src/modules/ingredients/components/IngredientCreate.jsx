@@ -14,12 +14,14 @@ const IngredientCreate = () => {
 
   const { reset, handleSubmit, register } = useForm();
 
-  const onCancel = () => {
+  const handleToggleCreateMode = () => setCreateMode(!createMode);
+
+  const handleCancel = () => {
     setCreateMode(!createMode);
     reset();
   };
 
-  const onSubmit = (data) => {
+  const handleCreateIngredient = (data) => {
     createIngredient(data);
     setCreateMode(!createMode);
     reset();
@@ -28,7 +30,7 @@ const IngredientCreate = () => {
   return (
     <>
       {createMode ? (
-        <form className="flex items-end gap-2" onSubmit={handleSubmit(onSubmit)}>
+        <form className="flex items-end gap-2" onSubmit={handleSubmit(handleCreateIngredient)}>
           <div className="flex flex-col w-full gap-2">
             <Input
               fullWidth
@@ -54,14 +56,14 @@ const IngredientCreate = () => {
             />
           </div>
           <div className="flex flex-col gap-2">
-            <Button icon="close" onClick={onCancel} />
+            <Button icon="close" onClick={handleCancel} />
             <Button htmlType="submit" icon="done" />
           </div>
         </form>
       ) : (
         <div className="flex items-center justify-between">
           <h1 className="ml-2 text-2xl font-medium">Składniki</h1>
-          <Button icon="add" onClick={() => setCreateMode(!createMode)} />
+          <Button icon="add" onClick={handleToggleCreateMode} />
         </div>
       )}
     </>

@@ -16,9 +16,9 @@ const RecipeFormSteps = ({ control, register }) => {
     name: 'steps',
   });
 
-  const onStepAdd = () => appendStep({ instruction: '' });
+  const handleAppendStep = () => appendStep({ instruction: '' });
 
-  const onStepRemove = (index) => removeStep(index);
+  const handleRemoveStep = (index) => removeStep(index);
 
   return (
     <RecipeSection label="przygotowanie">
@@ -35,12 +35,12 @@ const RecipeFormSteps = ({ control, register }) => {
                 register={register}
                 required
               />
-              <Button icon="delete" onClick={() => onStepRemove(index)} />
+              <Button icon="delete" onClick={() => handleRemoveStep(index)} />
             </li>
           ))}
         </ul>
       )}
-      <Button fullWidth icon="add" onClick={onStepAdd} />
+      <Button fullWidth icon="add" onClick={handleAppendStep} />
     </RecipeSection>
   );
 };

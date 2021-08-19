@@ -19,6 +19,10 @@ const RecipeFormIngredients = ({ control, register }) => {
     name: 'ingredients',
   });
 
+  const handleRemoveIngredient = (index) => {
+    removeIngredient(index);
+  };
+
   return (
     <RecipeSection label="składniki">
       {editIngredients.length > 0 && (
@@ -43,7 +47,7 @@ const RecipeFormIngredients = ({ control, register }) => {
                   register={register}
                   required
                 />
-                <Button icon="delete" onClick={() => removeIngredient(index)} />
+                <Button icon="delete" onClick={() => handleRemoveIngredient(index)} />
               </div>
             </li>
           ))}

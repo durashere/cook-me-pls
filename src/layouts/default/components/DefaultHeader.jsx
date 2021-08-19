@@ -7,6 +7,9 @@ import Button from '@/components/Button';
 const DefaultHeader = () => {
   const [session, loading] = useSession();
 
+  const handleSignIn = () => signIn('facebook');
+  const handleSignOut = () => signOut();
+
   return (
     <header className="relative flex items-center justify-between w-full p-4">
       <Link href="/">
@@ -23,10 +26,10 @@ const DefaultHeader = () => {
         </div>
       </Link>
 
-      {!loading && !session && <Button onClick={() => signIn('facebook')}>Zaloguj</Button>}
+      {!loading && !session && <Button onClick={handleSignIn}>Zaloguj</Button>}
 
       {!loading && session && (
-        <Button onClick={() => signOut()}>
+        <Button onClick={handleSignOut}>
           <div className="relative w-10 h-10 -m-2 overflow-hidden rounded-md">
             <Image
               src={session.user.image}
