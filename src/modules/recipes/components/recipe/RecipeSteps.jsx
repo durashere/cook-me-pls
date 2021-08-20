@@ -6,7 +6,7 @@ const Step = ({ index, instruction }) => {
       <div className="flex flex-col items-center justify-center w-2 h-2 p-2 text-xs font-bold text-yellow-500 ring-2 ring-yellow-500 rounded-3xl">
         {index + 1}
       </div>
-      <span className="w-full font-medium text-gray-600">{instruction}</span>
+      <span className="w-full font-medium text-gray-600 break-all">{instruction}</span>
     </li>
   );
 };
