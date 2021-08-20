@@ -25,11 +25,12 @@ const RecipeFormSteps = ({ control, register }) => {
       {editSteps.length > 0 && (
         <ul className="space-y-4">
           {editSteps.map((step, index) => (
-            <li className="flex gap-4" key={step._id}>
-              <span className="flex items-center justify-center w-10 h-10 p-2">{index + 1}</span>
+            <li className="flex items-end gap-4" key={step._id}>
               <Input
                 defaultValue={step.instruction}
                 fullWidth
+                label={`Krok ${index + 1}`}
+                multiline
                 name={`steps.${index}.instruction`}
                 placeholder="Opis kroku..."
                 register={register}
