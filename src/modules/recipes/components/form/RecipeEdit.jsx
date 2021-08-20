@@ -53,7 +53,7 @@ const RecipeEdit = () => {
   }
 
   return (
-    <form className="relative px-4 space-y-8" onSubmit={handleSubmit(handleUpdateRecipe)}>
+    <form className="relative space-y-8" onSubmit={handleSubmit(handleUpdateRecipe)}>
       <RecipeFormImage recipeId={recipe._id} />
 
       <RecipeFormDetails register={register} />

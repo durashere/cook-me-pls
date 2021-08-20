@@ -21,7 +21,7 @@ const RecipeCreate = () => {
   };
 
   return (
-    <form className="relative px-4 space-y-8" onSubmit={handleSubmit(onSubmit)}>
+    <form className="relative space-y-8" onSubmit={handleSubmit(onSubmit)}>
       <RecipeFormDetails register={register} />
 
       <RecipeFormIngredients control={control} register={register} />
