@@ -9,6 +9,7 @@ const Input = forwardRef(
       disabled,
       fullWidth,
       label,
+      multiline,
       name,
       onChange,
       onClick,
@@ -16,12 +17,45 @@ const Input = forwardRef(
       readOnly,
       register,
       required,
+      rows,
       type,
       value,
     },
     ref
   ) => {
     const registerProps = register && { ...register(name, { required }) };
+
+    if (multiline) {
+      return (
+        <div className={classNames({ 'w-full': fullWidth })}>
+          {label && (
+            <label htmlFor={name}>
+              <span className="capitalize">{label}</span>
+            </label>
+          )}
+          <textarea
+            className={classNames('block input resize-none', {
+              'mt-1': label,
+              'w-full': fullWidth,
+            })}
+            defaultValue={defaultValue}
+            disabled={disabled}
+            name={name}
+            onChange={onChange}
+            onClick={onClick}
+            placeholder={placeholder}
+            readOnly={readOnly}
+            ref={ref}
+            required={required}
+            rows={rows}
+            type={type}
+            value={value}
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...registerProps}
+          />
+        </div>
+      );
+    }
 
     return (
       <div className={classNames({ 'w-full': fullWidth })}>
@@ -59,6 +93,7 @@ Input.propTypes = {
   disabled: PropTypes.bool,
   fullWidth: PropTypes.bool,
   label: PropTypes.string,
+  multiline: PropTypes.bool,
   name: PropTypes.string,
   onChange: PropTypes.func,
   onClick: PropTypes.func,
@@ -66,6 +101,7 @@ Input.propTypes = {
   readOnly: PropTypes.bool,
   register: PropTypes.func,
   required: PropTypes.bool,
+  rows: PropTypes.number,
   type: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
@@ -75,6 +111,7 @@ Input.defaultProps = {
   disabled: false,
   fullWidth: false,
   label: undefined,
+  multiline: false,
   name: undefined,
   onChange: undefined,
   onClick: undefined,
@@ -82,6 +119,7 @@ Input.defaultProps = {
   readOnly: false,
   register: undefined,
   required: false,
+  rows: 5,
   type: 'text',
   value: undefined,
 };
