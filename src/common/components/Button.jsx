@@ -5,7 +5,7 @@ const Button = ({ children, disabled, fullWidth, htmlType, icon, onClick, type }
   return (
     <button
       className={classNames(
-        'bg-transparent flex items-center justify-center p-2 transition-all rounded-md shadow-sm outline-none focus:outline-none ring-1 hover:ring whitespace-nowrap focus:ring',
+        'bg-transparent flex items-center justify-center p-2 transition-all rounded-md shadow-sm outline-none focus:outline-none ring-1 hover:ring-2 whitespace-nowrap focus:ring',
         {
           'w-full': fullWidth,
           'text-gray-500 ring-gray-300 hover:ring-gray-400/50 focus:ring-gray-400/50':
