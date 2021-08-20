@@ -9,6 +9,16 @@
   body {
     @apply text-gray-700 bg-gray-100;
   }
+
+  select:invalid {
+    @apply text-gray-300;
+  }
+  option[value=''][disabled] {
+    @apply text-gray-500;
+  }
+  option {
+    @apply text-black;
+  }
 }
 
 @layer components {
