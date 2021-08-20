@@ -19,6 +19,25 @@
   option {
     @apply text-black;
   }
+
+  input[type='search']::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    height: 24px;
+    width: 24px;
+    background: url(/icons/clear.svg) no-repeat center;
+    background-size: center;
+    opacity: 0;
+    pointer-events: none;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+
+  input[type='search']:not(:placeholder-shown)::-webkit-search-cancel-button {
+    cursor: pointer;
+    opacity: 0.3;
+    pointer-events: all;
+  }
 }
 
 @layer components {
