@@ -58,7 +58,7 @@ handler.patch(protect(), async (req, res) => {
 
     const updatedRecipe = await Recipe.findByIdAndUpdate(
       recipeId,
-      { imageUrl: uploadResult.url },
+      { imageUrl: uploadResult.secure_url },
       {
         new: true,
       }
