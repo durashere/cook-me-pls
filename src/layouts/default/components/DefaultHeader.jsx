@@ -31,13 +31,7 @@ const DefaultHeader = () => {
       {!loading && session && (
         <Button onClick={handleSignOut}>
           <div className="relative w-10 h-10 -m-2 overflow-hidden rounded-md">
-            <Image
-              src={session.user.image}
-              layout="fill"
-              objectFit="cover"
-              alt="User avatar"
-              unoptimized
-            />
+            <Image src={session.user.image} layout="fill" objectFit="cover" alt="User avatar" />
           </div>
         </Button>
       )}

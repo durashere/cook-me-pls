@@ -19,26 +19,14 @@ const RecipeHeader = ({ author, cookTime, difficulty, imageUrl, name }) => {
   return (
     <div className="overflow-hidden rounded-md shadow-sm">
       <div className="relative pb-2/3">
-        <Image
-          alt="Picture of the dish"
-          layout="fill"
-          objectFit="cover"
-          src={imageUrl}
-          unoptimized
-        />
+        <Image alt="Picture of the dish" layout="fill" objectFit="cover" src={imageUrl} />
       </div>
       <div className="flex flex-col items-center gap-8 p-4 bg-white">
         <div className="flex flex-col items-center gap-2 text-center">
           <h1 className="text-4xl font-bold">{name}</h1>
           <div className="flex items-center gap-2">
             <div className="relative overflow-hidden rounded-md w-7 h-7">
-              <Image
-                src={author.image}
-                layout="fill"
-                objectFit="cover"
-                alt="User avatar"
-                unoptimized
-              />
+              <Image src={author.image} layout="fill" objectFit="cover" alt="User avatar" />
             </div>
             <h2 className="text-lg">{author.name}</h2>
           </div>

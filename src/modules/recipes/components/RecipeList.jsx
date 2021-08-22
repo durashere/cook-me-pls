@@ -10,14 +10,8 @@ const Recipe = ({ author, cookTime, difficulty, imageUrl, name, recipeId }) => {
   return (
     <Link href={`/recipes/${recipeId}`}>
       <li className="overflow-hidden bg-white rounded-md shadow-sm cursor-pointer">
-        <div className="relative pb-2/3">
-          <Image
-            src={imageUrl}
-            layout="fill"
-            objectFit="cover"
-            alt="Picture of the dish"
-            unoptimized
-          />
+        <div className="relative aspect-w-16 aspect-h-9">
+          <Image src={imageUrl} layout="fill" objectFit="cover" alt="Picture of the dish" />
         </div>
         <div className="p-4 space-y-4">
           <h2 className="h-full text-2xl font-medium line-clamp-3">{name}</h2>
@@ -31,13 +25,7 @@ const Recipe = ({ author, cookTime, difficulty, imageUrl, name, recipeId }) => {
               </h3>
             </div>
             <div className="relative overflow-hidden rounded-md w-7 h-7">
-              <Image
-                src={author.image}
-                layout="fill"
-                objectFit="cover"
-                alt="User avatar"
-                unoptimized
-              />
+              <Image src={author.image} layout="fill" objectFit="cover" alt="User avatar" />
             </div>
           </div>
         </div>
