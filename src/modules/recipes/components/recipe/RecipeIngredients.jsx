@@ -1,13 +1,12 @@
 import PropTypes from 'prop-types';
 
+import RecipeSection from '@/modules/recipes/components/RecipeSection';
+
 const Ingredient = ({ ingredient }) => {
   return (
-    <li className="flex items-center gap-2">
-      <div className="w-2 h-2 p-1 mx-2 bg-yellow-500 rounded-full" />
-      <span className="font-medium text-gray-600">
-        {`${ingredient.quantity} ${ingredient.unit} `}
-        <span className="text-gray-500">{ingredient.name}</span>
-      </span>
+    <li className="flex items-center justify-between py-2 first:pt-0 last:pb-0">
+      <span className="font-medium text-gray-600 first-letter:capitalize">{ingredient.name}</span>
+      <span className="text-gray-500">{`${ingredient.quantity} ${ingredient.unit}`}</span>
     </li>
   );
 };
@@ -22,11 +21,13 @@ Ingredient.propTypes = {
 
 const RecipeIngredients = ({ ingredients }) => {
   return (
-    <ul className="flex flex-col gap-4">
-      {ingredients.map((ingredient) => (
-        <Ingredient ingredient={ingredient} key={ingredient._id} />
-      ))}
-    </ul>
+    <RecipeSection>
+      <ul className="divide-y-2 divide-gray-300 divide-dotted">
+        {ingredients.map((ingredient) => (
+          <Ingredient ingredient={ingredient} key={ingredient._id} />
+        ))}
+      </ul>
+    </RecipeSection>
   );
 };
 

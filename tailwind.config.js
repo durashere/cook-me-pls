@@ -7,18 +7,14 @@ module.exports = {
       poppins: ['Poppins', 'sans-serif'],
       lobster: ['Lobster', 'cursive'],
     },
-    extend: {
-      borderRadius: {
-        '4xl': '2rem',
-      },
-      spacing: {
-        '1/3': '33.333333%',
-        '2/3': '66.666667%',
-      },
-    },
+    extend: {},
   },
   variants: {
     extend: {},
   },
-  plugins: [require('@tailwindcss/forms'), require('@tailwindcss/line-clamp')],
+  plugins: [
+    require('@tailwindcss/aspect-ratio'),
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/line-clamp'),
+  ],
 };

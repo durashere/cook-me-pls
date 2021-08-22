@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types';
 
+import RecipeSection from '@/modules/recipes/components/RecipeSection';
+
 const Step = ({ index, instruction }) => {
   return (
-    <li className="flex items-center gap-4">
-      <div className="flex flex-col items-center justify-center w-2 h-2 p-2 text-xs font-bold text-yellow-500 ring-2 ring-yellow-500 rounded-3xl">
+    <li className="flex gap-4">
+      <span className="flex items-center justify-center w-6 h-6 p-3 text-xs font-bold text-yellow-500 ring-2 ring-yellow-500 rounded-3xl">
         {index + 1}
-      </div>
-      <span className="w-full font-medium text-gray-600 break-all">{instruction}</span>
+      </span>
+      <p className="text-gray-600">{instruction}</p>
     </li>
   );
 };
@@ -18,11 +20,13 @@ Step.propTypes = {
 
 const RecipeSteps = ({ steps }) => {
   return (
-    <ul className="flex flex-col gap-4">
-      {steps.map((step, index) => (
-        <Step index={index} instruction={step.instruction} key={step._id} />
-      ))}
-    </ul>
+    <RecipeSection>
+      <ul className="space-y-8">
+        {steps.map((step, index) => (
+          <Step index={index} instruction={step.instruction} key={step._id} />
+        ))}
+      </ul>
+    </RecipeSection>
   );
 };
 

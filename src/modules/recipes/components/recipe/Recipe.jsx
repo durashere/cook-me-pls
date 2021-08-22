@@ -3,9 +3,10 @@ import { useSession } from 'next-auth/client';
 import Link from 'next/link';
 
 import Loader from '@/components/Loader';
+import RecipeAuthor from '@/modules/recipes/components/recipe/RecipeAuthor';
 import RecipeHeader from '@/modules/recipes/components/recipe/RecipeHeader';
+import RecipeInfo from '@/modules/recipes/components/recipe/RecipeInfo';
 import RecipeIngredients from '@/modules/recipes/components/recipe/RecipeIngredients';
-import RecipeSection from '@/modules/recipes/components/RecipeSection';
 import RecipeSteps from '@/modules/recipes/components/recipe/RecipeSteps';
 import useRecipe from '@/modules/recipes/hooks/useRecipe';
 
@@ -22,31 +23,27 @@ const Recipe = () => {
   }
 
   return (
-    <>
-      <div className="space-y-8">
-        {!loading && session?.user._id === recipe.author?._id && (
-          <div className="p-2 text-center">
-            <Link href={`/recipes/${recipeId}/edit`}>Edytuj</Link>
-          </div>
-        )}
+    <div className="space-y-4">
+      <RecipeHeader imageUrl={recipe.imageUrl} name={recipe.name} />
 
-        <RecipeHeader
-          cookTime={recipe.cookTime}
-          difficulty={recipe.difficulty}
-          imageUrl={recipe.imageUrl}
-          name={recipe.name}
-          author={recipe.author}
-        />
-
-        <RecipeSection label="składniki">
-          <RecipeIngredients ingredients={recipe.ingredients} />
-        </RecipeSection>
-
-        <RecipeSection label="przygotowanie">
-          <RecipeSteps steps={recipe.steps} />
-        </RecipeSection>
+      <div className="grid grid-flow-col gap-4">
+        <RecipeInfo icon="schedule">{recipe.cookTime}</RecipeInfo>
+        <RecipeInfo icon="people">1 porcja</RecipeInfo>
+        <RecipeInfo icon="bar_chart">{recipe.difficulty}</RecipeInfo>
       </div>
-    </>
+
+      <RecipeIngredients ingredients={recipe.ingredients} />
+
+      <RecipeSteps steps={recipe.steps} />
+
+      <RecipeAuthor image={recipe.author.image} name={recipe.author.name} />
+
+      {!loading && session?.user._id === recipe.author?._id && (
+        <div className="p-2 text-center">
+          <Link href={`/recipes/${recipeId}/edit`}>Edytuj</Link>
+        </div>
+      )}
+    </div>
   );
 };
 
