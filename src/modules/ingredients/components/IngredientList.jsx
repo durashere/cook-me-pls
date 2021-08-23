@@ -43,7 +43,7 @@ const IngredientListItem = ({ ingredient }) => {
         </form>
       ) : (
         <div className="flex items-center w-full gap-2">
-          <div className="w-full h-full p-2 capitalize bg-white rounded-md shadow-sm">
+          <div className="w-full h-full p-2 capitalize bg-white rounded-md shadow">
             {ingredient.name}
           </div>
           <Button icon="edit" onClick={handleToggleEditMode} />

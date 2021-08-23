@@ -9,7 +9,7 @@ import useRecipes from '@/modules/recipes/hooks/useRecipes';
 const Recipe = ({ author, cookTime, difficulty, imageUrl, name, recipeId }) => {
   return (
     <Link href={`/recipes/${recipeId}`}>
-      <li className="p-4 space-y-4 overflow-hidden bg-white rounded-md shadow cursor-pointer">
+      <li className="p-4 space-y-4 overflow-hidden bg-white rounded-md shadow-md cursor-pointer">
         <div className="relative -mx-4 -mt-4 aspect-w-16 aspect-h-9">
           <Image src={imageUrl} layout="fill" objectFit="cover" alt="Picture of the dish" />
           <div className="from-transparent via-transparent to-white bg-gradient-to-b" />
@@ -57,7 +57,7 @@ const RecipeList = ({ searchQuery }) => {
 
   if (statusRecipes === 'success' && !recipes.length) {
     return (
-      <div className="p-4 mt-4 text-center bg-white rounded-md shadow-sm">Nic nie znaleziono</div>
+      <div className="p-4 mt-4 text-center bg-white rounded-md shadow-md">Nic nie znaleziono</div>
     );
   }
 
