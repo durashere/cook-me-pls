@@ -9,24 +9,25 @@ import useRecipes from '@/modules/recipes/hooks/useRecipes';
 const Recipe = ({ author, cookTime, difficulty, imageUrl, name, recipeId }) => {
   return (
     <Link href={`/recipes/${recipeId}`}>
-      <li className="overflow-hidden bg-white rounded-md shadow-sm cursor-pointer">
-        <div className="relative aspect-w-16 aspect-h-9">
+      <li className="p-4 space-y-4 overflow-hidden bg-white rounded-md shadow cursor-pointer">
+        <div className="relative -mx-4 -mt-4 aspect-w-16 aspect-h-9">
           <Image src={imageUrl} layout="fill" objectFit="cover" alt="Picture of the dish" />
+          <div className="from-transparent via-transparent to-white bg-gradient-to-b" />
         </div>
-        <div className="p-4 space-y-4">
-          <h2 className="h-full text-2xl font-medium line-clamp-3">{name}</h2>
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex flex-wrap items-center gap-2 whitespace-nowrap">
-              <h3 className="px-2 text-yellow-500 border border-yellow-500 rounded-md shadow-sm">
-                {cookTime}
-              </h3>
-              <h3 className="px-2 text-yellow-500 border border-yellow-500 rounded-md shadow-sm">
-                {difficulty}
-              </h3>
-            </div>
-            <div className="relative overflow-hidden rounded-md w-7 h-7">
-              <Image src={author.image} layout="fill" objectFit="cover" alt="User avatar" />
-            </div>
+        <div className="flex justify-between gap-4">
+          <h1 className="text-2xl font-bold">{name}</h1>
+          <div className="relative w-8 h-8 p-4 overflow-hidden rounded-md">
+            <Image src={author.image} layout="fill" objectFit="cover" alt="User avatar" />
+          </div>
+        </div>
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="flex flex-wrap items-center gap-2 whitespace-nowrap">
+            <h2 className="px-2 text-yellow-500 border border-yellow-500 rounded-md shadow">
+              {cookTime}
+            </h2>
+            <h2 className="px-2 text-yellow-500 border border-yellow-500 rounded-md shadow">
+              {difficulty}
+            </h2>
           </div>
         </div>
       </li>
@@ -61,7 +62,7 @@ const RecipeList = ({ searchQuery }) => {
   }
 
   return (
-    <ul className="grid gap-8 sm:grid-cols-2">
+    <ul className="grid gap-4 sm:grid-cols-2">
       {recipes.map((recipe) => (
         <Recipe
           author={recipe.author}
