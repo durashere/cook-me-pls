@@ -24,7 +24,7 @@ const DefaultHeader = () => {
   const handleSignOut = () => signOut();
 
   return (
-    <header className="sticky top-0 z-20 flex items-center justify-between w-full p-4 shadow bg-white-100/20 backdrop-blur-md">
+    <header className="sticky top-0 z-30 flex items-center justify-between w-full p-4 shadow bg-gray-100/50 backdrop-blur">
       <Link href="/">
         <div className="flex items-center gap-2 select-none">
           <div className="relative w-10 h-10">
