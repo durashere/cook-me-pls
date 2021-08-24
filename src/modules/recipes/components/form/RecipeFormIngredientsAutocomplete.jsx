@@ -63,13 +63,13 @@ const RecipeFormIngredientsAutocomplete = ({ appendIngredient, usedIngredients }
           readOnly
           value={searchQuery}
         />
-        <span className="absolute right-0 w-10 h-10 p-2 text-gray-300 pointer-events-none material-icons-outlined">
+        <span className="absolute w-10 h-10 p-2 text-gray-300 pointer-events-none right-2 material-icons-outlined">
           search
         </span>
       </div>
 
       <Dialog
-        className="fixed inset-0 z-10 max-w-2xl mx-auto bg-white"
+        className="fixed inset-0 z-50 max-w-2xl mx-auto bg-white"
         initialFocus={searchInputRef}
         onClose={handleToggleSearchOpen}
         open={searchOpen}
@@ -86,8 +86,8 @@ const RecipeFormIngredientsAutocomplete = ({ appendIngredient, usedIngredients }
           />
         </div>
 
-        {(searchQueryDebouncedLoading && searchQuery.length > 0 && <Loader />) ||
-          (statusIngredients === 'loading' && <Loader />)}
+        {(searchQueryDebouncedLoading && searchQuery.length > 0 && <Loader className="h-auto" />) ||
+          (statusIngredients === 'loading' && <Loader className="h-auto" />)}
 
         {statusIngredients === 'success' && searchQuery.length > 0 && !searchQueryDebouncedLoading && (
           <>

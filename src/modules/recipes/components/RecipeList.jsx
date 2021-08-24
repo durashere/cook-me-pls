@@ -39,18 +39,19 @@ Recipe.propTypes = {
 };
 
 const RecipeList = ({ searchQuery }) => {
-  const { value: searchQueryDebounced } = useDebounce(searchQuery, 500);
+  const { value: searchQueryDebounced, loading: searchQueryDebouncedLoading } = useDebounce(
+    searchQuery,
+    500
+  );
 
   const { data: recipes, status: statusRecipes } = useRecipes(searchQueryDebounced);
 
-  if (statusRecipes === 'idle' || statusRecipes === 'loading') {
+  if (searchQueryDebouncedLoading || statusRecipes === 'idle' || statusRecipes === 'loading') {
     return <Loader />;
   }
 
   if (statusRecipes === 'success' && !recipes.length) {
-    return (
-      <div className="p-4 mt-4 text-center bg-white rounded-md shadow-md">Nic nie znaleziono</div>
-    );
+    return <div className="p-4 text-center bg-white rounded-md shadow-md">Nic nie znaleziono</div>;
   }
 
   return (
