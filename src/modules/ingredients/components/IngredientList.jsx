@@ -7,6 +7,7 @@ import Button from '@/components/Button';
 import Input from '@/components/Input';
 import Loader from '@/components/Loader';
 import Select from '@/components/Select';
+import useIngredientDelete from '@/modules/ingredients/hooks/useIngredientDelete';
 import useIngredients from '@/modules/ingredients/hooks/useIngredients';
 import useIngredientUpdate from '@/modules/ingredients/hooks/useIngredientUpdate';
 
@@ -14,6 +15,8 @@ const IngredientListItem = ({ ingredient }) => {
   const [editMode, setEditMode] = useState(false);
 
   const { mutate: updateIngredient } = useIngredientUpdate();
+
+  const { mutate: deleteIngredient } = useIngredientDelete();
 
   const { handleSubmit, register, reset } = useForm({ defaultValues: ingredient });
 
@@ -29,6 +32,10 @@ const IngredientListItem = ({ ingredient }) => {
     setEditMode(!editMode);
   };
 
+  const handleDeleteIngredient = () => {
+    deleteIngredient(ingredient._id);
+  };
+
   return (
     <li className="flex items-center gap-2">
       {editMode ? (
@@ -39,6 +46,7 @@ const IngredientListItem = ({ ingredient }) => {
           <Input fullWidth name="quantity" register={register} required type="number" />
           <Select name="unit" options={UNITS} register={register} />
           <Button icon="close" onClick={handleCancel} />
+          <Button icon="delete" onClick={handleDeleteIngredient} />
           <Button htmlType="submit" icon="done" />
         </form>
       ) : (
@@ -55,6 +63,7 @@ const IngredientListItem = ({ ingredient }) => {
 
 IngredientListItem.propTypes = {
   ingredient: PropTypes.shape({
+    _id: PropTypes.string,
     name: PropTypes.string,
     quantity: PropTypes.number,
     unit: PropTypes.string,
