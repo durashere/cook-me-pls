@@ -64,7 +64,7 @@ handler.delete(protect(), async (req, res) => {
 
     await cloudinary.v2.uploader.destroy(`cook-me-pls/${recipeId}`, { invalidate: true });
 
-    return res.status(204);
+    return res.status(204).json({ deleted: true });
   } catch (error) {
     return res.status(500).json({ message: 'Unexpected internal server error.' });
   }

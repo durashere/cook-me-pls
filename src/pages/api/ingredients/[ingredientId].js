@@ -45,7 +45,7 @@ handler.delete(protect(), async (req, res) => {
 
     await Ingredient.findByIdAndDelete(ingredientId);
 
-    return res.status(204);
+    return res.status(204).json({ deleted: true });
   } catch (error) {
     return res.status(500).json({ message: 'Unexpected internal server error.' });
   }
