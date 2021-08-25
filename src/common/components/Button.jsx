@@ -7,13 +7,14 @@ const Button = forwardRef(
     return (
       <button
         className={classNames(
-          'bg-transparent text-gray-500 ring-gray-300 hover:ring-gray-400/50 focus:ring-gray-400/50 flex items-center justify-center p-2 transition-all rounded-md shadow outline-none focus:outline-none ring-1 hover:ring-2 whitespace-nowrap focus:ring',
+          'bg-transparent flex items-center justify-center p-2 transition-all rounded-md shadow outline-none focus:outline-none ring-1 hover:ring-2 whitespace-nowrap focus:ring',
           {
             'w-full': fullWidth,
-            'text-yellow-500 ring-yellow-500 hover:ring-yellow-500/50 focus:ring-yellow-500/50':
+            'text-gray-500 ring-gray-400 hover:ring-gray-400 focus:ring-gray-400':
+              type === undefined,
+            'text-yellow-500 ring-yellow-400 hover:ring-yellow-400 focus:ring-yellow-400':
               type === 'primary',
-            'text-red-500 ring-red-500 hover:ring-red-500/50 focus:ring-red-500/50':
-              type === 'danger',
+            'text-red-500 ring-red-400 hover:ring-red-400 focus:ring-red-400': type === 'danger',
           }
         )}
         disabled={disabled}
