@@ -12,6 +12,7 @@ const useRecipeDelete = () => {
   return useMutation(deleteRecipe, {
     onSuccess: () => {
       queryClient.invalidateQueries('recipes');
+      queryClient.invalidateQueries('userRecipes');
     },
   });
 };

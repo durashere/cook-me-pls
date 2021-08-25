@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/client';
-import Link from 'next/link';
 
 import Button from '@/components/Button';
 import Loader from '@/components/Loader';
@@ -11,7 +10,6 @@ import RecipeFormImage from '@/modules/recipes/components/form/RecipeFormImage';
 import RecipeFormIngredients from '@/modules/recipes/components/form/RecipeFormIngredients';
 import RecipeFormSteps from '@/modules/recipes/components/form/RecipeFormSteps';
 import useRecipe from '@/modules/recipes/hooks/useRecipe';
-import useRecipeDelete from '@/modules/recipes/hooks/useRecipeDelete';
 import useRecipeUpdate from '@/modules/recipes/hooks/useRecipeUpdate';
 
 const RecipeEdit = () => {
@@ -25,22 +23,19 @@ const RecipeEdit = () => {
 
   const { mutate: updateRecipe } = useRecipeUpdate();
 
-  const { mutate: deleteRecipe } = useRecipeDelete();
-
   const { register, control, handleSubmit, reset } = useForm({ defaultValues: recipe });
 
   useEffect(() => {
     reset(recipe);
   }, [reset, recipe]);
 
-  const handleDelete = () => {
-    deleteRecipe(recipe._id);
-    push(`/`);
+  const handleCancel = () => {
+    push(`/users/${recipe.author._id}/recipes`);
   };
 
   const handleUpdateRecipe = (data) => {
     updateRecipe({ _id: recipe._id, ...data });
-    push(`/recipes/${recipe._id}`);
+    push(`/users/${recipe.author._id}/recipes`);
   };
 
   if (statusRecipe === 'idle' || statusRecipe === 'loading') {
@@ -63,17 +58,10 @@ const RecipeEdit = () => {
       <RecipeFormSteps control={control} register={register} />
 
       <div className="flex justify-between">
-        <Link href={`/recipes/${recipe._id}`}>
-          <a className="p-2">Anuluj</a>
-        </Link>
-        <div className="flex gap-4">
-          <Button onClick={handleDelete} type="danger">
-            Usuń
-          </Button>
-          <Button htmlType="submit" type="primary">
-            Zapisz
-          </Button>
-        </div>
+        <Button onClick={handleCancel}>Anuluj</Button>
+        <Button htmlType="submit" type="primary">
+          Zapisz
+        </Button>
       </div>
     </form>
   );

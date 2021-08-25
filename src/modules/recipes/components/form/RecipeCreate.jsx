@@ -1,6 +1,5 @@
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 
 import Button from '@/components/Button';
 import RecipeFormDetails from '@/modules/recipes/components/form/RecipeFormDetails';
@@ -9,19 +8,24 @@ import RecipeFormSteps from '@/modules/recipes/components/form/RecipeFormSteps';
 import useRecipeCreate from '@/modules/recipes/hooks/useRecipeCreate';
 
 const RecipeCreate = () => {
-  const { push } = useRouter();
+  const { back, push } = useRouter();
 
-  const { mutate: createRecipe } = useRecipeCreate();
+  const { mutateAsync: createRecipe } = useRecipeCreate();
 
   const { control, handleSubmit, register } = useForm();
 
-  const onSubmit = (data) => {
+  const handleCancel = (data) => {
     createRecipe(data);
-    push('/');
+    back();
+  };
+
+  const handleRecipeCreate = async (data) => {
+    const createdRecipe = await createRecipe(data);
+    push(`/recipes/${createdRecipe._id}`);
   };
 
   return (
-    <form className="relative space-y-8" onSubmit={handleSubmit(onSubmit)}>
+    <form className="relative space-y-8" onSubmit={handleSubmit(handleRecipeCreate)}>
       <RecipeFormDetails register={register} />
 
       <RecipeFormIngredients control={control} register={register} />
@@ -29,9 +33,7 @@ const RecipeCreate = () => {
       <RecipeFormSteps control={control} register={register} />
 
       <div className="flex justify-between">
-        <Link href="/">
-          <a className="p-2">Anuluj</a>
-        </Link>
+        <Button onClick={handleCancel}>Anuluj</Button>
         <Button htmlType="submit" type="primary">
           Utwórz
         </Button>

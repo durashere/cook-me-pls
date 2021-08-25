@@ -1,9 +1,9 @@
 import { Menu } from '@headlessui/react';
 import { signIn, signOut, useSession } from 'next-auth/client';
-import { useState } from 'react';
 import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
+import React, { useState } from 'react';
 import router from 'next/router';
 
 import Button from '@/components/Button';
@@ -53,9 +53,9 @@ const DefaultHeader = () => {
       )}
 
       {!loading && session && (
-        <Menu as="div" className="relative">
-          <Menu.Button as={Button}>
-            <div className="relative w-10 h-10 -m-2 overflow-hidden rounded-md">
+        <Menu as="div" className="relative w-10 h-10">
+          <Menu.Button className="overflow-hidden transition-all rounded-md outline-none focus:outline-none hover:ring-2 focus:ring hover:ring-gray-400 focus:ring-gray-400">
+            <div className="relative w-10 h-10 pointer-events-none">
               <Image src={session.user.image} layout="fill" objectFit="cover" alt="User avatar" />
             </div>
           </Menu.Button>
@@ -70,7 +70,7 @@ const DefaultHeader = () => {
                       'bg-gray-100': active,
                     }
                   )}
-                  onClick={() => push('#')}
+                  onClick={() => push(`/users/${session.user._id}/recipes`)}
                 >
                   <span className="material-icons-outlined">library_books</span>
                   <span className="font-medium">Moje przepisy</span>

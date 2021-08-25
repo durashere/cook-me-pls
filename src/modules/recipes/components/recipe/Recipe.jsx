@@ -1,6 +1,4 @@
 import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/client';
-import Link from 'next/link';
 
 import Loader from '@/components/Loader';
 import RecipeAuthor from '@/modules/recipes/components/recipe/RecipeAuthor';
@@ -14,7 +12,6 @@ const Recipe = () => {
   const {
     query: { recipeId },
   } = useRouter();
-  const [session, loading] = useSession();
 
   const { data: recipe, status: statusRecipe } = useRecipe(recipeId);
 
@@ -37,12 +34,6 @@ const Recipe = () => {
       <RecipeSteps steps={recipe.steps} />
 
       <RecipeAuthor image={recipe.author.image} name={recipe.author.name} />
-
-      {!loading && session?.user._id === recipe.author?._id && (
-        <div className="p-2 text-center">
-          <Link href={`/recipes/${recipeId}/edit`}>Edytuj</Link>
-        </div>
-      )}
     </div>
   );
 };
