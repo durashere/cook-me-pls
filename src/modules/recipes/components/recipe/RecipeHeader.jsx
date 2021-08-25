@@ -15,7 +15,7 @@ const RecipeHeader = ({ imageUrl, name }) => {
   );
 };
 
-RecipeHeader.defaultProps = { imageUrl: 'https://via.placeholder.com/640x427?text=Image' };
+RecipeHeader.defaultProps = { imageUrl: '/image-placeholder.png' };
 
 RecipeHeader.propTypes = {
   imageUrl: PropTypes.string,

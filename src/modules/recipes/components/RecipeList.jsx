@@ -28,7 +28,7 @@ const Recipe = ({ cookTime, difficulty, imageUrl, name, recipeId }) => {
   );
 };
 
-Recipe.defaultProps = { imageUrl: 'https://via.placeholder.com/640x427?text=Image' };
+Recipe.defaultProps = { imageUrl: '/image-placeholder.png' };
 
 Recipe.propTypes = {
   cookTime: PropTypes.string.isRequired,
