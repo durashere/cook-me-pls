@@ -33,7 +33,7 @@ const RecipeFormImage = ({ recipeId }) => {
             </div>
             <input
               onChange={(e) => handleImageUpload(e.target.files[0])}
-              className="self-center w-full p-4 mt-4 rounded-md ring ring-gray-300"
+              className="self-center w-full p-4 mt-4 rounded-md ring-1 ring-gray-300"
               accept="image/*"
               type="file"
             />
