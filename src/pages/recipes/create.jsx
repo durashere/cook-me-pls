@@ -1,22 +1,7 @@
-import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/client';
-
-import Loader from '@/components/Loader';
 import RecipeCreate from '@/modules/recipes/components/form/RecipeCreate';
+import withProtect from '@/components/withProtect';
 
 const RecipeCreatePage = () => {
-  const [session, loading] = useSession();
-  const { push } = useRouter();
-
-  if (loading) {
-    return <Loader />;
-  }
-
-  if (!loading && !session) {
-    push('/');
-    return <Loader />;
-  }
-
   return (
     <>
       <RecipeCreate />
@@ -24,4 +9,4 @@ const RecipeCreatePage = () => {
   );
 };
 
-export default RecipeCreatePage;
+export default withProtect(RecipeCreatePage);

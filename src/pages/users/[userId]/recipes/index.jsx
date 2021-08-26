@@ -3,22 +3,14 @@ import { useSession } from 'next-auth/client';
 
 import Loader from '@/components/Loader';
 import UserRecipes from '@/modules/users/components/UserRecipes';
+import withProtect from '@/components/withProtect';
 
 const UserRecipesPage = () => {
-  const [session, loading] = useSession();
+  const [session] = useSession();
   const {
     push,
     query: { userId },
   } = useRouter();
-
-  if (loading) {
-    return <Loader />;
-  }
-
-  if (!loading && !session) {
-    push('/');
-    return <Loader />;
-  }
 
   if (session.user._id !== userId) {
     push('/');
@@ -32,4 +24,4 @@ const UserRecipesPage = () => {
   );
 };
 
-export default UserRecipesPage;
+export default withProtect(UserRecipesPage);

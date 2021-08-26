@@ -1,23 +1,8 @@
-import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/client';
-
 import IngredientCreate from '@/modules/ingredients/components/IngredientCreate';
 import IngredientList from '@/modules/ingredients/components/IngredientList';
-import Loader from '@/components/Loader';
+import withProtect from '@/components/withProtect';
 
 const IngredientsPage = () => {
-  const [session, loading] = useSession();
-  const { push } = useRouter();
-
-  if (loading) {
-    return <Loader />;
-  }
-
-  if (!loading && !session) {
-    push('/');
-    return <Loader />;
-  }
-
   return (
     <div className="space-y-8">
       <IngredientCreate />
@@ -26,4 +11,4 @@ const IngredientsPage = () => {
   );
 };
 
-export default IngredientsPage;
+export default withProtect(IngredientsPage);
