@@ -2,13 +2,14 @@ import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 
 import Button from '@/components/Button';
+import DeleteModal from '@/components/DeleteModal';
 import Loader from '@/components/Loader';
 import useRecipeDelete from '@/modules/recipes/hooks/useRecipeDelete';
 import useUserRecipes from '@/modules/users/hooks/useUserRecipes';
 
 const Recipe = ({ name, recipeId }) => {
   const { push } = useRouter();
-  const { mutate: deleteRecipe, status: deleteRecipeStatus } = useRecipeDelete();
+  const { mutate: deleteRecipe } = useRecipeDelete();
 
   const handleDeleteRecipe = () => {
     deleteRecipe(recipeId);
@@ -18,17 +19,23 @@ const Recipe = ({ name, recipeId }) => {
     push(`/recipes/${recipeId}/edit`);
   };
 
+  const handleViewRecipe = () => {
+    push(`/recipes/${recipeId}`);
+  };
+
   return (
-    <li className="flex items-center justify-between gap-4 p-4 overflow-hidden bg-white rounded-md shadow-md">
-      <h1 className="text-2xl font-bold truncate">{name}</h1>
-      <div className="flex gap-4">
-        <Button
-          icon="delete"
-          loading={deleteRecipeStatus === 'loading'}
-          onClick={handleDeleteRecipe}
-          type="danger"
+    <li className="p-4 space-y-4 overflow-hidden bg-white rounded-md shadow-md">
+      <h1 className="text-2xl font-bold">{name}</h1>
+      <div className="flex items-center justify-end gap-2">
+        <DeleteModal
+          description="Czy jesteś pewny, że chcesz usunąć ten przepis? Tej czynności nie można cofnąć."
+          onSubmit={handleDeleteRecipe}
+          title="Usuń przepis"
         />
-        <Button icon="edit" onClick={handleEditRecipe} />
+        <Button icon="edit" onClick={handleEditRecipe}>
+          Edytuj
+        </Button>
+        <Button icon="visibility" onClick={handleViewRecipe} />
       </div>
     </li>
   );
