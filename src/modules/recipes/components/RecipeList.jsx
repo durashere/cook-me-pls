@@ -24,14 +24,7 @@ const RecipeList = ({ searchQuery }) => {
   return (
     <ul className="grid gap-4 sm:grid-cols-2">
       {recipes.map((recipe) => (
-        <RecipeCard
-          cookTime={recipe.cookTime}
-          difficulty={recipe.difficulty}
-          image={recipe.image}
-          key={recipe._id}
-          name={recipe.name}
-          recipeId={recipe._id}
-        />
+        <RecipeCard key={recipe._id} recipe={recipe} />
       ))}
     </ul>
   );
