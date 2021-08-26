@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 
 import RecipeSection from '@/modules/recipes/components/RecipeSection';
 
-const RecipeHeader = ({ imageUrl, name }) => {
+const RecipeHeader = ({ image, name }) => {
   return (
     <RecipeSection>
       <div className="relative -mx-4 -mt-4 overflow-hidden rounded-t-md aspect-w-16 aspect-h-9">
-        <Image alt="Picture of the dish" layout="fill" objectFit="cover" src={imageUrl} />
+        <Image alt="Picture of the dish" layout="fill" objectFit="cover" src={image} />
         <div className="from-transparent via-transparent to-white bg-gradient-to-b" />
       </div>
       <h1 className="text-2xl font-bold text-center text-gray-600">{name}</h1>
@@ -15,10 +15,10 @@ const RecipeHeader = ({ imageUrl, name }) => {
   );
 };
 
-RecipeHeader.defaultProps = { imageUrl: '/image-placeholder.png' };
+RecipeHeader.defaultProps = { image: '/image-placeholder.png' };
 
 RecipeHeader.propTypes = {
-  imageUrl: PropTypes.string,
+  image: PropTypes.string,
   name: PropTypes.string.isRequired,
 };
 

@@ -21,7 +21,7 @@ const Recipe = () => {
 
   return (
     <div className="space-y-4">
-      <RecipeHeader imageUrl={recipe.imageUrl} name={recipe.name} />
+      <RecipeHeader image={recipe.image} name={recipe.name} />
 
       <div className="grid grid-flow-col gap-4">
         <RecipeInfo icon="schedule">{recipe.cookTime}</RecipeInfo>

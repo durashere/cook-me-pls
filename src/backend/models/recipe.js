@@ -12,7 +12,7 @@ const recipeSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    imageUrl: {
+    image: {
       type: String,
     },
     cookTime: { type: String, enum: TIMES, required: true },

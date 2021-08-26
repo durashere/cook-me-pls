@@ -6,12 +6,12 @@ import Loader from '@/components/Loader';
 import useDebounce from '@/hooks/useDebounce';
 import useRecipes from '@/modules/recipes/hooks/useRecipes';
 
-const Recipe = ({ cookTime, difficulty, imageUrl, name, recipeId }) => {
+const Recipe = ({ cookTime, difficulty, image, name, recipeId }) => {
   return (
     <Link href={`/recipes/${recipeId}`}>
       <li className="p-4 space-y-4 overflow-hidden bg-white rounded-md shadow-md cursor-pointer">
         <div className="relative -mx-4 -mt-4 aspect-w-16 aspect-h-9">
-          <Image src={imageUrl} layout="fill" objectFit="cover" alt="Picture of the dish" />
+          <Image src={image} layout="fill" objectFit="cover" alt="Picture of the dish" />
           <div className="from-transparent via-transparent to-white bg-gradient-to-b" />
         </div>
         <h1 className="text-2xl font-bold text-center">{name}</h1>
@@ -28,12 +28,12 @@ const Recipe = ({ cookTime, difficulty, imageUrl, name, recipeId }) => {
   );
 };
 
-Recipe.defaultProps = { imageUrl: '/image-placeholder.png' };
+Recipe.defaultProps = { image: '/image-placeholder.png' };
 
 Recipe.propTypes = {
   cookTime: PropTypes.string.isRequired,
   difficulty: PropTypes.string.isRequired,
-  imageUrl: PropTypes.string,
+  image: PropTypes.string,
   name: PropTypes.string.isRequired,
   recipeId: PropTypes.string.isRequired,
 };
@@ -60,7 +60,7 @@ const RecipeList = ({ searchQuery }) => {
         <Recipe
           cookTime={recipe.cookTime}
           difficulty={recipe.difficulty}
-          imageUrl={recipe.imageUrl}
+          image={recipe.image}
           key={recipe._id}
           name={recipe.name}
           recipeId={recipe._id}
