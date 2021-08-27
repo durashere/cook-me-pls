@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const Section = ({ children, label }) => {
+const RecipeSection = ({ children, label }) => {
   return (
     <div className="w-full space-y-2">
       {label && <h2 className="ml-4 text-2xl font-medium capitalize">{label}</h2>}
@@ -9,13 +9,13 @@ const Section = ({ children, label }) => {
   );
 };
 
-Section.propTypes = {
+RecipeSection.propTypes = {
   children: PropTypes.node.isRequired,
   label: PropTypes.string,
 };
 
-Section.defaultProps = {
+RecipeSection.defaultProps = {
   label: undefined,
 };
 
-export default Section;
+export default RecipeSection;
