@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 
-const RecipeAuthor = ({ author: { _id, image, name } }) => {
+const RecipeAuthor = ({ _id, image, name }) => {
   return (
     <div className="flex items-center justify-center">
       <Link href={`/users/${_id}/recipes`}>
@@ -19,11 +19,9 @@ const RecipeAuthor = ({ author: { _id, image, name } }) => {
 };
 
 RecipeAuthor.propTypes = {
-  author: PropTypes.shape({
-    _id: PropTypes.string,
-    image: PropTypes.string,
-    name: PropTypes.string,
-  }).isRequired,
+  _id: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
 };
 
 export default RecipeAuthor;

@@ -29,11 +29,7 @@ const RecipeSteps = ({ steps }) => {
 };
 
 RecipeSteps.propTypes = {
-  steps: PropTypes.arrayOf(
-    PropTypes.shape({
-      instruction: PropTypes.string,
-    })
-  ).isRequired,
+  steps: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default RecipeSteps;

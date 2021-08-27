@@ -2,21 +2,19 @@ import PropTypes from 'prop-types';
 
 import RecipeSection from '@/modules/recipes/components/RecipeSection';
 
-const Ingredient = ({ ingredient }) => {
+const Ingredient = ({ name, quantity, unit }) => {
   return (
     <li className="flex items-center justify-between py-2 first:pt-0 last:pb-0">
-      <span className="font-medium text-gray-600 first-letter:capitalize">{ingredient.name}</span>
-      <span className="text-sm text-gray-500">{`${ingredient.quantity} ${ingredient.unit}`}</span>
+      <span className="font-medium text-gray-600 first-letter:capitalize">{name}</span>
+      <span className="text-sm text-gray-500">{`${quantity} ${unit}`}</span>
     </li>
   );
 };
 
 Ingredient.propTypes = {
-  ingredient: PropTypes.shape({
-    name: PropTypes.string,
-    quantity: PropTypes.number,
-    unit: PropTypes.string,
-  }).isRequired,
+  name: PropTypes.string.isRequired,
+  quantity: PropTypes.number.isRequired,
+  unit: PropTypes.string.isRequired,
 };
 
 const RecipeIngredients = ({ ingredients }) => {
@@ -24,7 +22,12 @@ const RecipeIngredients = ({ ingredients }) => {
     <RecipeSection>
       <ul className="divide-y-2 divide-dotted">
         {ingredients.map((ingredient) => (
-          <Ingredient ingredient={ingredient} key={ingredient._id} />
+          <Ingredient
+            key={ingredient._id}
+            name={ingredient.name}
+            quantity={ingredient.quantity}
+            unit={ingredient.unit}
+          />
         ))}
       </ul>
     </RecipeSection>
@@ -32,13 +35,7 @@ const RecipeIngredients = ({ ingredients }) => {
 };
 
 RecipeIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      quantity: PropTypes.number,
-      unit: PropTypes.string,
-    })
-  ).isRequired,
+  ingredients: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default RecipeIngredients;

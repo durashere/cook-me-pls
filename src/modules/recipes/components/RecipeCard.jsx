@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 
-const RecipeCard = ({ recipe: { _id, cookTime, difficulty, image, name } }) => {
+const RecipeCard = ({ _id, cookTime, difficulty, image, name }) => {
   return (
     <Link href={`/recipes/${_id}`}>
       <div className="relative overflow-hidden rounded-md shadow-md cursor-pointer group">
@@ -26,16 +26,14 @@ const RecipeCard = ({ recipe: { _id, cookTime, difficulty, image, name } }) => {
   );
 };
 
-RecipeCard.defaultProps = { recipe: { image: '/image-placeholder.png' } };
+RecipeCard.defaultProps = { image: '/image-placeholder.png' };
 
 RecipeCard.propTypes = {
-  recipe: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    cookTime: PropTypes.string.isRequired,
-    difficulty: PropTypes.string.isRequired,
-    image: PropTypes.string,
-    name: PropTypes.string.isRequired,
-  }),
+  _id: PropTypes.string.isRequired,
+  cookTime: PropTypes.string.isRequired,
+  difficulty: PropTypes.string.isRequired,
+  image: PropTypes.string,
+  name: PropTypes.string.isRequired,
 };
 
 export default RecipeCard;

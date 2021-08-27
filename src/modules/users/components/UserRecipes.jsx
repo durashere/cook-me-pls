@@ -19,7 +19,14 @@ const UserRecipes = () => {
     <div>
       <ul className="space-y-4">
         {userRecipes.map((recipe) => (
-          <RecipeCard key={recipe._id} recipe={recipe} />
+          <RecipeCard
+            _id={recipe._id}
+            cookTime={recipe.cookTime}
+            difficulty={recipe.difficulty}
+            image={recipe.image}
+            key={recipe._id}
+            name={recipe.name}
+          />
         ))}
       </ul>
     </div>
