@@ -1,17 +1,16 @@
 import Image from 'next/image';
 import PropTypes from 'prop-types';
 
-import RecipeSection from '@/modules/recipes/components/RecipeSection';
-
 const RecipeHeader = ({ image, name }) => {
   return (
-    <RecipeSection>
-      <div className="relative -mx-4 -mt-4 overflow-hidden rounded-t-md aspect-w-16 aspect-h-9">
-        <Image alt="Picture of the dish" layout="fill" objectFit="cover" src={image} />
-        <div className="from-transparent via-transparent to-white bg-gradient-to-b" />
+    <div className="space-y-4">
+      <div className="relative overflow-hidden rounded-md shadow-md">
+        <div className="relative aspect-w-1 aspect-h-1">
+          <Image src={image} layout="fill" objectFit="cover" alt="Picture of the dish" />
+        </div>
       </div>
-      <h1 className="text-2xl font-bold text-center text-gray-600">{name}</h1>
-    </RecipeSection>
+      <h1 className="px-4 text-2xl font-bold text-center">{name}</h1>
+    </div>
   );
 };
 

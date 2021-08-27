@@ -6,7 +6,7 @@ const Ingredient = ({ ingredient }) => {
   return (
     <li className="flex items-center justify-between py-2 first:pt-0 last:pb-0">
       <span className="font-medium text-gray-600 first-letter:capitalize">{ingredient.name}</span>
-      <span className="text-gray-500">{`${ingredient.quantity} ${ingredient.unit}`}</span>
+      <span className="text-sm text-gray-500">{`${ingredient.quantity} ${ingredient.unit}`}</span>
     </li>
   );
 };
@@ -22,7 +22,7 @@ Ingredient.propTypes = {
 const RecipeIngredients = ({ ingredients }) => {
   return (
     <RecipeSection>
-      <ul className="divide-y-2 divide-gray-300 divide-dotted">
+      <ul className="divide-y-2 divide-dotted">
         {ingredients.map((ingredient) => (
           <Ingredient ingredient={ingredient} key={ingredient._id} />
         ))}
