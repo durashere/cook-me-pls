@@ -70,7 +70,7 @@ const DefaultHeader = () => {
                       'bg-gray-100': active,
                     }
                   )}
-                  onClick={() => push(`/users/${session.user._id}/recipes`)}
+                  onClick={() => push(`/profile/my-recipes`)}
                 >
                   <span className="material-icons-outlined">library_books</span>
                   <span className="font-medium">Moje przepisy</span>
