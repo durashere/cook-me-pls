@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import Loader from '@/components/Loader';
 import UserRecipes from '@/modules/users/components/UserRecipes';
 import useUser from '@/modules/users/hooks/useUser';
-import withProtect from '@/components/withProtect';
 
 const UserRecipesPage = () => {
   const {
@@ -26,4 +25,4 @@ const UserRecipesPage = () => {
   );
 };
 
-export default withProtect(UserRecipesPage);
+export default UserRecipesPage;
