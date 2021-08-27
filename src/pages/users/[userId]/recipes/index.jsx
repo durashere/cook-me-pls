@@ -1,26 +1,28 @@
 import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/client';
 
 import Loader from '@/components/Loader';
 import UserRecipes from '@/modules/users/components/UserRecipes';
+import useUser from '@/modules/users/hooks/useUser';
 import withProtect from '@/components/withProtect';
 
 const UserRecipesPage = () => {
-  const [session] = useSession();
   const {
-    push,
     query: { userId },
   } = useRouter();
 
-  if (session.user._id !== userId) {
-    push('/');
+  const { data: user, status: userStatus } = useUser(userId);
+
+  if (userStatus === 'loading') {
     return <Loader />;
   }
 
   return (
-    <>
+    <div className="space-y-4">
+      <h1 className="text-2xl text-center">
+        Przepisy użytkownika <span className="block font-bold">{user.name}</span>
+      </h1>
       <UserRecipes />
-    </>
+    </div>
   );
 };
 

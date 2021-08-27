@@ -33,7 +33,7 @@ const Recipe = () => {
 
       <RecipeSteps steps={recipe.steps} />
 
-      <RecipeAuthor image={recipe.author.image} name={recipe.author.name} />
+      <RecipeAuthor author={recipe.author} />
     </div>
   );
 };
