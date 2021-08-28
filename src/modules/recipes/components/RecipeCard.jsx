@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 
-const RecipeCard = ({ _id, cookTime, difficulty, image, name }) => {
+const RecipeCard = ({ _id, cookTime, difficulty, image, name, servings }) => {
   return (
     <Link href={`/recipes/${_id}`}>
       <div className="relative overflow-hidden rounded-md shadow-md cursor-pointer group">
@@ -13,8 +13,11 @@ const RecipeCard = ({ _id, cookTime, difficulty, image, name }) => {
         <div className="absolute w-full px-4 space-y-2 bottom-4">
           <h1 className="text-2xl font-bold text-center text-white/70 line-clamp-2">{name}</h1>
           <div className="flex flex-wrap justify-center gap-2">
-            <h2 className="px-2 text-sm border rounded-md shadow border-white/50 text-white/50 backdrop-blur">
+            <h2 className="px-2 text-sm border rounded-md shadow border-white/50 text-white/50">
               {cookTime}
+            </h2>
+            <h2 className="px-2 text-sm border rounded-md shadow border-white/50 text-white/50">
+              {servings} porcja
             </h2>
             <h2 className="px-2 text-sm border rounded-md shadow text-white/50 border-white/50">
               {difficulty}
@@ -34,6 +37,7 @@ RecipeCard.propTypes = {
   difficulty: PropTypes.string.isRequired,
   image: PropTypes.string,
   name: PropTypes.string.isRequired,
+  servings: PropTypes.number.isRequired,
 };
 
 export default RecipeCard;

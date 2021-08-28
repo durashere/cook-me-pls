@@ -31,6 +31,7 @@ const RecipeList = ({ searchQuery }) => {
           image={recipe.image}
           key={recipe._id}
           name={recipe.name}
+          servings={recipe.servings}
         />
       ))}
     </ul>
