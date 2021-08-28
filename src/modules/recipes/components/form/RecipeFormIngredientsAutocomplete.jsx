@@ -100,7 +100,7 @@ const RecipeFormIngredientsAutocomplete = ({ appendIngredient, usedIngredients }
                   {unusedIngredients?.map((ingredient) => (
                     <li key={ingredient._id}>
                       <Button fullWidth onClick={() => handleAppendIngredient(ingredient)}>
-                        <span className="capitalize">{ingredient.name}</span>
+                        <span className="first-letter:capitalize">{ingredient.name}</span>
                       </Button>
                     </li>
                   ))}
@@ -117,7 +117,7 @@ const RecipeFormIngredientsAutocomplete = ({ appendIngredient, usedIngredients }
                 </p>
                 <p className="p-4 text-center text-gray-500">
                   Możesz utworzyć składnik
-                  <span className="font-bold capitalize"> {searchQuery} </span>
+                  <span className="font-bold first-letter:capitalize"> {searchQuery} </span>
                   podając poniżej domyślną ilość oraz jednostkę tak aby podczas kolejnego dodawania
                   pola te ustawiły sie automatycznie. Bez obaw, po dodaniu składnika zawsze możesz
                   zmienić te wartości.

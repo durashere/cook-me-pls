@@ -29,7 +29,7 @@ const RecipeFormIngredients = ({ control, register }) => {
         <ul className="space-y-4">
           {editIngredients.map((ingredient, index) => (
             <li key={ingredient._id}>
-              <span className="capitalize">{ingredient.name}</span>
+              <span className="first-letter:capitalize">{ingredient.name}</span>
               <div className="flex gap-4 mt-1">
                 <Input
                   defaultValue={ingredient.quantity}
