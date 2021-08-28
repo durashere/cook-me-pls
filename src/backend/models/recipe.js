@@ -16,6 +16,7 @@ const recipeSchema = new mongoose.Schema(
       type: String,
     },
     cookTime: { type: String, enum: TIMES, required: true },
+    servings: { type: Number, required: true },
     difficulty: {
       type: String,
       enum: DIFFICULTIES,

@@ -17,7 +17,7 @@ Ingredient.propTypes = {
   unit: PropTypes.string.isRequired,
 };
 
-const RecipeIngredients = ({ ingredients }) => {
+const RecipeIngredients = ({ ingredients, servings }) => {
   return (
     <RecipeSection>
       <ul className="divide-y-2 divide-dotted">
@@ -25,7 +25,7 @@ const RecipeIngredients = ({ ingredients }) => {
           <Ingredient
             key={ingredient._id}
             name={ingredient.name}
-            quantity={ingredient.quantity}
+            quantity={ingredient.quantity * servings}
             unit={ingredient.unit}
           />
         ))}
@@ -36,6 +36,7 @@ const RecipeIngredients = ({ ingredients }) => {
 
 RecipeIngredients.propTypes = {
   ingredients: PropTypes.arrayOf(PropTypes.object).isRequired,
+  servings: PropTypes.number.isRequired,
 };
 
 export default RecipeIngredients;

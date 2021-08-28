@@ -1,7 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-const useServings = () => {
-  const [servings, setServings] = useState(1);
+const useServings = ({ defaultServings }) => {
+  const [servings, setServings] = useState();
+
+  useEffect(() => {
+    setServings(defaultServings);
+  }, [defaultServings]);
 
   const addServing = () => setServings(servings + 1);
 

@@ -11,17 +11,25 @@ const RecipeFormDetails = ({ register }) => {
       <Input fullWidth name="name" placeholder="Nazwa przepisu..." register={register} required />
       <Select
         fullWidth
-        name="difficulty"
-        options={DIFFICULTIES}
-        placeholder="Trudność przepisu..."
-        register={register}
-        required
-      />
-      <Select
-        fullWidth
         name="cookTime"
         options={TIMES}
         placeholder="Czas..."
+        register={register}
+        required
+      />
+      <Input
+        fullWidth
+        name="servings"
+        placeholder="Ilość porcji..."
+        register={register}
+        required
+        type="number"
+      />
+      <Select
+        fullWidth
+        name="difficulty"
+        options={DIFFICULTIES}
+        placeholder="Trudność przepisu..."
         register={register}
         required
       />
