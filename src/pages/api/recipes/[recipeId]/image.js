@@ -43,8 +43,7 @@ handler.patch(protect(), async (req, res) => {
       {
         folder: 'cook-me-pls',
         public_id: recipeId,
-        width: 640,
-        crop: 'scale',
+        width: 1500,
       },
       async (uploadError, result) => {
         if (uploadError) {
