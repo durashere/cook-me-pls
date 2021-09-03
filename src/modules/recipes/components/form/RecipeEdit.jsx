@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/client';
+import { useState } from 'react';
+import PropTypes from 'prop-types';
 
 import Button from '@/components/Button';
 import Loader from '@/components/Loader';
@@ -9,47 +9,48 @@ import RecipeFormDetails from '@/modules/recipes/components/form/RecipeFormDetai
 import RecipeFormImage from '@/modules/recipes/components/form/RecipeFormImage';
 import RecipeFormIngredients from '@/modules/recipes/components/form/RecipeFormIngredients';
 import RecipeFormSteps from '@/modules/recipes/components/form/RecipeFormSteps';
-import useRecipe from '@/modules/recipes/hooks/useRecipe';
+import useRecipeImageUpdate from '@/modules/recipes/hooks/useRecipeImageUpdate';
 import useRecipeUpdate from '@/modules/recipes/hooks/useRecipeUpdate';
 
-const RecipeEdit = () => {
-  const {
-    push,
-    query: { recipeId },
-  } = useRouter();
-  const [session, loading] = useSession();
+const RecipeEdit = ({ recipe }) => {
+  const [selectedImage, setSelectedImage] = useState({ image: null, url: recipe.image });
 
-  const { data: recipe, status: statusRecipe } = useRecipe(recipeId);
+  const { back } = useRouter();
 
-  const { mutate: updateRecipe } = useRecipeUpdate();
+  const { mutateAsync: updateRecipe } = useRecipeUpdate(recipe._id);
 
-  const { register, control, handleSubmit, reset } = useForm({ defaultValues: recipe });
+  const { mutateAsync: updateRecipeImage, status: statusRecipeImageUpdate } = useRecipeImageUpdate(
+    recipe._id
+  );
 
-  useEffect(() => {
-    reset(recipe);
-  }, [reset, recipe]);
+  const { register, control, handleSubmit } = useForm({
+    defaultValues: recipe,
+  });
 
   const handleCancel = () => {
-    push(`/users/${recipe.author._id}/recipes`);
+    back();
   };
 
-  const handleUpdateRecipe = (data) => {
-    updateRecipe({ _id: recipe._id, ...data });
-    push(`/users/${recipe.author._id}/recipes`);
+  const handleUpdateRecipe = async (data) => {
+    await updateRecipe(data);
+
+    if (selectedImage.image) {
+      const updatedImageFormData = new FormData();
+      updatedImageFormData.append('image', selectedImage.image);
+
+      await updateRecipeImage(updatedImageFormData);
+    }
+
+    back();
   };
 
-  if (statusRecipe === 'idle' || statusRecipe === 'loading') {
-    return <Loader />;
-  }
-
-  if (!loading && session?.user._id !== recipe.author?._id) {
-    push(`/recipes/${recipe._id}`);
+  if (statusRecipeImageUpdate === 'loading') {
     return <Loader />;
   }
 
   return (
     <form className="relative space-y-8" onSubmit={handleSubmit(handleUpdateRecipe)}>
-      <RecipeFormImage recipeId={recipe._id} />
+      <RecipeFormImage selectedImage={selectedImage} setSelectedImage={setSelectedImage} />
 
       <RecipeFormDetails register={register} />
 
@@ -65,6 +66,10 @@ const RecipeEdit = () => {
       </div>
     </form>
   );
+};
+
+RecipeEdit.propTypes = {
+  recipe: PropTypes.shape({ _id: PropTypes.string, image: PropTypes.string }).isRequired,
 };
 
 export default RecipeEdit;

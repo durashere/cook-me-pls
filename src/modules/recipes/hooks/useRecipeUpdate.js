@@ -1,15 +1,15 @@
 import { useMutation, useQueryClient } from 'react-query';
 import axios from 'axios';
 
-const updateRecipe = async (values) => {
-  const { data } = await axios.patch(`/api/recipes/${values._id}`, values);
+const updateRecipe = async (variables, recipeId) => {
+  const { data } = await axios.patch(`/api/recipes/${recipeId}`, variables);
   return data;
 };
 
-const useRecipeUpdate = () => {
+const useRecipeUpdate = (recipeId) => {
   const queryClient = useQueryClient();
 
-  return useMutation(updateRecipe, {
+  return useMutation((variables) => updateRecipe(variables, recipeId), {
     onSuccess: () => {
       queryClient.invalidateQueries('recipes');
     },

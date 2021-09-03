@@ -1,31 +1,58 @@
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 import Button from '@/components/Button';
+import Loader from '@/components/Loader';
 import RecipeFormDetails from '@/modules/recipes/components/form/RecipeFormDetails';
+import RecipeFormImage from '@/modules/recipes/components/form/RecipeFormImage';
 import RecipeFormIngredients from '@/modules/recipes/components/form/RecipeFormIngredients';
 import RecipeFormSteps from '@/modules/recipes/components/form/RecipeFormSteps';
 import useRecipeCreate from '@/modules/recipes/hooks/useRecipeCreate';
+import useRecipeImageUpdate from '@/modules/recipes/hooks/useRecipeImageUpdate';
 
 const RecipeCreate = () => {
+  const [selectedImage, setSelectedImage] = useState({
+    url: null,
+    image: null,
+  });
+  const [recipeId, setRecipeId] = useState(null);
+
   const { back, push } = useRouter();
 
-  const { mutateAsync: createRecipe } = useRecipeCreate();
+  const { mutateAsync: createRecipe, status: statusRecipeCreate } = useRecipeCreate();
+
+  const { mutateAsync: updateRecipeImage, status: statusRecipeImageUpdate } =
+    useRecipeImageUpdate(recipeId);
 
   const { control, handleSubmit, register } = useForm();
 
-  const handleCancel = (data) => {
-    createRecipe(data);
+  const handleCancel = () => {
     back();
   };
 
   const handleRecipeCreate = async (data) => {
     const createdRecipe = await createRecipe(data);
+
+    if (selectedImage.url) {
+      const updatedImageFormData = new FormData();
+      updatedImageFormData.append('image', selectedImage.image);
+
+      setRecipeId(createdRecipe._id);
+      await updateRecipeImage(updatedImageFormData);
+    }
+
     push(`/recipes/${createdRecipe._id}`);
   };
 
+  if (statusRecipeCreate === 'loading' || statusRecipeImageUpdate === 'loading') {
+    return <Loader />;
+  }
+
   return (
     <form className="relative space-y-8" onSubmit={handleSubmit(handleRecipeCreate)}>
+      <RecipeFormImage selectedImage={selectedImage} setSelectedImage={setSelectedImage} />
+
       <RecipeFormDetails register={register} />
 
       <RecipeFormIngredients control={control} register={register} />
