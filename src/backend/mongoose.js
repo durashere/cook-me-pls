@@ -7,10 +7,8 @@ const dbConnect = (handler) => async (req, res) => {
   }
   await mongoose.connect(process.env.MONGODB_URL, {
     useNewUrlParser: true,
-    useCreateIndex: true,
     autoIndex: true,
     keepAlive: true,
-    useFindAndModify: false,
     useUnifiedTopology: true,
   });
   return handler(req, res);
