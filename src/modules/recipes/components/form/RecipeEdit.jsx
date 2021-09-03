@@ -17,11 +17,10 @@ const RecipeEdit = ({ recipe }) => {
 
   const { back } = useRouter();
 
-  const { mutateAsync: updateRecipe } = useRecipeUpdate(recipe._id);
+  const { mutateAsync: updateRecipe } = useRecipeUpdate();
 
-  const { mutateAsync: updateRecipeImage, status: statusRecipeImageUpdate } = useRecipeImageUpdate(
-    recipe._id
-  );
+  const { mutateAsync: updateRecipeImage, status: statusRecipeImageUpdate } =
+    useRecipeImageUpdate();
 
   const { register, control, handleSubmit } = useForm({
     defaultValues: recipe,
@@ -36,6 +35,7 @@ const RecipeEdit = ({ recipe }) => {
 
     if (selectedImage.image) {
       const updatedImageFormData = new FormData();
+      updatedImageFormData.append('_id', recipe._id);
       updatedImageFormData.append('image', selectedImage.image);
 
       await updateRecipeImage(updatedImageFormData);

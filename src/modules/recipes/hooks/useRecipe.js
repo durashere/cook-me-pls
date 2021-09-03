@@ -1,16 +1,13 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
 
-const getRecipe = async ({ queryKey }) => {
-  const [, recipeId] = queryKey;
-  const { data } = await axios.get(`/api/recipes/${recipeId}`);
-  return data;
+const getRecipe = async (recipeId) => {
+  const res = await axios.get(`/api/recipes/${recipeId}`);
+  return res.data;
 };
 
 const useRecipe = (recipeId) => {
-  return useQuery(['recipes', recipeId], getRecipe, {
-    enabled: !!recipeId,
-  });
+  return useQuery(['recipes', recipeId], () => getRecipe(recipeId), { enabled: !!recipeId });
 };
 
 export default useRecipe;

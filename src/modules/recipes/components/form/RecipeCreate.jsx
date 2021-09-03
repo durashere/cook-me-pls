@@ -16,14 +16,13 @@ const RecipeCreate = () => {
     url: null,
     image: null,
   });
-  const [recipeId, setRecipeId] = useState(null);
 
   const { back, push } = useRouter();
 
   const { mutateAsync: createRecipe, status: statusRecipeCreate } = useRecipeCreate();
 
   const { mutateAsync: updateRecipeImage, status: statusRecipeImageUpdate } =
-    useRecipeImageUpdate(recipeId);
+    useRecipeImageUpdate();
 
   const { control, handleSubmit, register } = useForm();
 
@@ -36,9 +35,9 @@ const RecipeCreate = () => {
 
     if (selectedImage.url) {
       const updatedImageFormData = new FormData();
+      updatedImageFormData.append('_id', createdRecipe._id);
       updatedImageFormData.append('image', selectedImage.image);
 
-      setRecipeId(createdRecipe._id);
       await updateRecipeImage(updatedImageFormData);
     }
 

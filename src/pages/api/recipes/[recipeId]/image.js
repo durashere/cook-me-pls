@@ -10,22 +10,11 @@ const handler = nextConnect();
 
 handler.patch(protect(), async (req, res) => {
   try {
-    const {
-      user,
-      query: { recipeId },
-    } = req;
-
-    const currentRecipe = await Recipe.findById(recipeId).populate('author');
-
-    if (user._id.toString() !== currentRecipe.author._id.toString()) {
-      return res
-        .status(403)
-        .send('Your account is not authorized to access the requested resource.');
-    }
+    const { user } = req;
 
     const form = formidable({ keepExtensions: true, maxFileSize: 5 * 1024 * 1024 });
 
-    const formFiles = await new Promise((resolve, reject) => {
+    const parsedForm = await new Promise((resolve, reject) => {
       form.parse(req, (parseError, fields, files) => {
         if (parseError) {
           reject(parseError);
@@ -34,12 +23,25 @@ handler.patch(protect(), async (req, res) => {
             .json({ message: 'There was an error uploading image', error: parseError });
         }
 
-        return resolve(files);
+        return resolve({ fields, files });
       });
     });
 
+    const {
+      files,
+      fields: { _id: recipeId },
+    } = parsedForm;
+
+    const currentRecipe = await Recipe.findById(recipeId);
+
+    if (user._id.toString() !== currentRecipe.author.toString()) {
+      return res
+        .status(403)
+        .send('Your account is not authorized to access the requested resource.');
+    }
+
     const uploadResult = await cloudinary.v2.uploader.upload(
-      formFiles.image.path,
+      files.image.path,
       {
         folder: 'cook-me-pls',
         public_id: recipeId,

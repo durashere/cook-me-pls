@@ -1,28 +1,16 @@
-import { useRouter } from 'next/router';
+import PropTypes from 'prop-types';
 
-import Loader from '@/components/Loader';
 import RecipeAuthor from '@/modules/recipes/components/recipe/RecipeAuthor';
 import RecipeHeader from '@/modules/recipes/components/recipe/RecipeHeader';
 import RecipeInfo from '@/modules/recipes/components/recipe/RecipeInfo';
 import RecipeIngredients from '@/modules/recipes/components/recipe/RecipeIngredients';
 import RecipeSteps from '@/modules/recipes/components/recipe/RecipeSteps';
-import useRecipe from '@/modules/recipes/hooks/useRecipe';
 import useServings from '@/modules/recipes/hooks/useServings';
 
-const Recipe = () => {
-  const {
-    query: { recipeId },
-  } = useRouter();
-
-  const { data: recipe, status: statusRecipe } = useRecipe(recipeId);
-
+const Recipe = ({ recipe }) => {
   const { servings, addServing, removeServing } = useServings({
-    defaultServings: recipe?.servings,
+    defaultServings: recipe.servings,
   });
-
-  if (statusRecipe === 'idle' || statusRecipe === 'loading') {
-    return <Loader />;
-  }
 
   return (
     <div className="space-y-4">
@@ -59,6 +47,33 @@ const Recipe = () => {
       <RecipeAuthor _id={recipe.author._id} image={recipe.author.image} name={recipe.author.name} />
     </div>
   );
+};
+
+Recipe.propTypes = {
+  recipe: PropTypes.shape({
+    _id: PropTypes.string,
+    author: PropTypes.shape({
+      _id: PropTypes.string,
+      image: PropTypes.string,
+      name: PropTypes.string,
+    }),
+    cookTime: PropTypes.string,
+    difficulty: PropTypes.string,
+    image: PropTypes.string,
+    ingredients: PropTypes.arrayOf(
+      PropTypes.shape({
+        _id: PropTypes.string,
+        name: PropTypes.string,
+        quantity: PropTypes.number,
+        unit: PropTypes.string,
+      })
+    ),
+    name: PropTypes.string,
+    servings: PropTypes.number,
+    steps: PropTypes.arrayOf(
+      PropTypes.shape({ _id: PropTypes.string, instruction: PropTypes.string })
+    ),
+  }).isRequired,
 };
 
 export default Recipe;

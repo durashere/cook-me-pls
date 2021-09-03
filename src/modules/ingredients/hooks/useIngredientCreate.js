@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from 'react-query';
 import axios from 'axios';
 
-const createIngredient = async (newIngredient) => {
-  const { data } = await axios.post(`/api/ingredients`, newIngredient);
-  return data;
+const createIngredient = async (values) => {
+  const res = await axios.post(`/api/ingredients`, values);
+  return res.data;
 };
 
 const useIngredientCreate = () => {

@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from 'react-query';
 import axios from 'axios';
 
-const createRecipe = async (newRecipe) => {
-  const { data } = await axios.post(`/api/recipes`, newRecipe);
-  return data;
+const createRecipe = async (values) => {
+  const res = await axios.post(`/api/recipes`, values);
+  return res.data;
 };
 
 const useRecipeCreate = () => {
@@ -12,6 +12,7 @@ const useRecipeCreate = () => {
   return useMutation(createRecipe, {
     onSuccess: () => {
       queryClient.invalidateQueries('recipes');
+      queryClient.invalidateQueries('userRecipes');
     },
   });
 };

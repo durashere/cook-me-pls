@@ -1,18 +1,18 @@
 import { useMutation, useQueryClient } from 'react-query';
 import axios from 'axios';
 
-const updateRecipeImage = async (variables, recipeId) => {
-  const { data } = await axios.patch(`/api/recipes/${recipeId}/image`, variables);
-  return data;
+const updateRecipeImage = async (values) => {
+  const res = await axios.patch(`/api/recipes/${values._id}/image`, values);
+  return res.data;
 };
 
-const useRecipeImageUpdate = (recipeId) => {
+const useRecipeImageUpdate = () => {
   const queryClient = useQueryClient();
 
-  return useMutation((variables) => updateRecipeImage(variables, recipeId), {
+  return useMutation(updateRecipeImage, {
     onSuccess: () => {
       queryClient.invalidateQueries('recipes');
-      queryClient.invalidateQueries(['recipes', recipeId]);
+      queryClient.invalidateQueries('userRecipes');
     },
   });
 };

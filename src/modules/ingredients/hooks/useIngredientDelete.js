@@ -2,8 +2,8 @@ import { useMutation, useQueryClient } from 'react-query';
 import axios from 'axios';
 
 const deleteIngredient = async (ingredientId) => {
-  const { data } = await axios.delete(`/api/ingredients/${ingredientId}`);
-  return data;
+  const res = await axios.delete(`/api/ingredients/${ingredientId}`);
+  return res.data;
 };
 
 const useIngredientDelete = () => {
