@@ -5,30 +5,34 @@ module.exports = {
       version: 'detect',
     },
   },
-  extends: ['airbnb', 'airbnb/hooks', 'plugin:prettier/recommended'],
   env: {
     browser: true,
     node: true,
     jest: true,
   },
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 2021,
+    project: './tsconfig.json',
     sourceType: 'module',
-    ecmaFeatures: {
-      jsx: true,
-    },
   },
+  extends: [
+    'next',
+    'airbnb',
+    'airbnb-typescript',
+    'airbnb/hooks',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'prettier',
+  ],
   rules: {
-    'react/react-in-jsx-scope': 'off',
-    'import/no-unresolved': ['error', { ignore: ['^@'] }],
+    '@typescript-eslint/explicit-function-return-type': 'error',
+    '@typescript-eslint/no-explicit-any': 'error',
+    'import/prefer-default-export': 'off',
     'no-underscore-dangle': 'off',
-    'jsx-a11y/anchor-is-valid': [
-      'error',
-      {
-        components: ['Link'],
-        specialLink: ['hrefLeft', 'hrefRight'],
-        aspects: ['invalidHref', 'preferButton'],
-      },
-    ],
+    'react/prop-types': 'off',
+    'react/react-in-jsx-scope': 'off',
+    'react/require-default-props': 'off',
+    'react/jsx-props-no-spreading': 'off',
   },
 };

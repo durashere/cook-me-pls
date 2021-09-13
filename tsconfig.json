@@ -1,0 +1,39 @@
+{
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/backend/middleware/protect.ts",
+    "src/backend/models/index.ts",
+    "src/pages/404.js",
+    "src/pages/_app.sx"
+  ],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/app/*": ["src/app/*"],
+      "@/backend/*": ["src/backend/*"],
+      "@/components/*": ["src/common/components/*"],
+      "@/hooks/*": ["src/common/hooks/*"],
+      "@/layouts/*": ["src/layouts/*"],
+      "@/modules/*": ["src/modules/*"],
+      "@/pages/*": ["src/pages/*"],
+      "@/utils/*": ["src/common/utils/*"]
+    },
+    "typeRoots": ["types"],
+    "target": "esnext",
+    "module": "esnext",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve"
+  }
+}

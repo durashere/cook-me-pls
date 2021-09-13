@@ -2,7 +2,7 @@ import { useFieldArray } from 'react-hook-form';
 import PropTypes from 'prop-types';
 
 import Button from '@/components/Button';
-import Input from '@/components/Input';
+import TextArea from '@/components/TextArea';
 import RecipeSection from '@/modules/recipes/components/RecipeSection';
 
 const RecipeFormSteps = ({ control, register }) => {
@@ -26,15 +26,13 @@ const RecipeFormSteps = ({ control, register }) => {
         <ul className="space-y-4">
           {editSteps.map((step, index) => (
             <li className="flex items-end gap-4" key={step._id}>
-              <Input
+              <TextArea
                 defaultValue={step.instruction}
                 fullWidth
                 label={`Krok ${index + 1}`}
-                multiline
-                name={`steps.${index}.instruction`}
                 placeholder="Opis kroku..."
-                register={register}
                 required
+                {...register(`steps.${index}.instruction`)}
               />
               <Button icon="delete" onClick={() => handleRemoveStep(index)} />
             </li>

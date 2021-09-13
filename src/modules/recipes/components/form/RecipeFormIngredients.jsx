@@ -34,18 +34,16 @@ const RecipeFormIngredients = ({ control, register }) => {
                 <Input
                   defaultValue={ingredient.quantity}
                   fullWidth
-                  name={`ingredients.${index}.quantity`}
                   placeholder="Ilość..."
-                  register={register}
                   type="number"
+                  {...register(`ingredients.${index}.quantity`)}
                 />
                 <Select
                   defaultValue={ingredient.unit}
-                  name={`ingredients.${index}.unit`}
                   options={UNITS}
                   placeholder="Jednostka..."
-                  register={register}
                   required
+                  {...register(`ingredients.${index}.unit`)}
                 />
                 <Button icon="delete" onClick={() => handleRemoveIngredient(index)} />
               </div>
