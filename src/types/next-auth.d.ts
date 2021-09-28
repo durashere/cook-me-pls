@@ -1,3 +1,4 @@
+import { IUser } from '@/backend/models/user';
 import NextAuth from 'next-auth';
 
 declare module 'next-auth' {
@@ -5,12 +6,6 @@ declare module 'next-auth' {
    * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
    */
   interface Session {
-    user: {
-      _id: string;
-      email: string;
-      image: string;
-      name: string;
-      role: string;
-    };
+    user: IUser;
   }
 }
