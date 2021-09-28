@@ -1,4 +1,4 @@
-import mongoose, { Model } from 'mongoose';
+import mongoose, { Model, ObjectId, PopulatedDoc } from 'mongoose';
 
 import { IIngredient } from '@/backend/models/ingredient';
 import { IUser } from '@/backend/models/user';
@@ -11,7 +11,7 @@ export interface IStep extends mongoose.Document {
 
 export interface IRecipe extends mongoose.Document {
   _id: string;
-  author: IUser;
+  author: PopulatedDoc<IUser & mongoose.Document>;
   cookTime: string;
   difficulty: string;
   image: string;

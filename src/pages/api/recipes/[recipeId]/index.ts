@@ -40,7 +40,7 @@ handler.patch<NextApiRequestExtended, NextApiResponse>(
         query: { recipeId },
       } = req;
 
-      if (user._id.toString() !== body.author._id.toString()) {
+      if (user._id.toString() !== body?.author?._id.toString()) {
         return res
           .status(403)
           .send(
@@ -70,12 +70,9 @@ handler.delete<NextApiRequestExtended, NextApiResponse>(
         query: { recipeId },
       } = req;
 
-      const currentRecipe = await Recipe.findById(recipeId).populate('author');
+      const currentRecipe = await Recipe.findById(recipeId);
 
-      if (
-        currentRecipe &&
-        user._id.toString() !== currentRecipe.author._id.toString()
-      ) {
+      if (user._id.toString() !== currentRecipe?.author?.toString()) {
         return res
           .status(403)
           .send(

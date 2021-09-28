@@ -1,7 +1,7 @@
-import mongoose, { Model } from 'mongoose';
+import mongoose, { Model, ObjectId } from 'mongoose';
 
 export interface IUser extends mongoose.Document {
-  _id: string;
+  _id: string | ObjectId;
   email?: string;
   image?: string;
   name?: string;

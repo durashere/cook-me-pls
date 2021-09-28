@@ -81,7 +81,7 @@ const RecipeEditPage = (): JSX.Element => {
     return <Loader />;
   }
 
-  if (!loading && session?.user._id !== recipe?.author._id) {
+  if (!loading && session?.user._id !== recipe?.author?._id) {
     return (
       <ErrorPage statusCode={403} title="Nie możesz edytować tego przepisu" />
     );

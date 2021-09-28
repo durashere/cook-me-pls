@@ -12,6 +12,11 @@ interface NextApiRequestExtended extends NextApiRequest {
   user: IUser;
 }
 
+interface IReceivedForm {
+  files: { image: { path: string } };
+  fields: { _id: string };
+}
+
 const handler = nextConnect();
 
 handler.patch<NextApiRequestExtended, NextApiResponse>(
@@ -42,11 +47,11 @@ handler.patch<NextApiRequestExtended, NextApiResponse>(
       const {
         files,
         fields: { _id: recipeId },
-      } = parsedForm;
+      } = parsedForm as IReceivedForm;
 
       const currentRecipe = await Recipe.findById(recipeId);
 
-      if (user._id.toString() !== currentRecipe.author.toString()) {
+      if (user._id.toString() !== currentRecipe?.author?.toString()) {
         return res
           .status(403)
           .send(
