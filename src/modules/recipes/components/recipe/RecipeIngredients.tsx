@@ -1,7 +1,7 @@
 import RecipeSection from '@/modules/recipes/components/RecipeSection';
 import { IIngredient } from '@/backend/models/ingredient';
 
-type IRecipeIngredient = Omit<IIngredient, '_id'>;
+type IRecipeIngredient = Pick<IIngredient, 'name' | 'quantity' | 'unit'>;
 
 const RecipeIngredient = ({
   name,

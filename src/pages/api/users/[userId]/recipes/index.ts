@@ -4,9 +4,9 @@ import nextConnect from 'next-connect';
 import dbConnect from '@/backend/mongoose';
 import Recipe from '@/backend/models/recipe';
 
-const handler = nextConnect<NextApiRequest, NextApiResponse>();
+const handler = nextConnect();
 
-handler.get(async (req, res) => {
+handler.get<NextApiRequest, NextApiResponse>(async (req, res) => {
   try {
     const {
       query: { userId, searchQuery },
@@ -15,10 +15,8 @@ handler.get(async (req, res) => {
     const regex = new RegExp(searchQuery as string, 'i');
 
     const recipes = await Recipe.find({
-      $and: [
-        { $or: [{ name: regex }, { difficulty: regex }, { cookTime: regex }] },
-        { author: userId },
-      ],
+      author: userId as string,
+      $or: [{ name: regex }, { difficulty: regex }, { cookTime: regex }],
     })
       .sort({ name: 1 })
       .populate('author');

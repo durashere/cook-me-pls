@@ -1,13 +1,19 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import nextConnect from 'next-connect';
 
+import { IUser } from '@/backend/models/user';
 import dbConnect from '@/backend/mongoose';
 import protect from '@/backend/middleware/protect';
-import Recipe from '@/backend/models/recipe';
+import Recipe, { IRecipe } from '@/backend/models/recipe';
 
-const handler = nextConnect<NextApiRequest, NextApiResponse>();
+interface NextApiRequestExtended extends NextApiRequest {
+  body: IRecipe;
+  user: IUser;
+}
 
-handler.get<NextApiRequest, NextApiResponse>(async (req, res) => {
+const handler = nextConnect();
+
+handler.get<NextApiRequestExtended, NextApiResponse>(async (req, res) => {
   try {
     const { query } = req;
 
@@ -27,18 +33,21 @@ handler.get<NextApiRequest, NextApiResponse>(async (req, res) => {
   }
 });
 
-handler.post<NextApiRequest, NextApiResponse>(protect(), async (req, res) => {
-  try {
-    const { body } = req;
+handler.post<NextApiRequestExtended, NextApiResponse>(
+  protect(),
+  async (req, res) => {
+    try {
+      const { body, user } = req;
 
-    const newRecipe = await Recipe.create({ ...body, author: req.user._id });
+      const newRecipe = await Recipe.create({ ...body, author: user._id });
 
-    return res.status(201).json(newRecipe);
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ message: 'Unexpected internal server error.' });
+      return res.status(201).json(newRecipe);
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ message: 'Unexpected internal server error.' });
+    }
   }
-});
+);
 
 export default dbConnect(handler);

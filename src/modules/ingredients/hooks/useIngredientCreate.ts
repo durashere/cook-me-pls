@@ -3,15 +3,19 @@ import axios, { AxiosError } from 'axios';
 
 import { IIngredient } from '@/backend/models/ingredient';
 
-const createIngredient = async (values: IIngredient): Promise<IIngredient> => {
+export type INewIngredient = Pick<IIngredient, 'name' | 'quantity' | 'unit'>;
+
+const createIngredient = async (
+  values: INewIngredient
+): Promise<IIngredient> => {
   const res = await axios.post<IIngredient>(`/api/ingredients`, values);
   return res.data;
 };
 
 const useIngredientCreate = (): UseMutationResult<
-  IIngredient,
+  INewIngredient,
   AxiosError,
-  IIngredient,
+  INewIngredient,
   unknown
 > => {
   const queryClient = useQueryClient();

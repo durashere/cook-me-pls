@@ -39,7 +39,7 @@ const Select = forwardRef<HTMLSelectElement, ISelect>(
           'mt-1': label,
           'w-full': fullWidth,
         })}
-        defaultValue={onChange ? undefined : defaultValue || ''}
+        defaultValue={defaultValue}
         name={name}
         onChange={onChange}
         required={required}

@@ -11,7 +11,7 @@ const RecipeAuthor = ({ _id, image, name }: IRecipeAuthor): JSX.Element => (
       <div className="flex items-center cursor-pointer">
         <div className="relative w-6 h-6 overflow-hidden rounded-md">
           <Image
-            src={image}
+            src={image as string}
             layout="fill"
             objectFit="cover"
             alt="User avatar"

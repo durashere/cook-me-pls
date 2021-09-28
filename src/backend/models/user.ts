@@ -20,6 +20,7 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const User: Model<IUser> =
   mongoose.models.User || mongoose.model('User', userSchema);
 

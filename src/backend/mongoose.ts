@@ -8,12 +8,8 @@ const dbConnect =
     if (mongoose.connection.readyState >= 1) {
       return handler(req, res);
     }
-    await mongoose.connect(process.env.MONGODB_URL, {
-      useNewUrlParser: true,
-      autoIndex: true,
-      keepAlive: true,
-      useUnifiedTopology: true,
-    });
+
+    await mongoose.connect(process.env.MONGODB_URL as string);
     return handler(req, res);
   };
 

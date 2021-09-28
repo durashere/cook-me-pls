@@ -11,12 +11,17 @@ import useIngredients from '@/modules/ingredients/hooks/useIngredients';
 import useIngredientUpdate from '@/modules/ingredients/hooks/useIngredientUpdate';
 import { IIngredient } from '@/backend/models/ingredient';
 
+type IIngredientListItem = Pick<
+  IIngredient,
+  '_id' | 'name' | 'quantity' | 'unit'
+>;
+
 const IngredientListItem = ({
   _id,
   name,
   quantity,
   unit,
-}: IIngredient): JSX.Element => {
+}: IIngredientListItem): JSX.Element => {
   const [editMode, setEditMode] = useState(false);
 
   const { mutate: updateIngredient } = useIngredientUpdate();
@@ -58,7 +63,7 @@ const IngredientListItem = ({
         </form>
       ) : (
         <div className="flex items-center w-full gap-2">
-          <div className="w-full h-full p-2 capitalize bg-white rounded-md shadow">
+          <div className="w-full h-full p-2 bg-white rounded-md shadow">
             {name}
           </div>
           <Button icon="edit" onClick={handleToggleEditMode} />

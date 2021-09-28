@@ -1,9 +1,10 @@
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/client';
-import { useEffect, useState } from 'react';
 import ErrorPage from 'next/error';
 
+import { IRecipe } from '@/backend/models/recipe';
 import Button from '@/components/Button';
 import Loader from '@/components/Loader';
 import RecipeFormDetails from '@/modules/recipes/components/form/RecipeFormDetails';
@@ -13,8 +14,11 @@ import RecipeFormSteps from '@/modules/recipes/components/form/RecipeFormSteps';
 import useRecipe from '@/modules/recipes/hooks/useRecipe';
 import useRecipeImageUpdate from '@/modules/recipes/hooks/useRecipeImageUpdate';
 import useRecipeUpdate from '@/modules/recipes/hooks/useRecipeUpdate';
-import withProtect from '@/components/withProtect';
-import { IRecipe } from '@/backend/models/recipe';
+
+interface ISelectedImage {
+  image: File | null;
+  url: string | null;
+}
 
 const RecipeEditPage = (): JSX.Element => {
   const {
@@ -31,14 +35,15 @@ const RecipeEditPage = (): JSX.Element => {
   const { mutateAsync: updateRecipeImage, status: statusRecipeImageUpdate } =
     useRecipeImageUpdate();
 
-  const [selectedImage, setSelectedImage] = useState({
+  const [selectedImage, setSelectedImage] = useState<ISelectedImage>({
     image: null,
-    url: recipe?.image,
+    url: recipe?.image as string,
   });
 
-  const { register, control, handleSubmit, reset } = useForm({
+  const methods = useForm({
     defaultValues: recipe,
   });
+  const { handleSubmit, reset } = methods;
 
   useEffect(() => {
     if (recipe) {
@@ -60,7 +65,7 @@ const RecipeEditPage = (): JSX.Element => {
     if (selectedImage.image) {
       const updatedImageFormData = new FormData();
       updatedImageFormData.append('_id', recipe?._id as string);
-      updatedImageFormData.append('image', selectedImage.image as File);
+      updatedImageFormData.append('image', selectedImage.image);
 
       await updateRecipeImage(updatedImageFormData);
     }
@@ -83,29 +88,33 @@ const RecipeEditPage = (): JSX.Element => {
   }
 
   return (
-    <form
-      className="relative space-y-8"
-      onSubmit={handleSubmit(handleUpdateRecipe)}
-    >
-      <RecipeFormImage
-        selectedImage={selectedImage}
-        setSelectedImage={setSelectedImage}
-      />
+    <FormProvider {...methods}>
+      <form
+        className="relative space-y-8"
+        onSubmit={handleSubmit(handleUpdateRecipe)}
+      >
+        <RecipeFormImage
+          selectedImage={selectedImage}
+          setSelectedImage={setSelectedImage}
+        />
 
-      <RecipeFormDetails register={register} />
+        <RecipeFormDetails />
 
-      <RecipeFormIngredients control={control} register={register} />
+        <RecipeFormIngredients />
 
-      <RecipeFormSteps control={control} register={register} />
+        <RecipeFormSteps />
 
-      <div className="flex justify-between">
-        <Button onClick={handleCancel}>Anuluj</Button>
-        <Button htmlType="submit" type="primary">
-          Zapisz
-        </Button>
-      </div>
-    </form>
+        <div className="flex justify-between">
+          <Button onClick={handleCancel}>Anuluj</Button>
+          <Button htmlType="submit" type="primary">
+            Zapisz
+          </Button>
+        </div>
+      </form>
+    </FormProvider>
   );
 };
 
-export default withProtect(RecipeEditPage);
+RecipeEditPage.protect = true;
+
+export default RecipeEditPage;

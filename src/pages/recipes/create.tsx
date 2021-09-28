@@ -1,4 +1,4 @@
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
@@ -11,12 +11,16 @@ import RecipeFormIngredients from '@/modules/recipes/components/form/RecipeFormI
 import RecipeFormSteps from '@/modules/recipes/components/form/RecipeFormSteps';
 import useRecipeCreate from '@/modules/recipes/hooks/useRecipeCreate';
 import useRecipeImageUpdate from '@/modules/recipes/hooks/useRecipeImageUpdate';
-import withProtect from '@/components/withProtect';
+
+interface ISelectedImage {
+  image: File | null;
+  url: string | null;
+}
 
 const RecipeCreatePage = (): JSX.Element => {
-  const [selectedImage, setSelectedImage] = useState({
-    url: null,
+  const [selectedImage, setSelectedImage] = useState<ISelectedImage>({
     image: null,
+    url: null,
   });
 
   const { back, push } = useRouter();
@@ -27,7 +31,8 @@ const RecipeCreatePage = (): JSX.Element => {
   const { mutateAsync: updateRecipeImage, status: statusRecipeImageUpdate } =
     useRecipeImageUpdate();
 
-  const { control, handleSubmit, register } = useForm();
+  const methods = useForm();
+  const { handleSubmit } = methods;
 
   const handleCancel = (): void => {
     back();
@@ -55,29 +60,33 @@ const RecipeCreatePage = (): JSX.Element => {
   }
 
   return (
-    <form
-      className="relative space-y-8"
-      onSubmit={handleSubmit(handleRecipeCreate)}
-    >
-      <RecipeFormImage
-        selectedImage={selectedImage}
-        setSelectedImage={setSelectedImage}
-      />
+    <FormProvider {...methods}>
+      <form
+        className="relative space-y-8"
+        onSubmit={handleSubmit(handleRecipeCreate)}
+      >
+        <RecipeFormImage
+          selectedImage={selectedImage}
+          setSelectedImage={setSelectedImage}
+        />
 
-      <RecipeFormDetails register={register} />
+        <RecipeFormDetails />
 
-      <RecipeFormIngredients control={control} register={register} />
+        <RecipeFormIngredients />
 
-      <RecipeFormSteps control={control} register={register} />
+        <RecipeFormSteps />
 
-      <div className="flex justify-between">
-        <Button onClick={handleCancel}>Anuluj</Button>
-        <Button htmlType="submit" type="primary">
-          Utwórz
-        </Button>
-      </div>
-    </form>
+        <div className="flex justify-between">
+          <Button onClick={handleCancel}>Anuluj</Button>
+          <Button htmlType="submit" type="primary">
+            Utwórz
+          </Button>
+        </div>
+      </form>
+    </FormProvider>
   );
 };
 
-export default withProtect(RecipeCreatePage);
+RecipeCreatePage.protect = true;
+
+export default RecipeCreatePage;

@@ -1,21 +1,34 @@
 import { getSession } from 'next-auth/client';
+import { NextApiRequest, NextApiResponse } from 'next';
+import { NextHandler } from 'next-connect';
 
-import User from '@/backend/models/user';
+import User, { IUser } from '@/backend/models/user';
 
-const protect = () => {
-  return async (req, res, next) => {
+interface NextApiRequestExtended extends NextApiRequest {
+  user: IUser;
+}
+
+const protect =
+  () =>
+  async (
+    req: NextApiRequestExtended,
+    res: NextApiResponse,
+    next: NextHandler
+  ): Promise<void> => {
     try {
       const session = await getSession({ req });
 
-      const currentUser = await User.findById(session.user._id);
+      if (session) {
+        const currentUser = await User.findById(session.user._id);
 
-      if (!currentUser) {
-        return res.status(401).json({
-          message: 'The user no longer exist.',
-        });
+        if (!currentUser) {
+          return res.status(401).json({
+            message: 'The user no longer exist.',
+          });
+        }
+
+        req.user = currentUser;
       }
-
-      req.user = currentUser;
 
       return next();
     } catch (error) {
@@ -25,6 +38,5 @@ const protect = () => {
       });
     }
   };
-};
 
 export default protect;

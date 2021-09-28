@@ -30,18 +30,15 @@ const IngredientSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-IngredientSchema.pre('save', async function () {
-  // function capitalize(text) {
-  //   return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
-  // }
-
-  function lowercase(text) {
+IngredientSchema.pre('save', function (this: IIngredient) {
+  function lowercase(text: string): string {
     return text.toLowerCase();
   }
 
-  this.name = await lowercase(this.name);
+  this.name = lowercase(this.name);
 });
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const Ingredient: Model<IIngredient> =
   mongoose.models.Ingredient || mongoose.model('Ingredient', IngredientSchema);
 

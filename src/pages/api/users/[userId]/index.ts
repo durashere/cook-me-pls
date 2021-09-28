@@ -4,9 +4,9 @@ import nextConnect from 'next-connect';
 import dbConnect from '@/backend/mongoose';
 import User from '@/backend/models/user';
 
-const handler = nextConnect<NextApiRequest, NextApiResponse>();
+const handler = nextConnect();
 
-handler.get(async (req, res) => {
+handler.get<NextApiRequest, NextApiResponse>(async (req, res) => {
   try {
     const {
       query: { userId },

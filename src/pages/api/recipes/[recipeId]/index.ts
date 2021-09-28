@@ -2,11 +2,17 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import cloudinary from 'cloudinary';
 import nextConnect from 'next-connect';
 
+import { IUser } from '@/backend/models/user';
 import dbConnect from '@/backend/mongoose';
 import protect from '@/backend/middleware/protect';
 import Recipe, { IRecipe } from '@/backend/models/recipe';
 
-const handler = nextConnect<NextApiRequest, NextApiResponse>();
+interface NextApiRequestExtended extends NextApiRequest {
+  body: IRecipe;
+  user: IUser;
+}
+
+const handler = nextConnect();
 
 handler.get<NextApiRequest, NextApiResponse>(async (req, res) => {
   try {
@@ -24,65 +30,75 @@ handler.get<NextApiRequest, NextApiResponse>(async (req, res) => {
   }
 });
 
-handler.patch<NextApiRequest, NextApiResponse>(protect(), async (req, res) => {
-  try {
-    const {
-      body,
-      user,
-      query: { recipeId },
-    } = req;
+handler.patch<NextApiRequestExtended, NextApiResponse>(
+  protect(),
+  async (req, res) => {
+    try {
+      const {
+        body,
+        user,
+        query: { recipeId },
+      } = req;
 
-    if (user._id.toString() !== body.author._id.toString()) {
+      if (user._id.toString() !== body.author._id.toString()) {
+        return res
+          .status(403)
+          .send(
+            'Your account is not authorized to access the requested resource.'
+          );
+      }
+
+      const updatedRecipe = await Recipe.findByIdAndUpdate(recipeId, body, {
+        new: true,
+      });
+
+      return res.status(200).json(updatedRecipe);
+    } catch (error) {
       return res
-        .status(403)
-        .send(
-          'Your account is not authorized to access the requested resource.'
-        );
+        .status(500)
+        .json({ message: 'Unexpected internal server error.' });
     }
-
-    const updatedRecipe = await Recipe.findByIdAndUpdate(recipeId, body, {
-      new: true,
-    });
-
-    return res.status(200).json(updatedRecipe);
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ message: 'Unexpected internal server error.' });
   }
-});
+);
 
-handler.delete<NextApiRequest, NextApiResponse>(protect(), async (req, res) => {
-  try {
-    const {
-      user,
-      query: { recipeId },
-    } = req;
+handler.delete<NextApiRequestExtended, NextApiResponse>(
+  protect(),
+  async (req, res) => {
+    try {
+      const {
+        user,
+        query: { recipeId },
+      } = req;
 
-    const currentRecipe: IRecipe = await Recipe.findById(recipeId).populate(
-      'author'
-    );
+      const currentRecipe = await Recipe.findById(recipeId).populate('author');
 
-    if (user._id.toString() !== currentRecipe.author._id.toString()) {
+      if (
+        currentRecipe &&
+        user._id.toString() !== currentRecipe.author._id.toString()
+      ) {
+        return res
+          .status(403)
+          .send(
+            'Your account is not authorized to access the requested resource.'
+          );
+      }
+
+      await Recipe.findByIdAndDelete(recipeId);
+
+      await cloudinary.v2.uploader.destroy(
+        `cook-me-pls/${recipeId as string}`,
+        {
+          invalidate: true,
+        }
+      );
+
+      return res.status(204).send({});
+    } catch (error) {
       return res
-        .status(403)
-        .send(
-          'Your account is not authorized to access the requested resource.'
-        );
+        .status(500)
+        .json({ message: 'Unexpected internal server error.' });
     }
-
-    await Recipe.findByIdAndDelete(recipeId);
-
-    await cloudinary.v2.uploader.destroy(`cook-me-pls/${recipeId}`, {
-      invalidate: true,
-    });
-
-    return res.status(204).send({});
-  } catch (error) {
-    return res
-      .status(500)
-      .json({ message: 'Unexpected internal server error.' });
   }
-});
+);
 
 export default dbConnect(handler);

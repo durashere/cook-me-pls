@@ -1,8 +1,8 @@
 import mongoose, { Model } from 'mongoose';
 
+import { IIngredient } from '@/backend/models/ingredient';
+import { IUser } from '@/backend/models/user';
 import { TIMES, DIFFICULTIES, UNITS } from '@/app/constants';
-import { IUser } from './user';
-import { IIngredient } from './ingredient';
 
 export interface IStep extends mongoose.Document {
   _id: string;
@@ -76,6 +76,7 @@ const RecipeSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const Recipe: Model<IRecipe> =
   mongoose.models.Recipe || mongoose.model<IRecipe>('Recipe', RecipeSchema);
 

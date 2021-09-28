@@ -1,15 +1,21 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import nextConnect from 'next-connect';
 
+import { IUser } from '@/backend/models/user';
 import dbConnect from '@/backend/mongoose';
 import Ingredient, { IIngredient } from '@/backend/models/ingredient';
 import protect from '@/backend/middleware/protect';
 
-const handler = nextConnect<NextApiRequest, NextApiResponse>();
+interface NextApiRequestExtended extends NextApiRequest {
+  body: IIngredient;
+  user: IUser;
+}
 
-handler.get<NextApiRequest, NextApiResponse>(
+const handler = nextConnect();
+
+handler.get<NextApiRequestExtended, NextApiResponse>(
   protect(),
-  async (req: NextApiRequest, res: NextApiResponse) => {
+  async (req, res) => {
     try {
       const {
         query: { searchQuery },
@@ -30,13 +36,13 @@ handler.get<NextApiRequest, NextApiResponse>(
   }
 );
 
-handler.post<NextApiRequest, NextApiResponse>(
+handler.post<NextApiRequestExtended, NextApiResponse>(
   protect(),
-  async (req: NextApiRequest, res: NextApiResponse) => {
+  async (req, res) => {
     try {
       const { body } = req;
 
-      const newIngredient = await Ingredient.create(body as IIngredient);
+      const newIngredient = await Ingredient.create(body);
 
       return res.status(201).json(newIngredient);
     } catch (error) {

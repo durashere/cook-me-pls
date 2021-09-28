@@ -18,7 +18,6 @@ const useDebounce = (
 
     setDebouncedLoading(true);
 
-    // Cancel the timeout if value changes (also on delay change or unmount)
     return (): void => {
       clearTimeout(handler);
       setDebouncedLoading(true);

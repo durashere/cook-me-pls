@@ -34,5 +34,8 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/require-default-props': 'off',
     'react/jsx-props-no-spreading': 'off',
+
+    // disable after next.js fix the issue probably in 11.1.3
+    '@next/next/no-document-import-in-page': 'off',
   },
 };
