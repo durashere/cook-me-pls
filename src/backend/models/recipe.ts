@@ -1,12 +1,18 @@
-import mongoose, { Model, ObjectId, PopulatedDoc } from 'mongoose';
+import mongoose, { Model, PopulatedDoc } from 'mongoose';
 
-import { IIngredient } from '@/backend/models/ingredient';
 import { IUser } from '@/backend/models/user';
 import { TIMES, DIFFICULTIES, UNITS } from '@/app/constants';
 
 export interface IStep extends mongoose.Document {
   _id: string;
   instruction: string;
+}
+
+export interface IIngredient extends mongoose.Document {
+  _id: string;
+  name: string;
+  quantity: number;
+  unit: string;
 }
 
 export interface IRecipe extends mongoose.Document {
@@ -45,22 +51,18 @@ const RecipeSchema = new mongoose.Schema(
     ingredients: [
       {
         name: {
-          type: String,
           required: true,
+          type: String,
+          unique: true,
         },
         quantity: {
-          type: Number,
           required: true,
+          type: Number,
         },
         unit: {
-          type: String,
           enum: UNITS,
           required: true,
-        },
-        _id: {
-          type: mongoose.SchemaTypes.ObjectId,
-          ref: 'Ingredient',
-          required: true,
+          type: String,
         },
       },
     ],

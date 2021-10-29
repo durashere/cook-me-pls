@@ -106,24 +106,6 @@ const DefaultHeader = (): JSX.Element => {
                 <button
                   type="button"
                   className={classNames(
-                    'p-2 w-full flex items-center gap-2 rounded-md transition-all text-gray-500 outline-none focus:outline-none',
-                    {
-                      'bg-gray-100': active,
-                    }
-                  )}
-                  onClick={(): Promise<boolean> => push('/ingredients')}
-                >
-                  <span className="material-icons-outlined">tune</span>
-                  <span className="font-medium">Składniki</span>
-                </button>
-              )}
-            </Menu.Item>
-
-            <Menu.Item>
-              {({ active }): JSX.Element => (
-                <button
-                  type="button"
-                  className={classNames(
                     'p-2 w-full flex items-center gap-2 rounded-md transition-all text-red-400 outline-none focus:outline-none',
                     {
                       'bg-gray-100': active,

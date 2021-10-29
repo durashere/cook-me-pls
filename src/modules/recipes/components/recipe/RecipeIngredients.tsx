@@ -1,5 +1,5 @@
+import { IIngredient } from '@/backend/models/recipe';
 import RecipeSection from '@/modules/recipes/components/RecipeSection';
-import { IIngredient } from '@/backend/models/ingredient';
 
 type IRecipeIngredient = Pick<IIngredient, 'name' | 'quantity' | 'unit'>;
 

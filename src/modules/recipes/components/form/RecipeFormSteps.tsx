@@ -1,7 +1,7 @@
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import Button from '@/components/Button';
-import RecipeSection from '@/modules/recipes/components/RecipeSection';
+import RecipeFormSection from '@/modules/recipes/components/RecipeFormSection';
 import TextArea from '@/components/TextArea';
 
 interface IRecipeFormStep {
@@ -16,15 +16,17 @@ const RecipeFormStep = ({
   const { register } = useFormContext();
 
   return (
-    <li className="flex items-end gap-4">
+    <li className="flex flex-col gap-2 p-4 bg-white rounded-md shadow-md">
+      <div className="flex justify-between gap-2">
+        <span>Krok {index + 1}</span>
+        <Button icon="delete" onClick={handleRemoveStep} />
+      </div>
       <TextArea
         fullWidth
-        label={`Krok ${index + 1}`}
         placeholder="Opis kroku..."
         required
         {...register(`steps.${index}.instruction`)}
       />
-      <Button icon="delete" onClick={handleRemoveStep} />
     </li>
   );
 };
@@ -47,7 +49,7 @@ const RecipeFormSteps = (): JSX.Element => {
   const handleRemoveStep = (index: number): void => removeStep(index);
 
   return (
-    <RecipeSection label="przygotowanie">
+    <RecipeFormSection label="przygotowanie">
       {editSteps.length > 0 && (
         <ul className="space-y-4">
           {editSteps.map((step, index) => (
@@ -59,8 +61,10 @@ const RecipeFormSteps = (): JSX.Element => {
           ))}
         </ul>
       )}
-      <Button fullWidth icon="add" onClick={handleAppendStep} />
-    </RecipeSection>
+      <div className="bg-white shadow-md">
+        <Button fullWidth icon="add" onClick={handleAppendStep} />
+      </div>
+    </RecipeFormSection>
   );
 };
 

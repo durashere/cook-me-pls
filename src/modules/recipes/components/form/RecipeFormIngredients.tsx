@@ -1,12 +1,10 @@
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
-import { IIngredient } from '@/backend/models/ingredient';
-import { INewIngredient } from '@/modules/ingredients/hooks/useIngredientCreate';
+import { IIngredient } from '@/backend/models/recipe';
 import { UNITS } from '@/app/constants';
 import Button from '@/components/Button';
 import Input from '@/components/Input';
-import RecipeFormIngredientsAutocomplete from '@/modules/recipes/components/form/RecipeFormIngredientsAutocomplete';
-import RecipeSection from '@/modules/recipes/components/RecipeSection';
+import RecipeFormSection from '@/modules/recipes/components/RecipeFormSection';
 import Select from '@/components/Select';
 
 interface IRecipeFormIngredient {
@@ -23,14 +21,20 @@ const RecipeFormIngredient = ({
   const { register } = useFormContext();
 
   return (
-    <li>
-      <span className="first-letter:capitalize">{ingredient.name}</span>
-
-      <div className="flex gap-4 mt-1">
+    <li className="flex flex-col gap-4 p-4 bg-white rounded-md shadow-md">
+      <Input
+        defaultValue={ingredient.name}
+        fullWidth
+        placeholder="Nazwa..."
+        required
+        {...register(`ingredients.${index}.name`)}
+      />
+      <div className="flex gap-4">
         <Input
           defaultValue={ingredient.quantity}
           fullWidth
           placeholder="Ilość..."
+          required
           type="number"
           {...register(`ingredients.${index}.quantity`)}
         />
@@ -60,8 +64,8 @@ const RecipeFormIngredients = (): JSX.Element => {
     name: 'ingredients',
   });
 
-  const handleAppendIngredient = (ingredient: INewIngredient): void => {
-    appendIngredient(ingredient);
+  const handleAppendIngredient = (): void => {
+    appendIngredient({ name: '', quantity: '', unit: '' });
   };
 
   const handleRemoveIngredient = (index: number): void => {
@@ -69,7 +73,7 @@ const RecipeFormIngredients = (): JSX.Element => {
   };
 
   return (
-    <RecipeSection label="składniki">
+    <RecipeFormSection label="składniki">
       {editIngredients.length > 0 && (
         <ul className="space-y-4">
           {editIngredients.map((ingredient, index) => (
@@ -82,11 +86,10 @@ const RecipeFormIngredients = (): JSX.Element => {
           ))}
         </ul>
       )}
-      <RecipeFormIngredientsAutocomplete
-        handleAppendIngredient={handleAppendIngredient}
-        usedIngredients={editIngredients as IIngredient[]}
-      />
-    </RecipeSection>
+      <div className="bg-white shadow-md">
+        <Button fullWidth icon="add" onClick={handleAppendIngredient} />
+      </div>
+    </RecipeFormSection>
   );
 };
 
