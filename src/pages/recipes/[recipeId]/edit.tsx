@@ -40,7 +40,7 @@ const RecipeEditPage = (): JSX.Element => {
     url: recipe?.image as string,
   });
 
-  const methods = useForm({
+  const methods = useForm<IRecipe>({
     defaultValues: recipe,
   });
   const { handleSubmit, reset } = methods;
@@ -66,7 +66,6 @@ const RecipeEditPage = (): JSX.Element => {
       const updatedImageFormData = new FormData();
       updatedImageFormData.append('_id', recipe?._id as string);
       updatedImageFormData.append('image', selectedImage.image);
-
       await updateRecipeImage(updatedImageFormData);
     }
 
@@ -81,7 +80,7 @@ const RecipeEditPage = (): JSX.Element => {
     return <Loader />;
   }
 
-  if (!loading && session?.user._id !== recipe?.author?._id) {
+  if (!loading && session?.user._id !== recipe?.author) {
     return (
       <ErrorPage statusCode={403} title="Nie możesz edytować tego przepisu" />
     );

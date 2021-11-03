@@ -1,27 +1,27 @@
-import Image from 'next/image';
 import Link from 'next/link';
 
-import { IUser } from '@/backend/models/user';
+import useUser from '@/modules/users/hooks/useUser';
 
-type IRecipeAuthor = Pick<IUser, '_id' | 'image' | 'name'>;
+interface IRecipeAuthor {
+  authorId: string;
+}
 
-const RecipeAuthor = ({ _id, image, name }: IRecipeAuthor): JSX.Element => (
-  <div className="flex items-center justify-center">
-    <Link href={`/users/${_id}/recipes`} passHref>
-      <div className="flex items-center cursor-pointer">
-        <div className="relative w-6 h-6 overflow-hidden rounded-md">
-          <Image
-            src={image as string}
-            layout="fill"
-            objectFit="cover"
-            alt="User avatar"
-          />
+const RecipeAuthor = ({ authorId }: IRecipeAuthor): JSX.Element => {
+  const { data: author } = useUser(authorId);
+
+  return (
+    <div className="flex items-center justify-center">
+      <Link href={`/users/${authorId}/recipes`} passHref>
+        <div className="flex items-center cursor-pointer">
+          <p className="text-lg">
+            <span className="text-base text-gray-400">Więcej od: </span>
+            {author?.name}
+          </p>
+          <span className="material-icons-outlined">chevron_right</span>
         </div>
-        <p className="ml-2 text-lg">{name}</p>
-        <span className="material-icons-outlined">chevron_right</span>
-      </div>
-    </Link>
-  </div>
-);
+      </Link>
+    </div>
+  );
+};
 
 export default RecipeAuthor;

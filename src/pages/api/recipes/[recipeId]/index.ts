@@ -20,7 +20,7 @@ handler.get<NextApiRequest, NextApiResponse>(async (req, res) => {
       query: { recipeId },
     } = req;
 
-    const recipe = await Recipe.findById(recipeId).populate('author');
+    const recipe = await Recipe.findById(recipeId);
 
     return res.status(200).json(recipe);
   } catch (error) {
@@ -40,7 +40,7 @@ handler.patch<NextApiRequestExtended, NextApiResponse>(
         query: { recipeId },
       } = req;
 
-      if (user._id.toString() !== body?.author?._id.toString()) {
+      if (user._id.toString() !== body?.author?.toString()) {
         return res
           .status(403)
           .send(

@@ -1,23 +1,22 @@
-import mongoose, { Model, PopulatedDoc } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 
-import { IUser } from '@/backend/models/user';
 import { TIMES, DIFFICULTIES, UNITS } from '@/app/constants';
 
-export interface IStep extends mongoose.Document {
+export interface IStep {
   _id: string;
   instruction: string;
 }
 
-export interface IIngredient extends mongoose.Document {
+export interface IIngredient {
   _id: string;
   name: string;
   quantity: number;
   unit: string;
 }
 
-export interface IRecipe extends mongoose.Document {
+export interface IRecipe {
   _id: string;
-  author: PopulatedDoc<IUser & mongoose.Document>;
+  author: string;
   cookTime: string;
   difficulty: string;
   image: string;

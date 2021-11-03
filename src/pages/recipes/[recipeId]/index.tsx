@@ -64,11 +64,7 @@ const RecipePage = (): JSX.Element => {
 
       <RecipeSteps steps={recipe.steps} />
 
-      <RecipeAuthor
-        _id={recipe.author?._id}
-        image={recipe.author.image}
-        name={recipe.author.name}
-      />
+      <RecipeAuthor authorId={recipe.author} />
     </div>
   );
 };

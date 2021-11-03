@@ -21,9 +21,7 @@ handler.get<NextApiRequestExtended, NextApiResponse>(async (req, res) => {
 
     const recipes = await Recipe.find({
       $or: [{ name: regex }, { difficulty: regex }, { cookTime: regex }],
-    })
-      .sort({ name: 1 })
-      .populate('author');
+    }).sort({ name: 1 });
 
     return res.status(200).json(recipes);
   } catch (error) {

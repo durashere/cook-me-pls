@@ -31,7 +31,7 @@ const RecipeCreatePage = (): JSX.Element => {
   const { mutateAsync: updateRecipeImage, status: statusRecipeImageUpdate } =
     useRecipeImageUpdate();
 
-  const methods = useForm();
+  const methods = useForm<IRecipe>();
   const { handleSubmit } = methods;
 
   const handleCancel = (): void => {
