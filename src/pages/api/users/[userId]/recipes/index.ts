@@ -12,7 +12,11 @@ handler.get<NextApiRequest, NextApiResponse>(async (req, res) => {
       query: { userId, searchQuery },
     } = req;
 
-    const regex = new RegExp(searchQuery as string, 'i');
+    if (typeof searchQuery !== 'string') {
+      throw new Error('recipeId must be a string');
+    }
+
+    const regex = new RegExp(searchQuery, 'i');
 
     const recipes = await Recipe.find({
       author: userId,

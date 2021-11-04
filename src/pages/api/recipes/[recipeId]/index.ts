@@ -70,6 +70,10 @@ handler.delete<NextApiRequestExtended, NextApiResponse>(
         query: { recipeId },
       } = req;
 
+      if (typeof recipeId !== 'string') {
+        throw new Error('recipeId must be a string');
+      }
+
       const currentRecipe = await Recipe.findById(recipeId);
 
       if (user._id.toString() !== currentRecipe?.author?.toString()) {
@@ -82,12 +86,9 @@ handler.delete<NextApiRequestExtended, NextApiResponse>(
 
       await Recipe.findByIdAndDelete(recipeId);
 
-      await cloudinary.v2.uploader.destroy(
-        `cook-me-pls/${recipeId as string}`,
-        {
-          invalidate: true,
-        }
-      );
+      await cloudinary.v2.uploader.destroy(`cook-me-pls/${recipeId}`, {
+        invalidate: true,
+      });
 
       return res.status(204).send({});
     } catch (error) {

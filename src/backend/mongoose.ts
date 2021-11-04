@@ -8,8 +8,11 @@ const dbConnect =
     if (mongoose.connection.readyState >= 1) {
       return handler(req, res);
     }
-
-    await mongoose.connect(process.env.MONGODB_URL as string);
+    if (!process.env.MONGODB_URL) {
+      console.log('MONGODB_URL is not set');
+      process.exit(1);
+    }
+    await mongoose.connect(process.env.MONGODB_URL);
     return handler(req, res);
   };
 

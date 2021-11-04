@@ -13,14 +13,14 @@ import useRecipeCreate from '@/modules/recipes/hooks/useRecipeCreate';
 import useRecipeImageUpdate from '@/modules/recipes/hooks/useRecipeImageUpdate';
 
 interface ISelectedImage {
-  image: File | null;
-  url: string | null;
+  image?: File;
+  url?: string;
 }
 
 const RecipeCreatePage = (): JSX.Element => {
   const [selectedImage, setSelectedImage] = useState<ISelectedImage>({
-    image: null,
-    url: null,
+    image: undefined,
+    url: undefined,
   });
 
   const { back, push } = useRouter();

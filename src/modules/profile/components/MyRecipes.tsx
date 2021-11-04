@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import { useSession } from 'next-auth/client';
 
 import { IRecipe } from '@/backend/models/recipe';
 import Button from '@/components/Button';
@@ -48,12 +47,13 @@ const RecipeListItem = ({
   );
 };
 
-const MyRecipesList = (): JSX.Element => {
-  const [session] = useSession();
+interface IMyRecipes {
+  userId: string;
+}
 
-  const { data: userRecipes, status: userRecipesStatus } = useUserRecipes(
-    session?.user._id as string
-  );
+const MyRecipesList = ({ userId }: IMyRecipes): JSX.Element => {
+  const { data: userRecipes, status: userRecipesStatus } =
+    useUserRecipes(userId);
 
   if (userRecipesStatus === 'idle' || userRecipesStatus === 'loading') {
     return <Loader />;

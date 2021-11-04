@@ -1,17 +1,14 @@
-import { useRouter } from 'next/router';
-
 import Loader from '@/components/Loader';
 import RecipeCard from '@/modules/recipes/components/RecipeCard';
 import useUserRecipes from '@/modules/users/hooks/useUserRecipes';
 
-const UserRecipes = (): JSX.Element => {
-  const {
-    query: { userId },
-  } = useRouter();
+interface IUserRecipes {
+  userId: string;
+}
 
-  const { data: userRecipes, status: userRecipesStatus } = useUserRecipes(
-    userId as string
-  );
+const UserRecipesList = ({ userId }: IUserRecipes): JSX.Element => {
+  const { data: userRecipes, status: userRecipesStatus } =
+    useUserRecipes(userId);
 
   if (userRecipesStatus === 'idle' || userRecipesStatus === 'loading') {
     return <Loader />;
@@ -44,4 +41,4 @@ const UserRecipes = (): JSX.Element => {
   );
 };
 
-export default UserRecipes;
+export default UserRecipesList;

@@ -57,7 +57,7 @@ const DefaultHeader = (): JSX.Element => {
           <Menu.Button className="overflow-hidden transition-all rounded-md outline-none focus:outline-none hover:ring-2 focus:ring hover:ring-gray-400 focus:ring-gray-400">
             <div className="relative w-10 h-10 pointer-events-none">
               <Image
-                src={session.user.image as string}
+                src={session.user.image || '/image-placeholder.png'}
                 layout="fill"
                 objectFit="cover"
                 alt="Avatar of the user"

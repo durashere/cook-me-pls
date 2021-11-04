@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 interface Servings {
-  defaultServings: number;
+  defaultServings?: number;
 }
 
 const useServings = ({
@@ -14,7 +14,9 @@ const useServings = ({
   const [servings, setServings] = useState(0);
 
   useEffect(() => {
-    setServings(defaultServings);
+    if (defaultServings) {
+      setServings(defaultServings);
+    }
   }, [defaultServings]);
 
   const addServing = (): void => setServings(servings + 1);

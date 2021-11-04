@@ -5,8 +5,8 @@ import Button from '@/components/Button';
 import RecipeFormSection from '@/modules/recipes/components/RecipeFormSection';
 
 interface ISelectedImage {
-  image: File | null;
-  url: string | null;
+  image?: File;
+  url?: string;
 }
 
 interface IRecipeFormImage {
