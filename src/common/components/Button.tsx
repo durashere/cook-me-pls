@@ -21,7 +21,7 @@ const Button = forwardRef<HTMLButtonElement, IButton>(
         'bg-transparent flex items-center justify-center p-2 transition-all rounded-md shadow outline-none focus:outline-none ring-1 hover:ring-2 whitespace-nowrap focus:ring',
         {
           'w-full': fullWidth,
-          'text-gray-500 ring-gray-400 hover:ring-gray-400 focus:ring-gray-400':
+          'text-gray-500 ring-gray-300 hover:ring-gray-400/50 focus:ring-gray-400/50':
             type === undefined,
           'text-yellow-500 ring-yellow-400 hover:ring-yellow-400 focus:ring-yellow-400':
             type === 'primary',

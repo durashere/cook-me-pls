@@ -16,8 +16,8 @@ const RecipeFormStep = ({
   const { register } = useFormContext();
 
   return (
-    <li className="flex flex-col gap-2 p-4 bg-white rounded-md shadow-md">
-      <div className="flex justify-between gap-2">
+    <li className="flex flex-col gap-4 p-4 bg-white rounded-md shadow-md">
+      <div className="flex items-center justify-between gap-4">
         <span>Krok {index + 1}</span>
         <Button icon="delete" onClick={handleRemoveStep} />
       </div>
@@ -61,9 +61,9 @@ const RecipeFormSteps = (): JSX.Element => {
           ))}
         </ul>
       )}
-      <div className="bg-white shadow-md">
-        <Button fullWidth icon="add" onClick={handleAppendStep} />
-      </div>
+      <Button fullWidth onClick={handleAppendStep}>
+        Dodaj krok
+      </Button>
     </RecipeFormSection>
   );
 };

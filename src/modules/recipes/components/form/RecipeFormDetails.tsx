@@ -2,14 +2,14 @@ import { useFormContext } from 'react-hook-form';
 
 import { TIMES, DIFFICULTIES } from '@/app/constants';
 import Input from '@/components/Input';
-import RecipeSection from '@/modules/recipes/components/RecipeSection';
+import RecipeFormSection from '@/modules/recipes/components/RecipeFormSection';
 import Select from '@/components/Select';
 
 const RecipeFormDetails = (): JSX.Element => {
   const { register } = useFormContext();
 
   return (
-    <RecipeSection label="sczegóły">
+    <RecipeFormSection label="sczegóły">
       <Input
         fullWidth
         placeholder="Nazwa przepisu..."
@@ -37,7 +37,7 @@ const RecipeFormDetails = (): JSX.Element => {
         required
         {...register('difficulty')}
       />
-    </RecipeSection>
+    </RecipeFormSection>
   );
 };
 

@@ -13,7 +13,7 @@ const RecipeStep = ({
 }: IRecipeStepWithIndex): JSX.Element => (
   <li>
     <p className="text-lg font-medium text-gray-600">Krok {index + 1}</p>
-    <p className="p-4 my-4 ml-2 text-sm text-gray-500 border-l-2">
+    <p className="px-4 py-2 m-2 text-sm text-gray-500 border-l-2">
       {instruction}
     </p>
   </li>
@@ -25,7 +25,7 @@ interface IRecipeSteps {
 
 const RecipeSteps = ({ steps }: IRecipeSteps): JSX.Element => (
   <RecipeSection>
-    <ul className="space-y-4">
+    <ul className="space-y-8">
       {steps.map((step: IStep, index: number) => (
         <RecipeStep
           index={index}

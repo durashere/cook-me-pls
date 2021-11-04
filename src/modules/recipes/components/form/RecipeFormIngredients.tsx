@@ -86,9 +86,9 @@ const RecipeFormIngredients = (): JSX.Element => {
           ))}
         </ul>
       )}
-      <div className="bg-white shadow-md">
-        <Button fullWidth icon="add" onClick={handleAppendIngredient} />
-      </div>
+      <Button fullWidth onClick={handleAppendIngredient}>
+        Dodaj składnik
+      </Button>
     </RecipeFormSection>
   );
 };

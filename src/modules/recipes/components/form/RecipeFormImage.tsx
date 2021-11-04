@@ -2,7 +2,7 @@ import Image from 'next/image';
 import React, { useRef } from 'react';
 
 import Button from '@/components/Button';
-import RecipeSection from '@/modules/recipes/components/RecipeSection';
+import RecipeFormSection from '@/modules/recipes/components/RecipeFormSection';
 
 interface ISelectedImage {
   image: File | null;
@@ -33,7 +33,7 @@ const RecipeFormImage = ({
   };
 
   return (
-    <RecipeSection label="zdjęcie">
+    <RecipeFormSection label="zdjęcie">
       {selectedImage.url && (
         <div className="relative overflow-hidden rounded-md aspect-w-1 aspect-h-1">
           <Image
@@ -59,7 +59,7 @@ const RecipeFormImage = ({
         ref={imageUploadInputRef}
         type="file"
       />
-    </RecipeSection>
+    </RecipeFormSection>
   );
 };
 
