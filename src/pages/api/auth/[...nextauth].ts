@@ -27,7 +27,7 @@ export default NextAuth({
 
     session(session, user) {
       // eslint-disable-next-line no-param-reassign
-      session.user._id = user.id;
+      session.user._id = user.id as string;
       return session;
     },
   },
