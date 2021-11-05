@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { IRecipe } from '@/backend/models/recipe';
 import Button from '@/components/Button';
 import DeleteModal from '@/components/DeleteModal';
-import Loader from '@/components/Loader';
 import useRecipeDelete from '@/modules/recipes/hooks/useRecipeDelete';
 import useUserRecipes from '@/modules/users/hooks/useUserRecipes';
 
@@ -52,25 +51,26 @@ interface IMyRecipes {
 }
 
 const MyRecipesList = ({ userId }: IMyRecipes): JSX.Element => {
-  const { data: userRecipes, status: userRecipesStatus } =
-    useUserRecipes(userId);
+  const { data: userRecipes } = useUserRecipes(userId);
 
-  if (userRecipesStatus === 'idle' || userRecipesStatus === 'loading') {
-    return <Loader />;
+  if (!userRecipes) {
+    return (
+      <div className="p-4 text-center bg-white rounded-md shadow-md">
+        Nie dodałeś jeszcze żadnego przepisu
+      </div>
+    );
   }
 
   return (
-    <div>
-      <ul className="space-y-4">
-        {userRecipes?.map((recipe: IRecipe) => (
-          <RecipeListItem
-            key={recipe._id}
-            name={recipe.name}
-            recipeId={recipe._id}
-          />
-        ))}
-      </ul>
-    </div>
+    <ul className="space-y-4">
+      {userRecipes.map((recipe: IRecipe) => (
+        <RecipeListItem
+          key={recipe._id}
+          name={recipe.name}
+          recipeId={recipe._id}
+        />
+      ))}
+    </ul>
   );
 };
 

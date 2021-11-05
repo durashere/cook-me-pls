@@ -2,9 +2,10 @@ import classNames from 'classnames';
 
 interface ILoader {
   className?: string;
+  color?: string;
 }
 
-const Loader = ({ className }: ILoader): JSX.Element => (
+const Loader = ({ className, color }: ILoader): JSX.Element => (
   <svg
     className={classNames('h-full w-full', className)}
     width="44"
@@ -13,7 +14,7 @@ const Loader = ({ className }: ILoader): JSX.Element => (
     xmlns="http://www.w3.org/2000/svg"
     stroke="#6B7280"
   >
-    <g fill="none" fillRule="evenodd" strokeWidth="2">
+    <g stroke={color} fill="none" fillRule="evenodd" strokeWidth="2">
       <circle cx="22" cy="22" r="1">
         <animate
           attributeName="r"

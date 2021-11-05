@@ -9,18 +9,11 @@ const handler = nextConnect();
 handler.get<NextApiRequest, NextApiResponse>(async (req, res) => {
   try {
     const {
-      query: { userId, searchQuery },
+      query: { userId },
     } = req;
-
-    if (typeof searchQuery !== 'string') {
-      throw new Error('recipeId must be a string');
-    }
-
-    const regex = new RegExp(searchQuery, 'i');
 
     const recipes = await Recipe.find({
       author: userId,
-      $or: [{ name: regex }, { difficulty: regex }, { cookTime: regex }],
     }).sort({ name: 1 });
 
     return res.status(200).json(recipes);

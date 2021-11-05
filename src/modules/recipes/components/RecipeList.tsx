@@ -1,5 +1,4 @@
 import { IRecipe } from '@/backend/models/recipe';
-import Loader from '@/components/Loader';
 import RecipeCard from '@/modules/recipes/components/RecipeCard';
 import useDebounce from '@/hooks/useDebounce';
 import useRecipes from '@/modules/recipes/hooks/useRecipes';
@@ -9,18 +8,13 @@ interface IRecipeList {
 }
 
 const RecipeList = ({ searchQuery }: IRecipeList): JSX.Element => {
-  const { value: searchQueryDebounced, loading: searchQueryDebouncedLoading } =
-    useDebounce(searchQuery, 500);
+  const { value: searchQueryDebounced } = useDebounce(searchQuery, 500);
 
   const { data: recipes, status: statusRecipes } =
     useRecipes(searchQueryDebounced);
 
-  if (
-    searchQueryDebouncedLoading ||
-    statusRecipes === 'idle' ||
-    statusRecipes === 'loading'
-  ) {
-    return <Loader />;
+  if (statusRecipes === 'loading') {
+    return <></>;
   }
 
   if (!recipes) {

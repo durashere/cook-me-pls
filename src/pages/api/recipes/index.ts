@@ -19,11 +19,7 @@ handler.get<NextApiRequestExtended, NextApiResponse>(async (req, res) => {
       query: { searchQuery },
     } = req;
 
-    if (typeof searchQuery !== 'string') {
-      throw new Error('searchQuery must be a string');
-    }
-
-    const regex = new RegExp(searchQuery, 'i');
+    const regex = new RegExp(searchQuery as string, 'i');
 
     const recipes = await Recipe.find({
       $or: [{ name: regex }, { difficulty: regex }, { cookTime: regex }],

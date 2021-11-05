@@ -1,5 +1,8 @@
+import mongoose from 'mongoose';
 import NextAuth from 'next-auth';
 import Providers from 'next-auth/providers';
+
+import User from '@/backend/models/user';
 
 export default NextAuth({
   providers: [
@@ -12,8 +15,19 @@ export default NextAuth({
   database: process.env.MONGODB_URL,
 
   callbacks: {
-    async session(session, user) {
-      session.user._id = user.id as string;
+    async signIn(user, account, profile) {
+      if (user.image !== profile.picture.data.url) {
+        await mongoose.connect(process.env.MONGODB_URL as string);
+        await User.findByIdAndUpdate(user.id, {
+          image: profile.picture.data.url,
+        });
+      }
+      return true;
+    },
+
+    session(session, user) {
+      // eslint-disable-next-line no-param-reassign
+      session.user._id = user.id;
       return session;
     },
   },

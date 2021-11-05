@@ -1,6 +1,5 @@
 import ErrorPage from 'next/error';
 
-import Loader from '@/components/Loader';
 import useUser from '@/modules/users/hooks/useUser';
 
 interface IUserRecipesHeader {
@@ -8,11 +7,7 @@ interface IUserRecipesHeader {
 }
 
 const UserRecipesHeader = ({ userId }: IUserRecipesHeader): JSX.Element => {
-  const { data: user, status: userStatus } = useUser(userId);
-
-  if (userStatus === 'loading') {
-    return <Loader />;
-  }
+  const { data: user } = useUser(userId);
 
   if (!user) {
     return <ErrorPage statusCode={404} title="Nie znaleziono użytkownika" />;

@@ -1,4 +1,3 @@
-import Loader from '@/components/Loader';
 import RecipeCard from '@/modules/recipes/components/RecipeCard';
 import useUserRecipes from '@/modules/users/hooks/useUserRecipes';
 
@@ -7,17 +6,12 @@ interface IUserRecipes {
 }
 
 const UserRecipesList = ({ userId }: IUserRecipes): JSX.Element => {
-  const { data: userRecipes, status: userRecipesStatus } =
-    useUserRecipes(userId);
-
-  if (userRecipesStatus === 'idle' || userRecipesStatus === 'loading') {
-    return <Loader />;
-  }
+  const { data: userRecipes } = useUserRecipes(userId);
 
   if (!userRecipes) {
     return (
       <div className="p-4 text-center bg-white rounded-md shadow-md">
-        Brak przepisów
+        Użytkownik nie dodał jeszcze żadnego przepisu
       </div>
     );
   }

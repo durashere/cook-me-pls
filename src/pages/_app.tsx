@@ -1,12 +1,12 @@
 import { AppProps } from 'next/app';
+import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { NextPage } from 'next';
 import { Provider } from 'next-auth/client';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { useState } from 'react';
 import Head from 'next/head';
 
 import DefaultLayout from '@/layouts/default/components/DefaultLayout';
-import Protect from '@/components/Protect';
 
 import '@/app/tailwind.css';
 
@@ -22,7 +22,7 @@ const CustomApp = ({
   Component,
   pageProps: { session, ...pageProps },
 }: CustomAppProps): JSX.Element => {
-  const queryClient = new QueryClient();
+  const [queryClient] = useState(() => new QueryClient());
 
   return (
     <>
@@ -32,15 +32,11 @@ const CustomApp = ({
 
       <Provider session={session}>
         <QueryClientProvider client={queryClient}>
-          <DefaultLayout>
-            {Component.protect ? (
-              <Protect>
-                <Component {...pageProps} />
-              </Protect>
-            ) : (
+          <Hydrate state={pageProps.dehydratedState}>
+            <DefaultLayout>
               <Component {...pageProps} />
-            )}
-          </DefaultLayout>
+            </DefaultLayout>
+          </Hydrate>
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </Provider>

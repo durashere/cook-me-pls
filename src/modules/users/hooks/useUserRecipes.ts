@@ -11,8 +11,6 @@ const getUserRecipes = async (userId: string): Promise<IRecipe[]> => {
 const useUserRecipes = (
   userId: string
 ): UseQueryResult<IRecipe[], AxiosError> =>
-  useQuery(['userRecipes', userId], () => getUserRecipes(userId), {
-    enabled: !!userId,
-  });
+  useQuery(['userRecipes', userId], () => getUserRecipes(userId));
 
 export default useUserRecipes;

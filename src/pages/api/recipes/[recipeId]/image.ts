@@ -36,7 +36,6 @@ handler.patch<NextApiRequestExtended, NextApiResponse>(
             reject(parseError);
             return res.status(400).json({
               message: 'There was an error uploading image',
-              error: parseError,
             });
           }
 
@@ -66,7 +65,7 @@ handler.patch<NextApiRequestExtended, NextApiResponse>(
           public_id: recipeId,
           width: 1500,
         },
-        async (uploadError, result) => {
+        (uploadError, result) => {
           if (uploadError) {
             return res.status(400).json({
               message: 'There was an error uploading image',

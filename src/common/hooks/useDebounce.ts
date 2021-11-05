@@ -16,8 +16,6 @@ const useDebounce = (
       setDebouncedLoading(false);
     }, delay);
 
-    setDebouncedLoading(true);
-
     return (): void => {
       clearTimeout(handler);
       setDebouncedLoading(true);

@@ -9,6 +9,6 @@ const getUser = async (userId: string): Promise<IUser> => {
 };
 
 const useUser = (userId: string): UseQueryResult<IUser, AxiosError> =>
-  useQuery(['users', userId], () => getUser(userId), { enabled: !!userId });
+  useQuery(['users', userId], () => getUser(userId));
 
 export default useUser;

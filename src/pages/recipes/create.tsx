@@ -1,4 +1,6 @@
 import { FormProvider, useForm } from 'react-hook-form';
+import { GetServerSideProps } from 'next';
+import { getSession } from 'next-auth/client';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
@@ -23,7 +25,7 @@ const RecipeCreatePage = (): JSX.Element => {
     url: undefined,
   });
 
-  const { back, push } = useRouter();
+  const { push } = useRouter();
 
   const { mutateAsync: createRecipe, status: statusRecipeCreate } =
     useRecipeCreate();
@@ -34,8 +36,8 @@ const RecipeCreatePage = (): JSX.Element => {
   const methods = useForm<IRecipe>();
   const { handleSubmit } = methods;
 
-  const handleCancel = (): void => {
-    back();
+  const handleCancel = async (): Promise<void> => {
+    await push('/profile/my-recipes');
   };
 
   const handleRecipeCreate = async (data: IRecipe): Promise<void> => {
@@ -51,13 +53,6 @@ const RecipeCreatePage = (): JSX.Element => {
 
     await push(`/recipes/${createdRecipe._id}`);
   };
-
-  if (
-    statusRecipeCreate === 'loading' ||
-    statusRecipeImageUpdate === 'loading'
-  ) {
-    return <Loader />;
-  }
 
   return (
     <FormProvider {...methods}>
@@ -79,7 +74,17 @@ const RecipeCreatePage = (): JSX.Element => {
         <div className="flex justify-between">
           <Button onClick={handleCancel}>Anuluj</Button>
           <Button htmlType="submit" type="primary">
-            Utwórz
+            <div className="flex items-center gap-2">
+              <span className="font-medium">Utwórz</span>
+              {statusRecipeCreate === 'loading' ||
+              statusRecipeCreate === 'success' ||
+              statusRecipeImageUpdate === 'loading' ||
+              statusRecipeImageUpdate === 'success' ? (
+                <Loader color="#F59E0B" className="w-6 h-6" />
+              ) : (
+                <span className="material-icons-outlined">save</span>
+              )}
+            </div>
           </Button>
         </div>
       </form>
@@ -87,6 +92,21 @@ const RecipeCreatePage = (): JSX.Element => {
   );
 };
 
-RecipeCreatePage.protect = true;
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const session = await getSession({ req });
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
 
 export default RecipeCreatePage;

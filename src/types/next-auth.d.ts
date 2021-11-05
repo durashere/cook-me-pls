@@ -1,5 +1,6 @@
-import { IUser } from '@/backend/models/user';
 import NextAuth from 'next-auth';
+
+import { IUser } from '@/backend/models/user';
 
 declare module 'next-auth' {
   /**
@@ -7,5 +8,17 @@ declare module 'next-auth' {
    */
   interface Session {
     user: IUser;
+  }
+
+  interface User {
+    id: string;
+  }
+
+  interface Profile {
+    picture: {
+      data: {
+        url: string;
+      };
+    };
   }
 }
