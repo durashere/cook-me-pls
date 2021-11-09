@@ -7,6 +7,7 @@ import { useState } from 'react';
 import Head from 'next/head';
 
 import DefaultLayout from '@/layouts/default/components/DefaultLayout';
+import Protect from '@/components/Protect';
 
 import '@/app/tailwind.css';
 
@@ -34,7 +35,13 @@ const CustomApp = ({
         <QueryClientProvider client={queryClient}>
           <Hydrate state={pageProps.dehydratedState}>
             <DefaultLayout>
-              <Component {...pageProps} />
+              {Component.protect ? (
+                <Protect>
+                  <Component {...pageProps} />
+                </Protect>
+              ) : (
+                <Component {...pageProps} />
+              )}
             </DefaultLayout>
           </Hydrate>
           <ReactQueryDevtools initialIsOpen={false} />

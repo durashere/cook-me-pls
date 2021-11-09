@@ -5,8 +5,9 @@ import Button from '@/components/Button';
 import DeleteModal from '@/components/DeleteModal';
 import useRecipeDelete from '@/modules/recipes/hooks/useRecipeDelete';
 import useUserRecipes from '@/modules/users/hooks/useUserRecipes';
+import Loader from '@/components/Loader';
 
-const RecipeListItem = ({
+const RecipesListItem = ({
   name,
   recipeId,
 }: {
@@ -51,9 +52,14 @@ interface IMyRecipes {
 }
 
 const MyRecipesList = ({ userId }: IMyRecipes): JSX.Element => {
-  const { data: userRecipes } = useUserRecipes(userId);
+  const { data: userRecipes, status: statusUserRecipes } =
+    useUserRecipes(userId);
 
-  if (!userRecipes) {
+  if (!userRecipes || statusUserRecipes === 'loading') {
+    return <Loader />;
+  }
+
+  if (userRecipes.length === 0) {
     return (
       <div className="p-4 text-center bg-white rounded-md shadow-md">
         Nie dodałeś jeszcze żadnego przepisu
@@ -64,7 +70,7 @@ const MyRecipesList = ({ userId }: IMyRecipes): JSX.Element => {
   return (
     <ul className="space-y-4">
       {userRecipes.map((recipe: IRecipe) => (
-        <RecipeListItem
+        <RecipesListItem
           key={recipe._id}
           name={recipe.name}
           recipeId={recipe._id}

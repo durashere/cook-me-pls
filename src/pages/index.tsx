@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 
 import Input from '@/components/Input';
 import Recipe, { IRecipe } from '@/backend/models/recipe';
-import RecipeList from '@/modules/recipes/components/RecipeList';
+import RecipesList from '@/modules/recipes/components/RecipesList';
 
 const RecipesPage = (): JSX.Element => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -36,7 +36,7 @@ const RecipesPage = (): JSX.Element => {
           search
         </span>
       </div>
-      <RecipeList searchQuery={searchQuery} />
+      <RecipesList searchQuery={searchQuery} />
     </div>
   );
 };

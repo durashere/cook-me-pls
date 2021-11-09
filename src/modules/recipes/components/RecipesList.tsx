@@ -2,22 +2,23 @@ import { IRecipe } from '@/backend/models/recipe';
 import RecipeCard from '@/modules/recipes/components/RecipeCard';
 import useDebounce from '@/hooks/useDebounce';
 import useRecipes from '@/modules/recipes/hooks/useRecipes';
+import Loader from '@/components/Loader';
 
 interface IRecipeList {
   searchQuery: string;
 }
 
-const RecipeList = ({ searchQuery }: IRecipeList): JSX.Element => {
-  const { value: searchQueryDebounced } = useDebounce(searchQuery, 500);
+const RecipesList = ({ searchQuery }: IRecipeList): JSX.Element => {
+  const { value: searchQueryDebounced } = useDebounce(searchQuery, 300);
 
   const { data: recipes, status: statusRecipes } =
     useRecipes(searchQueryDebounced);
 
-  if (statusRecipes === 'loading') {
-    return <></>;
+  if (!recipes || statusRecipes === 'loading') {
+    return <Loader />;
   }
 
-  if (!recipes) {
+  if (recipes.length === 0) {
     return (
       <div className="p-4 text-center bg-white rounded-md shadow-md">
         Nic nie znaleziono
@@ -42,4 +43,4 @@ const RecipeList = ({ searchQuery }: IRecipeList): JSX.Element => {
   );
 };
 
-export default RecipeList;
+export default RecipesList;

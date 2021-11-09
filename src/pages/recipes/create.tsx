@@ -1,6 +1,4 @@
 import { FormProvider, useForm } from 'react-hook-form';
-import { GetServerSideProps } from 'next';
-import { getSession } from 'next-auth/client';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
@@ -92,21 +90,6 @@ const RecipeCreatePage = (): JSX.Element => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const session = await getSession({ req });
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {},
-  };
-};
+RecipeCreatePage.protect = true;
 
 export default RecipeCreatePage;

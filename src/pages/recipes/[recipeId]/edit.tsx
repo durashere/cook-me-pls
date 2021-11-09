@@ -1,7 +1,7 @@
 import { dehydrate, QueryClient } from 'react-query';
 import { FormProvider, useForm } from 'react-hook-form';
-import { GetServerSideProps } from 'next';
-import { getSession } from 'next-auth/client';
+import { GetStaticPaths, GetStaticProps } from 'next';
+import { Session } from 'next-auth';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import ErrorPage from 'next/error';
@@ -24,14 +24,17 @@ interface ISelectedImage {
 }
 
 interface IRecipeEditPage {
-  userId: string;
-  recipeId: string;
+  params: { recipeId: string };
+  session: Session;
 }
 
-const RecipeEditPage = ({ userId, recipeId }: IRecipeEditPage): JSX.Element => {
+const RecipeEditPage = ({
+  params: { recipeId },
+  session,
+}: IRecipeEditPage): JSX.Element => {
   const { push } = useRouter();
 
-  const { data: recipe } = useRecipe(recipeId);
+  const { data: recipe, status: statusRecipe } = useRecipe(recipeId);
 
   const { mutateAsync: updateRecipe, status: statusRecipeUpdate } =
     useRecipeUpdate();
@@ -78,7 +81,11 @@ const RecipeEditPage = ({ userId, recipeId }: IRecipeEditPage): JSX.Element => {
     }
   };
 
-  if (userId !== recipe?.author) {
+  if (statusRecipe === 'loading') {
+    return <Loader />;
+  }
+
+  if (session?.user._id !== recipe?.author) {
     return (
       <ErrorPage statusCode={403} title="Nie możesz edytować tego przepisu" />
     );
@@ -122,39 +129,40 @@ const RecipeEditPage = ({ userId, recipeId }: IRecipeEditPage): JSX.Element => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({
-  query: { recipeId },
-  req,
-}) => {
-  const session = await getSession({ req });
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    };
-  }
-
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const queryClient = new QueryClient();
 
   const fetchRecipe = async (): Promise<IRecipe> => {
     await mongoose.connect(process.env.MONGODB_URL as string);
-    const recipe = await Recipe.findById(recipeId).lean();
+    const recipe = await Recipe.findById(params?.recipeId).lean();
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return JSON.parse(JSON.stringify(recipe));
   };
 
-  await queryClient.prefetchQuery(['recipes', recipeId], () => fetchRecipe());
+  await queryClient.prefetchQuery(['recipes', params?.recipeId], () =>
+    fetchRecipe()
+  );
 
   return {
     props: {
       dehydratedState: dehydrate(queryClient),
-      recipeId,
-      userId: session?.user._id,
+      params,
     },
   };
 };
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  await mongoose.connect(process.env.MONGODB_URL as string);
+
+  const recipes = await Recipe.find({}).lean();
+
+  const paths = recipes.map((recipe) => ({
+    params: { recipeId: recipe._id.toString() },
+  }));
+
+  return { paths, fallback: 'blocking' };
+};
+
+RecipeEditPage.protect = true;
 
 export default RecipeEditPage;
