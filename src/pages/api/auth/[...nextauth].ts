@@ -1,7 +1,7 @@
-import mongoose from 'mongoose';
 import NextAuth from 'next-auth';
 import Providers from 'next-auth/providers';
 
+import dbConnect from '@/backend/dbConnect';
 import User from '@/backend/models/user';
 
 export default NextAuth({
@@ -17,7 +17,7 @@ export default NextAuth({
   callbacks: {
     async signIn(user, account, profile) {
       if (user.image !== profile.picture.data.url) {
-        await mongoose.connect(process.env.MONGODB_URL as string);
+        await dbConnect();
         await User.findByIdAndUpdate(user.id, {
           image: profile.picture.data.url,
         });

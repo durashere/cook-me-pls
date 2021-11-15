@@ -1,13 +1,15 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import nextConnect from 'next-connect';
 
-import dbConnect from '@/backend/mongoose';
+import dbConnect from '@/backend/dbConnect';
 import User from '@/backend/models/user';
 
 const handler = nextConnect();
 
 handler.get<NextApiRequest, NextApiResponse>(async (req, res) => {
   try {
+    await dbConnect();
+
     const {
       query: { userId },
     } = req;
@@ -22,4 +24,4 @@ handler.get<NextApiRequest, NextApiResponse>(async (req, res) => {
   }
 });
 
-export default dbConnect(handler);
+export default handler;

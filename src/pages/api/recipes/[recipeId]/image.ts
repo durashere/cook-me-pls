@@ -3,10 +3,10 @@ import cloudinary from 'cloudinary';
 import formidable from 'formidable';
 import nextConnect from 'next-connect';
 
-import dbConnect from '@/backend/mongoose';
+import { IUser } from '@/backend/models/user';
+import dbConnect from '@/backend/dbConnect';
 import protect from '@/backend/middleware/protect';
 import Recipe from '@/backend/models/recipe';
-import { IUser } from '@/backend/models/user';
 
 interface NextApiRequestExtended extends NextApiRequest {
   user: IUser;
@@ -23,6 +23,8 @@ handler.patch<NextApiRequestExtended, NextApiResponse>(
   protect(),
   async (req, res) => {
     try {
+      await dbConnect();
+
       const { user } = req;
 
       const form = formidable({
@@ -99,4 +101,4 @@ export const config = {
   },
 };
 
-export default dbConnect(handler);
+export default handler;

@@ -3,7 +3,7 @@ import cloudinary from 'cloudinary';
 import nextConnect from 'next-connect';
 
 import { IUser } from '@/backend/models/user';
-import dbConnect from '@/backend/mongoose';
+import dbConnect from '@/backend/dbConnect';
 import protect from '@/backend/middleware/protect';
 import Recipe, { IRecipe } from '@/backend/models/recipe';
 
@@ -16,6 +16,8 @@ const handler = nextConnect();
 
 handler.get<NextApiRequest, NextApiResponse>(async (req, res) => {
   try {
+    await dbConnect();
+
     const {
       query: { recipeId },
     } = req;
@@ -34,6 +36,8 @@ handler.patch<NextApiRequestExtended, NextApiResponse>(
   protect(),
   async (req, res) => {
     try {
+      await dbConnect();
+
       const {
         body,
         user,
@@ -65,6 +69,8 @@ handler.delete<NextApiRequestExtended, NextApiResponse>(
   protect(),
   async (req, res) => {
     try {
+      await dbConnect();
+
       const {
         user,
         query: { recipeId },
@@ -99,4 +105,4 @@ handler.delete<NextApiRequestExtended, NextApiResponse>(
   }
 );
 
-export default dbConnect(handler);
+export default handler;

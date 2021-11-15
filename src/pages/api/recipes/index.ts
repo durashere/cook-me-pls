@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import nextConnect from 'next-connect';
 
 import { IUser } from '@/backend/models/user';
-import dbConnect from '@/backend/mongoose';
+import dbConnect from '@/backend/dbConnect';
 import protect from '@/backend/middleware/protect';
 import Recipe, { IRecipe } from '@/backend/models/recipe';
 
@@ -15,6 +15,8 @@ const handler = nextConnect();
 
 handler.get<NextApiRequestExtended, NextApiResponse>(async (req, res) => {
   try {
+    await dbConnect();
+
     const {
       query: { searchQuery },
     } = req;
@@ -37,6 +39,8 @@ handler.post<NextApiRequestExtended, NextApiResponse>(
   protect(),
   async (req, res) => {
     try {
+      await dbConnect();
+
       const { body, user } = req;
 
       const newRecipe = await Recipe.create({ ...body, author: user._id });
@@ -50,4 +54,4 @@ handler.post<NextApiRequestExtended, NextApiResponse>(
   }
 );
 
-export default dbConnect(handler);
+export default handler;

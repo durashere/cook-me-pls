@@ -5,9 +5,9 @@ import { Session } from 'next-auth';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import ErrorPage from 'next/error';
-import mongoose from 'mongoose';
 
 import Button from '@/components/Button';
+import dbConnect from '@/backend/dbConnect';
 import Loader from '@/components/Loader';
 import Recipe, { IRecipe } from '@/backend/models/recipe';
 import RecipeFormDetails from '@/modules/recipes/components/form/RecipeFormDetails';
@@ -133,7 +133,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const queryClient = new QueryClient();
 
   const fetchRecipe = async (): Promise<IRecipe> => {
-    await mongoose.connect(process.env.MONGODB_URL as string);
+    await dbConnect();
     const recipe = await Recipe.findById(params?.recipeId).lean();
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return JSON.parse(JSON.stringify(recipe));
@@ -152,9 +152,14 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  await mongoose.connect(process.env.MONGODB_URL as string);
+  const fetchRecipes = async (): Promise<IRecipe[]> => {
+    await dbConnect();
+    const recipes = await Recipe.find({}).lean();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return JSON.parse(JSON.stringify(recipes));
+  };
 
-  const recipes = await Recipe.find({}).lean();
+  const recipes = await fetchRecipes();
 
   const paths = recipes.map((recipe) => ({
     params: { recipeId: recipe._id.toString() },

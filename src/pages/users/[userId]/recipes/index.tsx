@@ -1,7 +1,7 @@
 import { dehydrate, QueryClient } from 'react-query';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import mongoose from 'mongoose';
 
+import dbConnect from '@/backend/dbConnect';
 import Recipe from '@/backend/models/recipe';
 import User, { IUser } from '@/backend/models/user';
 import UserRecipesHeader from '@/modules/users/components/UserRecipesHeader';
@@ -24,7 +24,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const queryClient = new QueryClient();
 
   const fetchUser = async (): Promise<IUser> => {
-    await mongoose.connect(process.env.MONGODB_URL as string);
+    await dbConnect();
     const user = await User.findById(params?.userId).lean();
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return JSON.parse(JSON.stringify(user));
@@ -33,7 +33,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   await queryClient.prefetchQuery(['users', params?.userId], () => fetchUser());
 
   const fetchUserRecipes = async (): Promise<IUser> => {
-    await mongoose.connect(process.env.MONGODB_URL as string);
+    await dbConnect();
     const recipe = await Recipe.find({ author: params?.userId })
       .sort({ name: 1 })
       .lean();
@@ -54,9 +54,14 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  await mongoose.connect(process.env.MONGODB_URL as string);
+  const fetchUsers = async (): Promise<IUser[]> => {
+    await dbConnect();
+    const users = await User.find({}).lean();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return JSON.parse(JSON.stringify(users));
+  };
 
-  const users = await User.find({}).lean();
+  const users = await fetchUsers();
 
   const paths = users.map((user) => ({
     params: { userId: user._id.toString() },

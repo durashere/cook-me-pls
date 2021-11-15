@@ -1,8 +1,8 @@
 import { dehydrate, QueryClient } from 'react-query';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import ErrorPage from 'next/error';
-import mongoose from 'mongoose';
 
+import dbConnect from '@/backend/dbConnect';
 import Recipe, { IRecipe } from '@/backend/models/recipe';
 import RecipeAuthor from '@/modules/recipes/components/recipe/RecipeAuthor';
 import RecipeHeader from '@/modules/recipes/components/recipe/RecipeHeader';
@@ -71,7 +71,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const queryClient = new QueryClient();
 
   const fetchRecipe = async (): Promise<IRecipe> => {
-    await mongoose.connect(process.env.MONGODB_URL as string);
+    await dbConnect();
     const recipe = await Recipe.findById(params?.recipeId).lean();
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return JSON.parse(JSON.stringify(recipe));
@@ -90,9 +90,14 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  await mongoose.connect(process.env.MONGODB_URL as string);
+  const fetchRecipes = async (): Promise<IRecipe[]> => {
+    await dbConnect();
+    const recipes = await Recipe.find({}).lean();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+    return JSON.parse(JSON.stringify(recipes));
+  };
 
-  const recipes = await Recipe.find({}).lean();
+  const recipes = await fetchRecipes();
 
   const paths = recipes.map((recipe) => ({
     params: { recipeId: recipe._id.toString() },
