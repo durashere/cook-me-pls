@@ -37,11 +37,11 @@ const RecipeFormImage = ({
       {selectedImage.url && (
         <div className="relative overflow-hidden rounded-md aspect-w-1 aspect-h-1">
           <Image
-            alt="recipe preview"
+            alt="Picture of the dish"
             layout="fill"
             objectFit="cover"
-            src={selectedImage.url}
-            unoptimized
+            priority
+            src={selectedImage.url || '/image-placeholder.png'}
           />
         </div>
       )}

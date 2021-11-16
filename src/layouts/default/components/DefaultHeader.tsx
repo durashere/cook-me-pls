@@ -32,6 +32,7 @@ const DefaultHeader = (): JSX.Element => {
               alt="Picture of the chicken"
               layout="fill"
               objectFit="cover"
+              priority
               src="/chicken.svg"
             />
           </div>
@@ -57,10 +58,11 @@ const DefaultHeader = (): JSX.Element => {
           <Menu.Button className="overflow-hidden transition-all rounded-md outline-none focus:outline-none hover:ring-2 focus:ring hover:ring-gray-400 focus:ring-gray-400">
             <div className="relative w-10 h-10 pointer-events-none">
               <Image
-                src={session.user.image || '/image-placeholder.png'}
+                alt="Avatar of the user"
                 layout="fill"
                 objectFit="cover"
-                alt="Avatar of the user"
+                priority
+                src={session.user.image || '/image-placeholder.png'}
               />
             </div>
           </Menu.Button>

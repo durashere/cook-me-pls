@@ -20,10 +20,11 @@ const RecipeCard = ({
     <div className="relative overflow-hidden rounded-md shadow-md cursor-pointer group">
       <div className="relative transition-all duration-500 aspect-w-1 aspect-h-1 group-hover:scale-110">
         <Image
-          src={image || '/image-placeholder.png'}
+          alt="Picture of the dish"
           layout="fill"
           objectFit="cover"
-          alt="Picture of the dish"
+          priority
+          src={image || '/image-placeholder.png'}
         />
       </div>
       <div className="absolute bottom-0 w-full from-transparent to-black h-3/4 bg-gradient-to-b" />
