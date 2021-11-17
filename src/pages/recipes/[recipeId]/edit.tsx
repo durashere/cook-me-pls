@@ -1,6 +1,7 @@
 import { dehydrate, QueryClient } from 'react-query';
 import { FormProvider, useForm } from 'react-hook-form';
 import { GetStaticPaths, GetStaticProps } from 'next';
+import { MdOutlineSave } from 'react-icons/md';
 import { Session } from 'next-auth';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -119,7 +120,7 @@ const RecipeEditPage = ({
               statusRecipeImageUpdate === 'success' ? (
                 <Loader color="#F59E0B" className="w-6 h-6" />
               ) : (
-                <span className="material-icons-outlined">save</span>
+                <MdOutlineSave />
               )}
             </div>
           </Button>

@@ -1,3 +1,4 @@
+import { MdOutlineDelete } from 'react-icons/md';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import Button from '@/components/Button';
@@ -19,7 +20,7 @@ const RecipeFormStep = ({
     <li className="flex flex-col gap-4 p-4 bg-white rounded-md shadow-md">
       <div className="flex items-center justify-between gap-4">
         <span>Krok {index + 1}</span>
-        <Button icon="delete" onClick={handleRemoveStep} />
+        <Button icon={<MdOutlineDelete />} onClick={handleRemoveStep} />
       </div>
       <TextArea
         fullWidth

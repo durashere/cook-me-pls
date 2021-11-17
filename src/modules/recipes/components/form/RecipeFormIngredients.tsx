@@ -1,3 +1,4 @@
+import { MdOutlineDelete } from 'react-icons/md';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { UNITS } from '@/app/constants';
@@ -39,7 +40,7 @@ const RecipeFormIngredient = ({
           required
           {...register(`ingredients.${index}.unit`)}
         />
-        <Button icon="delete" onClick={handleRemoveIngredient} />
+        <Button icon={<MdOutlineDelete />} onClick={handleRemoveIngredient} />
       </div>
     </li>
   );

@@ -1,3 +1,9 @@
+import {
+  MdOutlineListAlt,
+  MdOutlineLogin,
+  MdOutlineLogout,
+  MdOutlinePostAdd,
+} from 'react-icons/md';
 import { Menu } from '@headlessui/react';
 import { signIn, signOut, useSession } from 'next-auth/client';
 import classNames from 'classnames';
@@ -40,15 +46,13 @@ const DefaultHeader = (): JSX.Element => {
         </div>
       </Link>
 
+      {loading && <Button icon={<Loader className="w-6 h-6" />} />}
+
       {!loading && !session && (
         <Button onClick={handleSignIn}>
           <div className="flex items-center gap-2">
             <span className="font-medium">Zaloguj</span>
-            {loginLoading ? (
-              <Loader className="w-6 h-6" />
-            ) : (
-              <span className="material-icons-outlined">login</span>
-            )}
+            {loginLoading ? <Loader className="w-6 h-6" /> : <MdOutlineLogin />}
           </div>
         </Button>
       )}
@@ -79,7 +83,7 @@ const DefaultHeader = (): JSX.Element => {
                   )}
                   onClick={(): Promise<boolean> => push(`/profile/my-recipes`)}
                 >
-                  <span className="material-icons-outlined">library_books</span>
+                  <MdOutlineListAlt />
                   <span className="font-medium">Moje przepisy</span>
                 </button>
               )}
@@ -97,7 +101,7 @@ const DefaultHeader = (): JSX.Element => {
                   )}
                   onClick={(): Promise<boolean> => push('/recipes/create')}
                 >
-                  <span className="material-icons-outlined">post_add</span>
+                  <MdOutlinePostAdd />
                   <span className="font-medium">Dodaj przepis</span>
                 </button>
               )}
@@ -115,9 +119,7 @@ const DefaultHeader = (): JSX.Element => {
                   )}
                   onClick={handleSignOut}
                 >
-                  <span className="text-red-400 material-icons-outlined">
-                    logout
-                  </span>
+                  <MdOutlineLogout />
                   <span className="font-medium">Wyloguj</span>
                 </button>
               )}

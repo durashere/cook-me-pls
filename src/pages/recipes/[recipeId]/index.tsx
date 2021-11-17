@@ -1,5 +1,12 @@
 import { dehydrate, QueryClient } from 'react-query';
 import { GetStaticPaths, GetStaticProps } from 'next';
+import {
+  MdOutlineBarChart,
+  MdOutlineChevronLeft,
+  MdOutlineChevronRight,
+  MdOutlinePeopleAlt,
+  MdOutlineSchedule,
+} from 'react-icons/md';
 import ErrorPage from 'next/error';
 
 import dbConnect from '@/backend/dbConnect';
@@ -32,27 +39,37 @@ const RecipePage = ({ params: { recipeId } }: IRecipePage): JSX.Element => {
       <RecipeHeader image={recipe.image} name={recipe.name} />
 
       <div className="grid grid-flow-col gap-4">
-        <RecipeInfo icon="schedule">{recipe.cookTime}</RecipeInfo>
-        <RecipeInfo icon="people">
+        <RecipeInfo
+          icon={<MdOutlineSchedule className="text-yellow-500" size="3rem" />}
+        >
+          {recipe.cookTime}
+        </RecipeInfo>
+        <RecipeInfo
+          icon={<MdOutlinePeopleAlt className="text-yellow-500" size="3rem" />}
+        >
           <div className="flex justify-center w-full gap-4">
             <button
-              className="outline-none focus:outline-none material-icons-outlined"
+              className="outline-none focus:outline-none"
               onClick={removeServing}
               type="button"
             >
-              chevron_left
+              <MdOutlineChevronLeft />
             </button>
             <span className="flex justify-center w-4">{servings}</span>
             <button
-              className="outline-none focus:outline-none material-icons-outlined"
+              className="outline-none focus:outline-none"
               onClick={addServing}
               type="button"
             >
-              chevron_right
+              <MdOutlineChevronRight />
             </button>
           </div>
         </RecipeInfo>
-        <RecipeInfo icon="bar_chart">{recipe.difficulty}</RecipeInfo>
+        <RecipeInfo
+          icon={<MdOutlineBarChart className="text-yellow-500" size="3rem" />}
+        >
+          {recipe.difficulty}
+        </RecipeInfo>
       </div>
 
       <RecipeIngredients

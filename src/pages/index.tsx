@@ -1,5 +1,6 @@
 import { dehydrate, QueryClient } from 'react-query';
 import { GetStaticProps } from 'next';
+import { MdOutlineSearch } from 'react-icons/md';
 import { useState } from 'react';
 import classNames from 'classnames';
 
@@ -24,17 +25,15 @@ const RecipesPage = (): JSX.Element => {
           type="search"
           value={searchQuery}
         />
-        <span
+        <MdOutlineSearch
           className={classNames(
-            'absolute top-0 right-2 w-10 h-10 p-2 text-gray-300 pointer-events-none transition-all material-icons-outlined',
+            'absolute top-0 right-2 w-10 h-10 p-2 text-gray-300 pointer-events-none transition-all',
             {
               'opacity-0': searchQuery,
               'opacity-100 ': !searchQuery,
             }
           )}
-        >
-          search
-        </span>
+        />
       </div>
       <RecipesList searchQuery={searchQuery} />
     </div>

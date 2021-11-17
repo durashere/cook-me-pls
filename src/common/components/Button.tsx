@@ -1,12 +1,12 @@
-import { forwardRef } from 'react';
 import classNames from 'classnames';
+import React, { forwardRef } from 'react';
 
 interface IButton {
   children?: React.ReactNode;
   disabled?: boolean;
   fullWidth?: boolean;
   htmlType?: 'button' | 'submit' | 'reset';
-  icon?: string;
+  icon?: JSX.Element;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   type?: 'primary' | 'danger';
 }
@@ -35,7 +35,7 @@ const Button = forwardRef<HTMLButtonElement, IButton>(
       // eslint-disable-next-line react/button-has-type
       type={htmlType}
     >
-      {icon && <span className="material-icons-outlined">{icon}</span>}
+      {icon && icon}
       {children && (
         <span className={classNames('font-medium', { 'ml-2': icon })}>
           {children}

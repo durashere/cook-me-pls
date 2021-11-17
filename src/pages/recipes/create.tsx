@@ -1,4 +1,5 @@
 import { FormProvider, useForm } from 'react-hook-form';
+import { MdOutlineSave } from 'react-icons/md';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
@@ -80,7 +81,7 @@ const RecipeCreatePage = (): JSX.Element => {
               statusRecipeImageUpdate === 'success' ? (
                 <Loader color="#F59E0B" className="w-6 h-6" />
               ) : (
-                <span className="material-icons-outlined">save</span>
+                <MdOutlineSave />
               )}
             </div>
           </Button>

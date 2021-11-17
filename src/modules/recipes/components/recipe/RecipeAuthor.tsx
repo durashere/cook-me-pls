@@ -1,3 +1,4 @@
+import { MdOutlineChevronRight } from 'react-icons/md';
 import Link from 'next/link';
 
 import useUser from '@/modules/users/hooks/useUser';
@@ -17,7 +18,7 @@ const RecipeAuthor = ({ authorId }: IRecipeAuthor): JSX.Element => {
             <span className="text-base text-gray-400">Więcej od: </span>
             {author?.name}
           </p>
-          <span className="material-icons-outlined">chevron_right</span>
+          <MdOutlineChevronRight />
         </div>
       </Link>
     </div>

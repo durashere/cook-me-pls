@@ -1,11 +1,12 @@
+import { MdOutlineEdit, MdOutlineVisibility } from 'react-icons/md';
 import { useRouter } from 'next/router';
 
 import { IRecipe } from '@/backend/models/recipe';
 import Button from '@/components/Button';
 import DeleteModal from '@/components/DeleteModal';
+import Loader from '@/components/Loader';
 import useRecipeDelete from '@/modules/recipes/hooks/useRecipeDelete';
 import useUserRecipes from '@/modules/users/hooks/useUserRecipes';
-import Loader from '@/components/Loader';
 
 const RecipesListItem = ({
   name,
@@ -38,10 +39,10 @@ const RecipesListItem = ({
           onSubmit={handleDeleteRecipe}
           title="Usuń przepis"
         />
-        <Button icon="edit" onClick={handleEditRecipe}>
+        <Button icon={<MdOutlineEdit />} onClick={handleEditRecipe}>
           Edytuj
         </Button>
-        <Button icon="visibility" onClick={handleViewRecipe} />
+        <Button icon={<MdOutlineVisibility />} onClick={handleViewRecipe} />
       </div>
     </li>
   );

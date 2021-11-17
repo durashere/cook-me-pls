@@ -1,5 +1,6 @@
 import { AppProps } from 'next/app';
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
+import { IconContext } from 'react-icons';
 import { NextPage } from 'next';
 import { Provider } from 'next-auth/client';
 import { ReactQueryDevtools } from 'react-query/devtools';
@@ -31,22 +32,24 @@ const CustomApp = ({
         <title>Cook me pls</title>
       </Head>
 
-      <Provider session={session}>
-        <QueryClientProvider client={queryClient}>
-          <Hydrate state={pageProps.dehydratedState}>
-            <DefaultLayout>
-              {Component.protect ? (
-                <Protect>
+      <IconContext.Provider value={{ size: '1.5rem' }}>
+        <Provider session={session}>
+          <QueryClientProvider client={queryClient}>
+            <Hydrate state={pageProps.dehydratedState}>
+              <DefaultLayout>
+                {Component.protect ? (
+                  <Protect>
+                    <Component {...pageProps} />
+                  </Protect>
+                ) : (
                   <Component {...pageProps} />
-                </Protect>
-              ) : (
-                <Component {...pageProps} />
-              )}
-            </DefaultLayout>
-          </Hydrate>
-          <ReactQueryDevtools initialIsOpen={false} />
-        </QueryClientProvider>
-      </Provider>
+                )}
+              </DefaultLayout>
+            </Hydrate>
+            <ReactQueryDevtools initialIsOpen={false} />
+          </QueryClientProvider>
+        </Provider>
+      </IconContext.Provider>
     </>
   );
 };
