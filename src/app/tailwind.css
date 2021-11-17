@@ -85,6 +85,6 @@
 
 @layer components {
   .input {
-    @apply block placeholder-gray-300 transition-all border-none rounded-md shadow outline-none ring-1 hover:ring-gray-400/50 ring-gray-300 hover:ring-2 focus:ring focus:ring-gray-400/50;
+    @apply block placeholder-gray-300 transition-all border-none rounded-md shadow outline-none ring-1 hover:ring-gray-400 ring-gray-300 hover:ring-2 focus:ring focus:ring-gray-400;
   }
 }

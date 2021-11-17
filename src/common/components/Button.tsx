@@ -21,11 +21,11 @@ const Button = forwardRef<HTMLButtonElement, IButton>(
         'bg-transparent flex items-center justify-center p-2 transition-all rounded-md shadow outline-none focus:outline-none ring-1 hover:ring-2 whitespace-nowrap focus:ring',
         {
           'w-full': fullWidth,
-          'text-gray-500 ring-gray-300 hover:ring-gray-400/50 focus:ring-gray-400/50':
+          'text-gray-500 ring-gray-300 hover:ring-gray-400 focus:ring-gray-400':
             type === undefined,
-          'text-yellow-500 ring-yellow-400 hover:ring-yellow-400 focus:ring-yellow-400':
+          'text-yellow-500 ring-yellow-300 hover:ring-yellow-400 focus:ring-yellow-400':
             type === 'primary',
-          'text-red-500 ring-red-400 hover:ring-red-400 focus:ring-red-400':
+          'text-red-500 ring-red-300 hover:ring-red-400 focus:ring-red-400':
             type === 'danger',
         }
       )}
