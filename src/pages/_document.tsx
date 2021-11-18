@@ -5,7 +5,7 @@ class CustomDocument extends NextDocument {
     return (
       <Html>
         <Head>
-          <link rel="shortcut icon" href="/chicken.svg" />
+          <link rel="icon" href="/chicken.svg" />
         </Head>
         <body className="text-gray-700 bg-gray-100 font-poppins">
           <Main />

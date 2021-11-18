@@ -32,6 +32,7 @@ const CustomApp = ({
         <title>Cook me pls</title>
       </Head>
 
+      {/* eslint-disable-next-line react/jsx-no-constructed-context-values */}
       <IconContext.Provider value={{ size: '1.5rem' }}>
         <Provider session={session}>
           <QueryClientProvider client={queryClient}>

@@ -26,6 +26,13 @@ module.exports = {
     'prettier',
   ],
   rules: {
+    'react/function-component-definition': [
+      'error',
+      {
+        namedComponents: 'arrow-function',
+        unnamedComponents: 'function-expression',
+      },
+    ],
     '@typescript-eslint/explicit-function-return-type': 'error',
     '@typescript-eslint/no-explicit-any': 'error',
     'import/prefer-default-export': 'off',
