@@ -7,7 +7,18 @@ module.exports = {
       poppins: ['Poppins', 'sans-serif'],
       lobster: ['Lobster', 'cursive'],
     },
-    extend: {},
+    extend: {
+      keyframes: {
+        'puff-in-center': {
+          '0%': { opacity: 0, filter: 'blur(4px)' },
+          '100%': { opacity: 1, filter: 'blur(0px)' },
+        },
+      },
+      animation: {
+        'puff-in-center':
+          'puff-in-center 0.7s cubic-bezier(0.470, 0.000, 0.745, 0.715) both',
+      },
+    },
   },
   variants: {
     extend: {},
