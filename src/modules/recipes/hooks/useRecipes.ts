@@ -13,6 +13,8 @@ const getRecipes = async (searchQuery: string): Promise<IRecipe[]> => {
 const useRecipes = (
   searchQuery: string
 ): UseQueryResult<IRecipe[], AxiosError> =>
-  useQuery(['recipes', searchQuery], () => getRecipes(searchQuery));
+  useQuery(['recipes', searchQuery], () => getRecipes(searchQuery), {
+    keepPreviousData: true,
+  });
 
 export default useRecipes;
