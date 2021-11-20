@@ -1,4 +1,3 @@
-import { IRecipe } from '@/backend/models/recipe';
 import RecipeCard from '@/modules/recipes/components/RecipeCard';
 import useDebounce from '@/hooks/useDebounce';
 import useRecipes from '@/modules/recipes/hooks/useRecipes';
@@ -28,16 +27,8 @@ const RecipesList = ({ searchQuery }: IRecipeList): JSX.Element => {
 
   return (
     <ul className="grid gap-4 sm:grid-cols-2">
-      {recipes.map((recipe: IRecipe) => (
-        <RecipeCard
-          _id={recipe._id}
-          cookTime={recipe.cookTime}
-          difficulty={recipe.difficulty}
-          image={recipe.image}
-          key={recipe._id}
-          name={recipe.name}
-          servings={recipe.servings}
-        />
+      {recipes.map((recipe) => (
+        <RecipeCard recipe={recipe} />
       ))}
     </ul>
   );

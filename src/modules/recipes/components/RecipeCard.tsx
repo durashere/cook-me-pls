@@ -3,18 +3,12 @@ import Link from 'next/link';
 
 import { IRecipe } from '@/backend/models/recipe';
 
-type IRecipeCard = Pick<
-  IRecipe,
-  '_id' | 'cookTime' | 'difficulty' | 'image' | 'name' | 'servings'
->;
+interface IRecipeCard {
+  recipe: IRecipe;
+}
 
 const RecipeCard = ({
-  _id,
-  cookTime,
-  difficulty,
-  image,
-  name,
-  servings,
+  recipe: { _id, cookTime, difficulty, image, name, servings },
 }: IRecipeCard): JSX.Element => (
   <Link href={`/recipes/${_id}`} passHref>
     <div className="relative overflow-hidden rounded-md shadow-md cursor-pointer group">

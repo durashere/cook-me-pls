@@ -20,15 +20,7 @@ const UserRecipesList = ({ userId }: IUserRecipes): JSX.Element => {
     <div>
       <ul className="space-y-4">
         {userRecipes.map((recipe) => (
-          <RecipeCard
-            _id={recipe._id}
-            cookTime={recipe.cookTime}
-            difficulty={recipe.difficulty}
-            image={recipe.image}
-            key={recipe._id}
-            name={recipe.name}
-            servings={recipe.servings}
-          />
+          <RecipeCard recipe={recipe} />
         ))}
       </ul>
     </div>
