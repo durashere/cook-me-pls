@@ -2,10 +2,12 @@ import { dehydrate, QueryClient } from 'react-query';
 import { GetStaticPaths, GetStaticProps } from 'next';
 
 import dbConnect from '@/backend/dbConnect';
+import List from '@/components/List';
 import Recipe from '@/backend/models/recipe';
+import RecipeCard from '@/modules/recipes/components/RecipeCard';
 import User, { IUser } from '@/backend/models/user';
 import UserRecipesHeader from '@/modules/users/components/UserRecipesHeader';
-import UserRecipesList from '@/modules/users/components/UserRecipesList';
+import useUserRecipes from '@/modules/users/hooks/useUserRecipes';
 
 interface IUserRecipesPage {
   params: { userId: string };
@@ -13,12 +15,25 @@ interface IUserRecipesPage {
 
 const UserRecipesPage = ({
   params: { userId },
-}: IUserRecipesPage): JSX.Element => (
-  <div className="space-y-4">
-    <UserRecipesHeader userId={userId} />
-    <UserRecipesList userId={userId} />
-  </div>
-);
+}: IUserRecipesPage): JSX.Element | null => {
+  const { data: userRecipes } = useUserRecipes(userId);
+
+  if (!userRecipes) {
+    return null;
+  }
+
+  return (
+    <div className="space-y-4">
+      <UserRecipesHeader userId={userId} />
+      <List
+        items={userRecipes}
+        renderItem={(recipe): React.ReactElement => (
+          <RecipeCard recipe={recipe} />
+        )}
+      />
+    </div>
+  );
+};
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const queryClient = new QueryClient();

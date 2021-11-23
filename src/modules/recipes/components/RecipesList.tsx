@@ -1,36 +1,30 @@
+import { ReactElement } from 'react';
+
+import List from '@/components/List';
 import RecipeCard from '@/modules/recipes/components/RecipeCard';
 import useDebounce from '@/hooks/useDebounce';
 import useRecipes from '@/modules/recipes/hooks/useRecipes';
-import Loader from '@/components/Loader';
 
 interface IRecipeList {
   searchQuery: string;
 }
 
-const RecipesList = ({ searchQuery }: IRecipeList): JSX.Element => {
+const RecipesList = ({ searchQuery }: IRecipeList): JSX.Element | null => {
   const { value: searchQueryDebounced } = useDebounce(searchQuery, 300);
 
-  const { data: recipes, status: statusRecipes } =
-    useRecipes(searchQueryDebounced);
+  const { data: recipes } = useRecipes(searchQueryDebounced);
 
-  if (!recipes || statusRecipes === 'loading') {
-    return <Loader />;
-  }
-
-  if (recipes.length === 0) {
-    return (
-      <div className="p-4 text-center bg-white rounded-md shadow-md">
-        Nic nie znaleziono
-      </div>
-    );
+  if (!recipes) {
+    return null;
   }
 
   return (
-    <ul className="grid gap-4 sm:grid-cols-2">
-      {recipes.map((recipe) => (
-        <RecipeCard recipe={recipe} />
-      ))}
-    </ul>
+    <div className="grid gap-4 sm:grid-cols-2">
+      <List
+        items={recipes}
+        renderItem={(recipe): ReactElement => <RecipeCard recipe={recipe} />}
+      />
+    </div>
   );
 };
 
