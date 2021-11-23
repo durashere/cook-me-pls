@@ -1,3 +1,5 @@
+import { ReactElement } from 'react';
+
 import { IStep } from '@/backend/models/recipe';
 import RecipeSection from '@/modules/recipes/components/RecipeSection';
 
@@ -10,7 +12,7 @@ interface IRecipeStepWithIndex extends IRecipeStep {
 const RecipeStep = ({
   index,
   instruction,
-}: IRecipeStepWithIndex): JSX.Element => (
+}: IRecipeStepWithIndex): ReactElement => (
   <li>
     <p className="text-lg font-medium text-gray-600">Krok {index + 1}</p>
     <p className="px-4 py-2 m-2 text-sm text-gray-500 border-l-2">
@@ -23,7 +25,7 @@ interface IRecipeSteps {
   steps: IStep[];
 }
 
-const RecipeSteps = ({ steps }: IRecipeSteps): JSX.Element => (
+const RecipeSteps = ({ steps }: IRecipeSteps): ReactElement => (
   <RecipeSection>
     <ul className="space-y-8">
       {steps.map((step: IStep, index: number) => (

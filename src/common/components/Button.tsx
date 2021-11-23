@@ -1,12 +1,12 @@
 import classNames from 'classnames';
-import React, { forwardRef } from 'react';
+import React, { forwardRef, ReactElement } from 'react';
 
 interface IButton {
   children?: React.ReactNode;
   disabled?: boolean;
   fullWidth?: boolean;
   htmlType?: 'button' | 'submit' | 'reset';
-  icon?: JSX.Element;
+  icon?: ReactElement;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   type?: 'primary' | 'danger';
 }

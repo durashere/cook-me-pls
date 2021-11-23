@@ -1,7 +1,8 @@
+import { ReactElement } from 'react';
 import NextDocument, { Html, Head, Main, NextScript } from 'next/document';
 
 class CustomDocument extends NextDocument {
-  render(): JSX.Element {
+  render(): ReactElement {
     return (
       <Html>
         <Head>

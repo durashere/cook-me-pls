@@ -1,4 +1,5 @@
 import { MdOutlineDelete } from 'react-icons/md';
+import { ReactElement } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { UNITS } from '@/app/constants';
@@ -15,7 +16,7 @@ interface IRecipeFormIngredient {
 const RecipeFormIngredient = ({
   handleRemoveIngredient,
   index,
-}: IRecipeFormIngredient): JSX.Element => {
+}: IRecipeFormIngredient): ReactElement => {
   const { register } = useFormContext();
 
   return (
@@ -46,7 +47,7 @@ const RecipeFormIngredient = ({
   );
 };
 
-const RecipeFormIngredients = (): JSX.Element => {
+const RecipeFormIngredients = (): ReactElement => {
   const { control } = useFormContext();
 
   const {

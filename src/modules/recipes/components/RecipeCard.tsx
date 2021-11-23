@@ -1,3 +1,4 @@
+import { ReactElement } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -9,7 +10,7 @@ interface IRecipeCard {
 
 const RecipeCard = ({
   recipe: { _id, cookTime, difficulty, image, name, servings },
-}: IRecipeCard): JSX.Element => (
+}: IRecipeCard): ReactElement => (
   <Link href={`/recipes/${_id}`} passHref>
     <div className="relative overflow-hidden rounded-md shadow-md cursor-pointer group">
       <div className="relative transition-all duration-500 aspect-w-1 aspect-h-1 group-hover:scale-110">

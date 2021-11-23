@@ -1,6 +1,6 @@
 import { Dialog } from '@headlessui/react';
 import { MdOutlineDelete } from 'react-icons/md';
-import { useState } from 'react';
+import { ReactElement, useState } from 'react';
 
 import Button from '@/components/Button';
 
@@ -14,7 +14,7 @@ const DeleteModal = ({
   description,
   onSubmit,
   title,
-}: IDeleteModal): JSX.Element => {
+}: IDeleteModal): ReactElement => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggleModal = (): void => {

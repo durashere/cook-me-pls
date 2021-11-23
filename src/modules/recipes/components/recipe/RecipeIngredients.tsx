@@ -1,3 +1,5 @@
+import { ReactElement } from 'react';
+
 import { IIngredient } from '@/backend/models/recipe';
 import RecipeSection from '@/modules/recipes/components/RecipeSection';
 
@@ -7,7 +9,7 @@ const RecipeIngredient = ({
   name,
   quantity,
   unit,
-}: IRecipeIngredient): JSX.Element => (
+}: IRecipeIngredient): ReactElement => (
   <li className="flex items-center justify-between py-2 first:pt-0 last:pb-0">
     <span className="font-medium text-gray-600 first-letter:capitalize">
       {name}
@@ -24,7 +26,7 @@ interface IRecipeIngredients {
 const RecipeIngredients = ({
   ingredients,
   servings,
-}: IRecipeIngredients): JSX.Element => (
+}: IRecipeIngredients): ReactElement => (
   <RecipeSection>
     <ul className="divide-y-2 divide-dotted">
       {ingredients.map((ingredient: IIngredient) => (

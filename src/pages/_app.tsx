@@ -3,8 +3,8 @@ import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { IconContext } from 'react-icons';
 import { NextPage } from 'next';
 import { Provider } from 'next-auth/client';
+import { ReactElement, useState } from 'react';
 import { ReactQueryDevtools } from 'react-query/devtools';
-import { useState } from 'react';
 import Head from 'next/head';
 
 import DefaultLayout from '@/layouts/default/components/DefaultLayout';
@@ -23,7 +23,7 @@ type CustomAppProps = AppProps & {
 const CustomApp = ({
   Component,
   pageProps: { session, ...pageProps },
-}: CustomAppProps): JSX.Element => {
+}: CustomAppProps): ReactElement => {
   const [queryClient] = useState(() => new QueryClient());
 
   return (

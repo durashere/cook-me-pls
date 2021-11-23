@@ -1,7 +1,7 @@
 import { dehydrate, QueryClient } from 'react-query';
 import { GetStaticProps } from 'next';
 import { MdOutlineSearch } from 'react-icons/md';
-import { useState } from 'react';
+import { ReactElement, useState } from 'react';
 import classNames from 'classnames';
 
 import dbConnect from '@/backend/dbConnect';
@@ -9,7 +9,7 @@ import Input from '@/components/Input';
 import Recipe, { IRecipe } from '@/backend/models/recipe';
 import RecipesList from '@/modules/recipes/components/RecipesList';
 
-const RecipesPage = (): JSX.Element => {
+const RecipesPage = (): ReactElement => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleSearch = (e: React.FormEvent<HTMLInputElement>): void =>

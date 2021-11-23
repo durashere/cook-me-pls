@@ -1,10 +1,10 @@
+import { cloneElement, ReactElement } from 'react';
 import { useSession } from 'next-auth/client';
 import ErrorPage from 'next/error';
-import { cloneElement } from 'react';
 
 import Loader from '@/components/Loader';
 
-const Protect = ({ children }: { children: JSX.Element }): JSX.Element => {
+const Protect = ({ children }: { children: ReactElement }): ReactElement => {
   const [session, loading] = useSession();
 
   if (loading) {

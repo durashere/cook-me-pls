@@ -1,4 +1,5 @@
 import { MdOutlineDelete } from 'react-icons/md';
+import { ReactElement } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import Button from '@/components/Button';
@@ -13,7 +14,7 @@ interface IRecipeFormStep {
 const RecipeFormStep = ({
   handleRemoveStep,
   index,
-}: IRecipeFormStep): JSX.Element => {
+}: IRecipeFormStep): ReactElement => {
   const { register } = useFormContext();
 
   return (
@@ -32,7 +33,7 @@ const RecipeFormStep = ({
   );
 };
 
-const RecipeFormSteps = (): JSX.Element => {
+const RecipeFormSteps = (): ReactElement => {
   const { control } = useFormContext();
 
   const {

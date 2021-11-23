@@ -1,11 +1,13 @@
+import { ReactElement } from 'react';
+
 import RecipeSection from '@/modules/recipes/components/RecipeSection';
 
 interface IRecipeInfo {
   children: React.ReactNode;
-  icon: JSX.Element;
+  icon: ReactElement;
 }
 
-const RecipeInfo = ({ children, icon }: IRecipeInfo): JSX.Element => (
+const RecipeInfo = ({ children, icon }: IRecipeInfo): ReactElement => (
   <RecipeSection>
     <div className="aspect-w-16 aspect-h-9">
       <div className="flex flex-col items-center justify-center">

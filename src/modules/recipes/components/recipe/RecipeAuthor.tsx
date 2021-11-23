@@ -1,4 +1,5 @@
 import { MdOutlineChevronRight } from 'react-icons/md';
+import { ReactElement } from 'react';
 import Link from 'next/link';
 
 import useUser from '@/modules/users/hooks/useUser';
@@ -7,7 +8,7 @@ interface IRecipeAuthor {
   authorId: string;
 }
 
-const RecipeAuthor = ({ authorId }: IRecipeAuthor): JSX.Element => {
+const RecipeAuthor = ({ authorId }: IRecipeAuthor): ReactElement => {
   const { data: author } = useUser(authorId);
 
   return (

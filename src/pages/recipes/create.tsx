@@ -1,7 +1,7 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { MdOutlineSave } from 'react-icons/md';
+import { ReactElement, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 
 import { IRecipe } from '@/backend/models/recipe';
 import Button from '@/components/Button';
@@ -18,7 +18,7 @@ interface ISelectedImage {
   url?: string;
 }
 
-const RecipeCreatePage = (): JSX.Element => {
+const RecipeCreatePage = (): ReactElement => {
   const [selectedImage, setSelectedImage] = useState<ISelectedImage>({
     image: undefined,
     url: undefined,

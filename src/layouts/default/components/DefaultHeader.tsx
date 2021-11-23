@@ -9,13 +9,13 @@ import { signIn, signOut, useSession } from 'next-auth/client';
 import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { ReactElement, useState } from 'react';
 import router from 'next/router';
 
 import Button from '@/components/Button';
 import Loader from '@/components/Loader';
 
-const DefaultHeader = (): JSX.Element => {
+const DefaultHeader = (): ReactElement => {
   const { push } = router;
 
   const [loginLoading, setLoginLoading] = useState(false);
@@ -72,7 +72,7 @@ const DefaultHeader = (): JSX.Element => {
           </Menu.Button>
           <Menu.Items className="absolute right-0 z-10 flex flex-col items-start w-56 p-2 mt-2 bg-white rounded-md shadow-xl outline-none focus:outline-none">
             <Menu.Item>
-              {({ active }): JSX.Element => (
+              {({ active }): ReactElement => (
                 <button
                   type="button"
                   className={classNames(
@@ -90,7 +90,7 @@ const DefaultHeader = (): JSX.Element => {
             </Menu.Item>
 
             <Menu.Item>
-              {({ active }): JSX.Element => (
+              {({ active }): ReactElement => (
                 <button
                   type="button"
                   className={classNames(
@@ -108,7 +108,7 @@ const DefaultHeader = (): JSX.Element => {
             </Menu.Item>
 
             <Menu.Item>
-              {({ active }): JSX.Element => (
+              {({ active }): ReactElement => (
                 <button
                   type="button"
                   className={classNames(

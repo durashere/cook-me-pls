@@ -1,10 +1,11 @@
+import { ReactElement } from 'react';
 import Image from 'next/image';
 
 import { IRecipe } from '@/backend/models/recipe';
 
 type IRecipeHeader = Pick<IRecipe, 'image' | 'name'>;
 
-const RecipeHeader = ({ image, name }: IRecipeHeader): JSX.Element => (
+const RecipeHeader = ({ image, name }: IRecipeHeader): ReactElement => (
   <div className="space-y-4">
     <div className="relative overflow-hidden rounded-md shadow-md">
       <div className="relative aspect-w-1 aspect-h-1">

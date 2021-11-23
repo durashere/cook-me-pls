@@ -1,3 +1,4 @@
+import { ReactElement } from 'react';
 import ErrorPage from 'next/error';
 
 import useUser from '@/modules/users/hooks/useUser';
@@ -6,7 +7,7 @@ interface IUserRecipesHeader {
   userId: string;
 }
 
-const UserRecipesHeader = ({ userId }: IUserRecipesHeader): JSX.Element => {
+const UserRecipesHeader = ({ userId }: IUserRecipesHeader): ReactElement => {
   const { data: user } = useUser(userId);
 
   if (!user) {

@@ -9,7 +9,7 @@ interface IRecipeList {
   searchQuery: string;
 }
 
-const RecipesList = ({ searchQuery }: IRecipeList): JSX.Element | null => {
+const RecipesList = ({ searchQuery }: IRecipeList): ReactElement | null => {
   const { value: searchQueryDebounced } = useDebounce(searchQuery, 300);
 
   const { data: recipes } = useRecipes(searchQueryDebounced);

@@ -1,5 +1,6 @@
 import { dehydrate, QueryClient } from 'react-query';
 import { GetStaticPaths, GetStaticProps } from 'next';
+import { ReactElement } from 'react';
 
 import dbConnect from '@/backend/dbConnect';
 import List from '@/components/List';
@@ -15,7 +16,7 @@ interface IUserRecipesPage {
 
 const UserRecipesPage = ({
   params: { userId },
-}: IUserRecipesPage): JSX.Element | null => {
+}: IUserRecipesPage): ReactElement | null => {
   const { data: userRecipes } = useUserRecipes(userId);
 
   if (!userRecipes) {

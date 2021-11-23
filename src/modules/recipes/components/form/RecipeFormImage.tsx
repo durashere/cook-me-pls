@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, { useRef } from 'react';
+import React, { ReactElement, useRef } from 'react';
 
 import Button from '@/components/Button';
 import RecipeFormSection from '@/modules/recipes/components/RecipeFormSection';
@@ -17,7 +17,7 @@ interface IRecipeFormImage {
 const RecipeFormImage = ({
   selectedImage,
   setSelectedImage,
-}: IRecipeFormImage): JSX.Element => {
+}: IRecipeFormImage): ReactElement => {
   const imageUploadInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageUploadButtonClick = (): void => {

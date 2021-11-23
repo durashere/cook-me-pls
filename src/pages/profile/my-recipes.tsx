@@ -19,7 +19,7 @@ const RecipesListItem = ({
 }: {
   name: string;
   recipeId: string;
-}): JSX.Element => {
+}): ReactElement => {
   const { push } = useRouter();
   const { mutate: deleteRecipe } = useRecipeDelete();
 
@@ -57,7 +57,7 @@ const MyRecipesPage = ({
   session: {
     user: { _id: userId },
   },
-}: IMyRecipesPage): JSX.Element | null => {
+}: IMyRecipesPage): ReactElement | null => {
   const { push } = useRouter();
 
   const { data: userRecipes } = useUserRecipes(userId);

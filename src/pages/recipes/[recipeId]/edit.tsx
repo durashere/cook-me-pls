@@ -2,8 +2,8 @@ import { dehydrate, QueryClient } from 'react-query';
 import { FormProvider, useForm } from 'react-hook-form';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { MdOutlineSave } from 'react-icons/md';
+import { ReactElement, useEffect, useState } from 'react';
 import { Session } from 'next-auth';
-import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import ErrorPage from 'next/error';
 
@@ -32,7 +32,7 @@ interface IRecipeEditPage {
 const RecipeEditPage = ({
   params: { recipeId },
   session,
-}: IRecipeEditPage): JSX.Element => {
+}: IRecipeEditPage): ReactElement => {
   const { push } = useRouter();
 
   const { data: recipe, status: statusRecipe } = useRecipe(recipeId);

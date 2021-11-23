@@ -1,5 +1,3 @@
-import { dehydrate, QueryClient } from 'react-query';
-import { GetStaticPaths, GetStaticProps } from 'next';
 import {
   MdOutlineBarChart,
   MdOutlineChevronLeft,
@@ -7,6 +5,9 @@ import {
   MdOutlinePeopleAlt,
   MdOutlineSchedule,
 } from 'react-icons/md';
+import { dehydrate, QueryClient } from 'react-query';
+import { GetStaticPaths, GetStaticProps } from 'next';
+import { ReactElement } from 'react';
 import ErrorPage from 'next/error';
 
 import dbConnect from '@/backend/dbConnect';
@@ -23,7 +24,7 @@ interface IRecipePage {
   params: { recipeId: string };
 }
 
-const RecipePage = ({ params: { recipeId } }: IRecipePage): JSX.Element => {
+const RecipePage = ({ params: { recipeId } }: IRecipePage): ReactElement => {
   const { data: recipe } = useRecipe(recipeId);
 
   const { servings, addServing, removeServing } = useServings({
