@@ -1,21 +1,44 @@
+import { MongoClient } from 'mongodb';
+import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
+import FacebookProvider from 'next-auth/providers/facebook';
 import NextAuth from 'next-auth';
-import Providers from 'next-auth/providers';
 
-import dbConnect from '@/backend/dbConnect';
 import User from '@/backend/models/user';
+import dbConnect from '@/backend/dbConnect';
+
+const { FACEBOOK_CLIENT_ID, FACEBOOK_CLIENT_SECRET, MONGODB_URL } = process.env;
+
+if (!FACEBOOK_CLIENT_ID) {
+  throw new Error(
+    'Please define the FACEBOOK_CLIENT_ID environment variable inside .env.local'
+  );
+}
+if (!FACEBOOK_CLIENT_SECRET) {
+  throw new Error(
+    'Please define the FACEBOOK_CLIENT_SECRET environment variable inside .env.local'
+  );
+}
+if (!MONGODB_URL) {
+  throw new Error(
+    'Please define the MONGODB_URL environment variable inside .env.local'
+  );
+}
+
+const client = new MongoClient(MONGODB_URL);
+const clientPromise = client.connect();
 
 export default NextAuth({
   providers: [
-    Providers.Facebook({
-      clientId: process.env.FACEBOOK_CLIENT_ID,
-      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+    FacebookProvider({
+      clientId: FACEBOOK_CLIENT_ID,
+      clientSecret: FACEBOOK_CLIENT_SECRET,
     }),
   ],
 
-  database: process.env.MONGODB_URL,
+  adapter: MongoDBAdapter(clientPromise),
 
   callbacks: {
-    async signIn(user, account, profile) {
+    async signIn({ user, profile }) {
       if (user.image !== profile.picture.data.url) {
         await dbConnect();
         await User.findByIdAndUpdate(user.id, {
@@ -25,10 +48,12 @@ export default NextAuth({
       return true;
     },
 
-    session(session, user) {
-      // eslint-disable-next-line no-param-reassign
-      session.user._id = user.id as string;
-      return session;
+    async session({ session, user }) {
+      const updatedSession = {
+        ...session,
+        user: { ...session.user, _id: user.id },
+      };
+      return updatedSession;
     },
   },
 });

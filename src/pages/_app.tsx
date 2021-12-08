@@ -2,9 +2,9 @@ import { AppProps } from 'next/app';
 import { Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { IconContext } from 'react-icons';
 import { NextPage } from 'next';
-import { Provider } from 'next-auth/client';
 import { ReactElement, useState } from 'react';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { SessionProvider } from 'next-auth/react';
 import Head from 'next/head';
 
 import DefaultLayout from '@/layouts/default/components/DefaultLayout';
@@ -34,7 +34,7 @@ const CustomApp = ({
 
       {/* eslint-disable-next-line react/jsx-no-constructed-context-values */}
       <IconContext.Provider value={{ size: '1.5rem' }}>
-        <Provider session={session}>
+        <SessionProvider session={session}>
           <QueryClientProvider client={queryClient}>
             <Hydrate state={pageProps.dehydratedState}>
               <DefaultLayout>
@@ -49,7 +49,7 @@ const CustomApp = ({
             </Hydrate>
             <ReactQueryDevtools initialIsOpen={false} />
           </QueryClientProvider>
-        </Provider>
+        </SessionProvider>
       </IconContext.Provider>
     </>
   );

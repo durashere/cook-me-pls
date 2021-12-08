@@ -1,17 +1,17 @@
 import { cloneElement, ReactElement } from 'react';
-import { useSession } from 'next-auth/client';
+import { useSession } from 'next-auth/react';
 import ErrorPage from 'next/error';
 
 import Loader from '@/components/Loader';
 
 const Protect = ({ children }: { children: ReactElement }): ReactElement => {
-  const [session, loading] = useSession();
+  const { data: session, status: sessionStatus } = useSession();
 
-  if (loading) {
+  if (sessionStatus === 'loading') {
     return <Loader />;
   }
 
-  if (!loading && !session) {
+  if (sessionStatus === 'unauthenticated') {
     return (
       <ErrorPage statusCode={403} title="Nie masz dostępu do tej strony" />
     );

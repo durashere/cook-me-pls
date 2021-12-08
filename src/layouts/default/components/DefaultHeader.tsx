@@ -5,11 +5,11 @@ import {
   MdOutlinePostAdd,
 } from 'react-icons/md';
 import { Menu } from '@headlessui/react';
-import { signIn, signOut, useSession } from 'next-auth/client';
+import { ReactElement, useState } from 'react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import classNames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { ReactElement, useState } from 'react';
 import router from 'next/router';
 
 import Button from '@/components/Button';
@@ -20,7 +20,7 @@ const DefaultHeader = (): ReactElement => {
 
   const [loginLoading, setLoginLoading] = useState(false);
 
-  const [session, loading] = useSession();
+  const { data: session, status: sessionStatus } = useSession();
 
   const handleSignIn = async (): Promise<void> => {
     setLoginLoading(true);
@@ -46,9 +46,11 @@ const DefaultHeader = (): ReactElement => {
         </div>
       </Link>
 
-      {loading && <Button icon={<Loader className="w-6 h-6" />} />}
+      {sessionStatus === 'loading' && (
+        <Button icon={<Loader className="w-6 h-6" />} />
+      )}
 
-      {!loading && !session && (
+      {sessionStatus === 'unauthenticated' && (
         <Button onClick={handleSignIn}>
           <div className="flex items-center gap-2">
             <span className="font-medium">Zaloguj</span>
@@ -57,7 +59,7 @@ const DefaultHeader = (): ReactElement => {
         </Button>
       )}
 
-      {!loading && session && (
+      {sessionStatus === 'authenticated' && session && (
         <Menu as="div" className="relative w-10 h-10">
           <Menu.Button className="overflow-hidden transition-all rounded-md outline-none focus:outline-none hover:ring-2 focus:ring hover:ring-gray-400 focus:ring-gray-400">
             <div className="relative w-10 h-10 pointer-events-none">
