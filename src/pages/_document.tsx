@@ -4,7 +4,7 @@ import NextDocument, { Html, Head, Main, NextScript } from 'next/document';
 class CustomDocument extends NextDocument {
   render(): ReactElement {
     return (
-      <Html>
+      <Html lang="pl">
         <Head>
           <link rel="icon" href="/chicken.svg" />
           <link
