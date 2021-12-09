@@ -6,7 +6,12 @@ import NextAuth from 'next-auth';
 import User from '@/backend/models/user';
 import dbConnect from '@/backend/dbConnect';
 
-const { FACEBOOK_CLIENT_ID, FACEBOOK_CLIENT_SECRET, MONGODB_URL } = process.env;
+const {
+  FACEBOOK_CLIENT_ID,
+  FACEBOOK_CLIENT_SECRET,
+  MONGODB_URL,
+  NEXTAUTH_SECRET,
+} = process.env;
 
 if (!FACEBOOK_CLIENT_ID) {
   throw new Error(
@@ -23,6 +28,11 @@ if (!MONGODB_URL) {
     'Please define the MONGODB_URL environment variable inside .env.local'
   );
 }
+if (!NEXTAUTH_SECRET) {
+  throw new Error(
+    'Please define the NEXTAUTH_SECRET environment variable inside .env.local'
+  );
+}
 
 const client = new MongoClient(MONGODB_URL);
 const clientPromise = client.connect();
@@ -34,6 +44,8 @@ export default NextAuth({
       clientSecret: FACEBOOK_CLIENT_SECRET,
     }),
   ],
+
+  secret: NEXTAUTH_SECRET,
 
   adapter: MongoDBAdapter(clientPromise),
 
