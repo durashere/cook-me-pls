@@ -9,11 +9,9 @@ interface IRecipeInfo {
 
 const RecipeInfo = ({ children, icon }: IRecipeInfo): ReactElement => (
   <RecipeSection>
-    <div className="aspect-w-16 aspect-h-9">
-      <div className="flex flex-col items-center justify-center">
-        {icon}
-        <span className="font-bold text-yellow-500">{children}</span>
-      </div>
+    <div className="flex flex-col items-center justify-center">
+      {icon}
+      <span className="font-bold text-yellow-500">{children}</span>
     </div>
   </RecipeSection>
 );

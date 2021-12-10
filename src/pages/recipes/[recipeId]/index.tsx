@@ -39,7 +39,7 @@ const RecipePage = ({ params: { recipeId } }: IRecipePage): ReactElement => {
     <div className="space-y-4">
       <RecipeHeader image={recipe.image} name={recipe.name} />
 
-      <div className="grid grid-flow-col gap-4">
+      <div className="grid grid-cols-3 gap-4">
         <RecipeInfo
           icon={<MdOutlineSchedule className="text-yellow-500" size="3rem" />}
         >

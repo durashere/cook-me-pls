@@ -13,7 +13,7 @@ const RecipeCard = ({
 }: IRecipeCard): ReactElement => (
   <Link href={`/recipes/${_id}`} passHref>
     <div className="relative overflow-hidden rounded-md shadow-md cursor-pointer group">
-      <div className="relative transition-all duration-500 aspect-w-1 aspect-h-1 group-hover:scale-110">
+      <div className="relative transition-all duration-500 aspect-square group-hover:scale-110">
         <Image
           alt="Picture of the dish"
           layout="fill"

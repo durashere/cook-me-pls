@@ -19,12 +19,10 @@ const RecipesList = ({ searchQuery }: IRecipeList): ReactElement | null => {
   }
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2">
-      <List
-        items={recipes}
-        renderItem={(recipe): ReactElement => <RecipeCard recipe={recipe} />}
-      />
-    </div>
+    <List
+      items={recipes}
+      renderItem={(recipe): ReactElement => <RecipeCard recipe={recipe} />}
+    />
   );
 };
 
