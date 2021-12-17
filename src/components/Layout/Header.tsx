@@ -12,8 +12,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import router from 'next/router';
 
-import Button from '@/components/Button';
-import Loader from '@/components/Loader';
+import Button from '@/components/UI/Button';
+import Loader from '@/components/UI/Loader';
 
 const DefaultHeader = (): ReactElement => {
   const { push } = router;

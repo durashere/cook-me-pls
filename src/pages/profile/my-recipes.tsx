@@ -3,11 +3,10 @@ import { ReactElement } from 'react';
 import { Session } from 'next-auth';
 import { useRouter } from 'next/router';
 
-import Button from '@/components/Button';
-import DeleteModal from '@/components/DeleteModal';
-import List from '@/components/List';
-import useRecipeDelete from '@/modules/recipes/hooks/useRecipeDelete';
-import useUserRecipes from '@/modules/users/hooks/useUserRecipes';
+import Button from '@/components/UI/Button';
+import DeleteModal from '@/components/UI/DeleteModal';
+import useRecipeDelete from '@/hooks/recipes/useRecipeDelete';
+import useUserRecipes from '@/hooks/users/useUserRecipes';
 
 interface IMyRecipesPage {
   session: Session;
@@ -75,13 +74,9 @@ const MyRecipesPage = ({
       <Button fullWidth onClick={handleCreateRecipe}>
         Dodaj przepis
       </Button>
-
-      <List
-        items={userRecipes}
-        renderItem={({ _id, name }): ReactElement => (
-          <RecipesListItem name={name} recipeId={_id} />
-        )}
-      />
+      {userRecipes.map(({ _id, name }) => (
+        <RecipesListItem name={name} recipeId={_id} />
+      ))}
     </div>
   );
 };

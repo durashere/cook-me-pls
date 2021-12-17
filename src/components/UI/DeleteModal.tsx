@@ -2,7 +2,7 @@ import { Dialog } from '@headlessui/react';
 import { MdOutlineDelete } from 'react-icons/md';
 import { ReactElement, useState } from 'react';
 
-import Button from '@/components/Button';
+import Button from '@/components/UI/Button';
 
 interface IDeleteModal {
   description: string;

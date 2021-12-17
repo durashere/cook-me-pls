@@ -3,10 +3,10 @@ import { ReactElement } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { UNITS } from '@/app/constants';
-import Button from '@/components/Button';
-import Input from '@/components/Input';
-import RecipeFormSection from '@/modules/recipes/components/RecipeFormSection';
-import Select from '@/components/Select';
+import Button from '@/components/UI/Button';
+import Input from '@/components/UI/Input';
+import RecipeFormSection from '@/components/Recipe/Form/Section';
+import Select from '@/components/UI/Select';
 
 interface IRecipeFormIngredient {
   handleRemoveIngredient: () => void;

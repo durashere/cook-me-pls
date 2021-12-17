@@ -5,12 +5,16 @@ import { ReactElement, useState } from 'react';
 import classNames from 'classnames';
 
 import dbConnect from '@/backend/dbConnect';
-import Input from '@/components/Input';
+import Input from '@/components/UI/Input';
 import Recipe, { IRecipe } from '@/backend/models/recipe';
-import RecipesList from '@/modules/recipes/components/RecipesList';
+import useRecipes from '@/hooks/recipes/useRecipes';
+import useDebounce from '@/hooks/useDebounce';
+import RecipeCard from '@/components/Recipe/Card';
 
 const RecipesPage = (): ReactElement => {
   const [searchQuery, setSearchQuery] = useState('');
+  const { value: searchQueryDebounced } = useDebounce(searchQuery, 300);
+  const { data: recipes } = useRecipes(searchQueryDebounced);
 
   const handleSearch = (e: React.FormEvent<HTMLInputElement>): void =>
     setSearchQuery(e.currentTarget.value);
@@ -35,7 +39,9 @@ const RecipesPage = (): ReactElement => {
           )}
         />
       </div>
-      <RecipesList searchQuery={searchQuery} />
+      {recipes?.map((recipe) => (
+        <RecipeCard key={recipe._id} recipe={recipe} />
+      ))}
     </div>
   );
 };

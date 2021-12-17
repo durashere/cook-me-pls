@@ -1,14 +1,14 @@
 import { dehydrate, QueryClient } from 'react-query';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { ReactElement } from 'react';
+import ErrorPage from 'next/error';
 
 import dbConnect from '@/backend/dbConnect';
-import List from '@/components/List';
 import Recipe from '@/backend/models/recipe';
-import RecipeCard from '@/modules/recipes/components/RecipeCard';
+import RecipeCard from '@/components/Recipe/Card';
 import User, { IUser } from '@/backend/models/user';
-import UserRecipesHeader from '@/modules/users/components/UserRecipesHeader';
-import useUserRecipes from '@/modules/users/hooks/useUserRecipes';
+import useUser from '@/hooks/users/useUser';
+import useUserRecipes from '@/hooks/users/useUserRecipes';
 
 interface IUserRecipesPage {
   params: { userId: string };
@@ -17,21 +17,27 @@ interface IUserRecipesPage {
 const UserRecipesPage = ({
   params: { userId },
 }: IUserRecipesPage): ReactElement | null => {
-  const { data: userRecipes } = useUserRecipes(userId);
+  const { data: userRecipes, status: userRecipesStatus } =
+    useUserRecipes(userId);
+  const { data: user, status: userStatus } = useUser(userId);
 
-  if (!userRecipes) {
+  if (userRecipesStatus === 'loading' || userStatus === 'loading') {
     return null;
+  }
+
+  if (userStatus === 'error') {
+    return <ErrorPage statusCode={404} title="Nie znaleziono użytkownika" />;
   }
 
   return (
     <div className="space-y-4">
-      <UserRecipesHeader userId={userId} />
-      <List
-        items={userRecipes}
-        renderItem={(recipe): React.ReactElement => (
-          <RecipeCard recipe={recipe} />
-        )}
-      />
+      <h1 className="text-2xl text-center">
+        Przepisy użytkownika
+        <span className="block font-bold">{user?.name}</span>
+      </h1>
+      {userRecipes?.map((recipe) => (
+        <RecipeCard key={recipe._id} recipe={recipe} />
+      ))}
     </div>
   );
 };

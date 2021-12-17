@@ -7,8 +7,8 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { SessionProvider } from 'next-auth/react';
 import Head from 'next/head';
 
-import DefaultLayout from '@/layouts/default/components/DefaultLayout';
-import Protect from '@/components/Protect';
+import Layout from '@/components/Layout/Layout';
+import Protect from '@/components/UI/Protect';
 
 import '@/app/tailwind.css';
 
@@ -37,7 +37,7 @@ const CustomApp = ({
         <SessionProvider session={session}>
           <QueryClientProvider client={queryClient}>
             <Hydrate state={pageProps.dehydratedState}>
-              <DefaultLayout>
+              <Layout>
                 {Component.protect ? (
                   <Protect>
                     <Component {...pageProps} />
@@ -45,7 +45,7 @@ const CustomApp = ({
                 ) : (
                   <Component {...pageProps} />
                 )}
-              </DefaultLayout>
+              </Layout>
             </Hydrate>
             <ReactQueryDevtools initialIsOpen={false} />
           </QueryClientProvider>

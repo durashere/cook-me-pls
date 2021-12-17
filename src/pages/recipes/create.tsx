@@ -4,14 +4,14 @@ import { ReactElement, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { IRecipe } from '@/backend/models/recipe';
-import Button from '@/components/Button';
-import Loader from '@/components/Loader';
-import RecipeFormDetails from '@/modules/recipes/components/form/RecipeFormDetails';
-import RecipeFormImage from '@/modules/recipes/components/form/RecipeFormImage';
-import RecipeFormIngredients from '@/modules/recipes/components/form/RecipeFormIngredients';
-import RecipeFormSteps from '@/modules/recipes/components/form/RecipeFormSteps';
-import useRecipeCreate from '@/modules/recipes/hooks/useRecipeCreate';
-import useRecipeImageUpdate from '@/modules/recipes/hooks/useRecipeImageUpdate';
+import Button from '@/components/UI/Button';
+import Loader from '@/components/UI/Loader';
+import RecipeFormDetails from '@/components/Recipe/Form/Details';
+import RecipeFormImage from '@/components/Recipe/Form/Image';
+import RecipeFormIngredients from '@/components/Recipe/Form/Ingredients';
+import RecipeFormSteps from '@/components/Recipe/Form/Steps';
+import useRecipeCreate from '@/hooks/recipes/useRecipeCreate';
+import useRecipeImageUpdate from '@/hooks/recipes/useRecipeImageUpdate';
 
 interface ISelectedImage {
   image?: File;

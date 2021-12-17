@@ -7,17 +7,17 @@ import { Session } from 'next-auth';
 import { useRouter } from 'next/router';
 import ErrorPage from 'next/error';
 
-import Button from '@/components/Button';
+import Button from '@/components/UI/Button';
 import dbConnect from '@/backend/dbConnect';
-import Loader from '@/components/Loader';
+import Loader from '@/components/UI/Loader';
 import Recipe, { IRecipe } from '@/backend/models/recipe';
-import RecipeFormDetails from '@/modules/recipes/components/form/RecipeFormDetails';
-import RecipeFormImage from '@/modules/recipes/components/form/RecipeFormImage';
-import RecipeFormIngredients from '@/modules/recipes/components/form/RecipeFormIngredients';
-import RecipeFormSteps from '@/modules/recipes/components/form/RecipeFormSteps';
-import useRecipe from '@/modules/recipes/hooks/useRecipe';
-import useRecipeImageUpdate from '@/modules/recipes/hooks/useRecipeImageUpdate';
-import useRecipeUpdate from '@/modules/recipes/hooks/useRecipeUpdate';
+import RecipeFormDetails from '@/components/Recipe/Form/Details';
+import RecipeFormImage from '@/components/Recipe/Form/Image';
+import RecipeFormIngredients from '@/components/Recipe/Form/Ingredients';
+import RecipeFormSteps from '@/components/Recipe/Form/Steps';
+import useRecipe from '@/hooks/recipes/useRecipe';
+import useRecipeImageUpdate from '@/hooks/recipes/useRecipeImageUpdate';
+import useRecipeUpdate from '@/hooks/recipes/useRecipeUpdate';
 
 interface ISelectedImage {
   image?: File;

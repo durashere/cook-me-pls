@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import React, { ReactElement, useRef } from 'react';
 
-import Button from '@/components/Button';
-import RecipeFormSection from '@/modules/recipes/components/RecipeFormSection';
+import Button from '@/components/UI/Button';
+import RecipeFormSection from '@/components/Recipe/Form/Section';
 
 interface ISelectedImage {
   image?: File;
