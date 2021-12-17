@@ -7,9 +7,7 @@
       "@/app/*": ["src/app/*"],
       "@/backend/*": ["src/backend/*"],
       "@/components/*": ["src/components/*"],
-      "@/hooks/*": ["src/hooks/*"],
-      "@/layouts/*": ["src/layouts/*"],
-      "@/pages/*": ["src/pages/*"]
+      "@/hooks/*": ["src/hooks/*"]
     },
     "allowJs": true,
     "esModuleInterop": true,
