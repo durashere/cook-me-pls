@@ -1,9 +1,11 @@
+const { fontFamily } = require('tailwindcss/defaultTheme');
+
 module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     fontFamily: {
-      poppins: ['Poppins', 'sans-serif'],
-      lobster: ['Lobster', 'cursive'],
+      poppins: ['Poppins', ...fontFamily.sans],
+      lobster: ['Lobster', ...fontFamily.sans],
     },
     extend: {},
   },
