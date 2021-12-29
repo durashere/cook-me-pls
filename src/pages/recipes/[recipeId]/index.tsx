@@ -1,3 +1,6 @@
+import { dehydrate, QueryClient } from 'react-query';
+import { GetStaticPaths, GetStaticProps } from 'next';
+import { ReactElement } from 'react';
 import {
   MdOutlineBarChart,
   MdOutlineChevronLeft,
@@ -5,15 +8,12 @@ import {
   MdOutlinePeopleAlt,
   MdOutlineSchedule,
 } from 'react-icons/md';
-import { dehydrate, QueryClient } from 'react-query';
-import { GetStaticPaths, GetStaticProps } from 'next';
-import { ReactElement } from 'react';
-import axios from 'axios';
 import ErrorPage from 'next/error';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { IIngredient, IRecipe, IStep } from '@/backend/models/recipe';
+import dbConnect from '@/backend/dbConnect';
+import Recipe, { IIngredient, IRecipe, IStep } from '@/backend/models/recipe';
 import RecipeSection from '@/components/Recipe/Section';
 import useRecipe from '@/hooks/recipes/useRecipe';
 import useServings from '@/hooks/recipes/useServings';
@@ -156,14 +156,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const queryClient = new QueryClient();
 
   const getRecipe = async (): Promise<IRecipe> => {
-    const dev = process.env.NODE_ENV !== 'production';
-    const { DEV_URL, PROD_URL } = process.env;
-
-    const res = await axios.get<IRecipe>(
-      `${dev ? DEV_URL : PROD_URL}/api/recipes/${params?.recipeId}`
-    );
-
-    return res.data;
+    await dbConnect();
+    const recipe = await Recipe.findById(params?.recipeId);
+    return JSON.parse(JSON.stringify(recipe));
   };
 
   const recipe = await getRecipe();
@@ -184,14 +179,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const getRecipes = async (): Promise<IRecipe[]> => {
-    const dev = process.env.NODE_ENV !== 'production';
-    const { DEV_URL, PROD_URL } = process.env;
-
-    const res = await axios.get<IRecipe[]>(
-      `${dev ? DEV_URL : PROD_URL}/api/recipes`
-    );
-
-    return res.data;
+    await dbConnect();
+    const recipe = await Recipe.find({});
+    return JSON.parse(JSON.stringify(recipe));
   };
 
   const recipes = await getRecipes();

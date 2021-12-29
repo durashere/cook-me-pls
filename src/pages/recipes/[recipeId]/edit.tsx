@@ -5,12 +5,12 @@ import { MdOutlineSave } from 'react-icons/md';
 import { ReactElement, useEffect, useState } from 'react';
 import { Session } from 'next-auth';
 import { useRouter } from 'next/router';
-import axios from 'axios';
 import ErrorPage from 'next/error';
 
-import { IRecipe } from '@/backend/models/recipe';
 import Button from '@/components/UI/Button';
+import dbConnect from '@/backend/dbConnect';
 import Loader from '@/components/UI/Loader';
+import Recipe, { IRecipe } from '@/backend/models/recipe';
 import RecipeFormDetails from '@/components/Recipe/Form/Details';
 import RecipeFormImage from '@/components/Recipe/Form/Image';
 import RecipeFormIngredients from '@/components/Recipe/Form/Ingredients';
@@ -134,14 +134,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const queryClient = new QueryClient();
 
   const getRecipe = async (): Promise<IRecipe> => {
-    const dev = process.env.NODE_ENV !== 'production';
-    const { DEV_URL, PROD_URL } = process.env;
-
-    const res = await axios.get<IRecipe>(
-      `${dev ? DEV_URL : PROD_URL}/api/recipes/${params?.recipeId}`
-    );
-
-    return res.data;
+    await dbConnect();
+    const recipe = await Recipe.findById(params?.recipeId);
+    return JSON.parse(JSON.stringify(recipe));
   };
 
   await queryClient.prefetchQuery(
@@ -159,14 +154,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const getRecipes = async (): Promise<IRecipe[]> => {
-    const dev = process.env.NODE_ENV !== 'production';
-    const { DEV_URL, PROD_URL } = process.env;
-
-    const res = await axios.get<IRecipe[]>(
-      `${dev ? DEV_URL : PROD_URL}/api/recipes`
-    );
-
-    return res.data;
+    await dbConnect();
+    const recipe = await Recipe.find({});
+    return JSON.parse(JSON.stringify(recipe));
   };
 
   const recipes = await getRecipes();

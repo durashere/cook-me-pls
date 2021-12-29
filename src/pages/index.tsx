@@ -2,11 +2,11 @@ import { dehydrate, QueryClient } from 'react-query';
 import { GetStaticProps } from 'next';
 import { MdOutlineSearch } from 'react-icons/md';
 import { ReactElement, useState } from 'react';
-import axios from 'axios';
 import classNames from 'classnames';
 
-import { IRecipe } from '@/backend/models/recipe';
+import dbConnect from '@/backend/dbConnect';
 import Input from '@/components/UI/Input';
+import Recipe, { IRecipe } from '@/backend/models/recipe';
 import RecipeCard from '@/components/Recipe/Card';
 import useDebounce from '@/hooks/useDebounce';
 import useRecipes from '@/hooks/recipes/useRecipes';
@@ -53,14 +53,9 @@ export const getStaticProps: GetStaticProps = async () => {
   const queryClient = new QueryClient();
 
   const getRecipes = async (): Promise<IRecipe[]> => {
-    const dev = process.env.NODE_ENV !== 'production';
-    const { DEV_URL, PROD_URL } = process.env;
-
-    const res = await axios.get<IRecipe[]>(
-      `${dev ? DEV_URL : PROD_URL}/api/recipes`,
-      { params: { name: '' } }
-    );
-    return res.data;
+    await dbConnect();
+    const recipes = await Recipe.find({}).sort({ updatedAt: -1 });
+    return JSON.parse(JSON.stringify(recipes));
   };
 
   await queryClient.prefetchQuery(
