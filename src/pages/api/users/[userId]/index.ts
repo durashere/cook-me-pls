@@ -10,13 +10,11 @@ handler.get<NextApiRequest, NextApiResponse>(async (req, res) => {
   try {
     await dbConnect();
 
-    const {
-      query: { userId },
-    } = req;
+    const { query } = req;
 
-    const user = await User.findById(userId);
+    const user = await User.findById(query.userId);
 
-    return res.status(200).json(user);
+    return res.status(200).json(JSON.parse(JSON.stringify(user)));
   } catch (error) {
     return res
       .status(500)

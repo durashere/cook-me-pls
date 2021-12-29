@@ -8,12 +8,12 @@ import {
 import { dehydrate, QueryClient } from 'react-query';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { ReactElement } from 'react';
+import axios from 'axios';
 import ErrorPage from 'next/error';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import dbConnect from '@/backend/dbConnect';
-import Recipe, { IIngredient, IRecipe, IStep } from '@/backend/models/recipe';
+import { IIngredient, IRecipe, IStep } from '@/backend/models/recipe';
 import RecipeSection from '@/components/Recipe/Section';
 import useRecipe from '@/hooks/recipes/useRecipe';
 import useServings from '@/hooks/recipes/useServings';
@@ -155,22 +155,27 @@ const RecipePage = ({
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const queryClient = new QueryClient();
 
-  const fetchRecipe = async (): Promise<IRecipe> => {
-    await dbConnect();
-    const recipe = await Recipe.findById(params?.recipeId).lean();
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return JSON.parse(JSON.stringify(recipe));
+  const getRecipe = async (): Promise<IRecipe> => {
+    const dev = process.env.NODE_ENV !== 'production';
+    const { DEV_URL, PROD_URL } = process.env;
+
+    const res = await axios.get<IRecipe>(
+      `${dev ? DEV_URL : PROD_URL}/api/recipes/${params?.recipeId}`
+    );
+
+    return res.data;
   };
 
-  const fetchedRecipe = await fetchRecipe();
+  const recipe = await getRecipe();
 
-  await queryClient.prefetchQuery(['recipes', params?.recipeId], () =>
-    fetchRecipe()
+  await queryClient.prefetchQuery(
+    ['recipes', 'detail', params?.recipeId],
+    getRecipe
   );
 
   return {
     props: {
-      authorId: fetchedRecipe.author,
+      authorId: recipe.author,
       dehydratedState: dehydrate(queryClient),
       params,
     },
@@ -178,14 +183,18 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const fetchRecipes = async (): Promise<IRecipe[]> => {
-    await dbConnect();
-    const recipes = await Recipe.find({}).lean();
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return JSON.parse(JSON.stringify(recipes));
+  const getRecipes = async (): Promise<IRecipe[]> => {
+    const dev = process.env.NODE_ENV !== 'production';
+    const { DEV_URL, PROD_URL } = process.env;
+
+    const res = await axios.get<IRecipe[]>(
+      `${dev ? DEV_URL : PROD_URL}/api/recipes`
+    );
+
+    return res.data;
   };
 
-  const recipes = await fetchRecipes();
+  const recipes = await getRecipes();
 
   const paths = recipes.map((recipe) => ({
     params: { recipeId: recipe._id.toString() },

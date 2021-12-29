@@ -17,17 +17,20 @@ handler.get<NextApiRequestExtended, NextApiResponse>(async (req, res) => {
   try {
     await dbConnect();
 
-    const {
-      query: { searchQuery },
-    } = req;
-
-    const regex = new RegExp(searchQuery as string, 'i');
+    const { query } = req;
 
     const recipes = await Recipe.find({
-      $or: [{ name: regex }, { difficulty: regex }, { cookTime: regex }],
-    }).sort({ name: 1 });
+      ...(query.author && { author: query.author }),
+      ...(query.name && { name: { $regex: query.name, $options: 'i' } }),
+      ...(query.difficulty && {
+        difficulty: query.difficulty,
+      }),
+      ...(query.cookTime && { cookTime: query.cookTime }),
+    })
+      .sort({ updatedAt: -1 })
+      .limit(Number(query.limit) || 10);
 
-    return res.status(200).json(recipes);
+    return res.status(200).json(JSON.parse(JSON.stringify(recipes)));
   } catch (error) {
     return res
       .status(500)
@@ -43,9 +46,9 @@ handler.post<NextApiRequestExtended, NextApiResponse>(
 
       const { body, user } = req;
 
-      const newRecipe = await Recipe.create({ ...body, author: user._id });
+      const createdRecipe = await Recipe.create({ ...body, author: user._id });
 
-      return res.status(201).json(newRecipe);
+      return res.status(201).json(JSON.parse(JSON.stringify(createdRecipe)));
     } catch (error) {
       return res
         .status(500)

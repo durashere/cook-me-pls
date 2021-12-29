@@ -11,8 +11,7 @@ const useRecipeDelete = (): UseMutationResult<boolean, AxiosError, string> => {
 
   return useMutation(deleteRecipe, {
     onSuccess: async () => {
-      await queryClient.invalidateQueries('recipes');
-      await queryClient.invalidateQueries('userRecipes');
+      await queryClient.invalidateQueries(['recipes', 'list']);
     },
   });
 };

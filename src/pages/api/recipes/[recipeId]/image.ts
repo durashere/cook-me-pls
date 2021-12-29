@@ -13,7 +13,7 @@ interface NextApiRequestExtended extends NextApiRequest {
 }
 
 interface IReceivedForm {
-  files: { image: { path: string } };
+  files: { image: { filepath: string } };
   fields: { _id: string };
 }
 
@@ -61,7 +61,7 @@ handler.patch<NextApiRequestExtended, NextApiResponse>(
       }
 
       const uploadResult = await cloudinary.v2.uploader.upload(
-        files.image.path,
+        files.image.filepath,
         {
           folder: 'cook-me-pls',
           public_id: recipeId,
@@ -86,7 +86,7 @@ handler.patch<NextApiRequestExtended, NextApiResponse>(
         }
       );
 
-      return res.status(200).json(updatedRecipe);
+      return res.status(200).json(JSON.parse(JSON.stringify(updatedRecipe)));
     } catch (error) {
       return res
         .status(500)

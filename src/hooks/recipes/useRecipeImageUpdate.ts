@@ -26,8 +26,7 @@ const useRecipeImageUpdate = (): UseMutationResult<
 
   return useMutation(updateRecipeImage, {
     onSuccess: async () => {
-      await queryClient.invalidateQueries('recipes');
-      await queryClient.invalidateQueries('userRecipes');
+      await queryClient.invalidateQueries(['recipes', 'list']);
     },
   });
 };

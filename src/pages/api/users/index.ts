@@ -2,23 +2,17 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import nextConnect from 'next-connect';
 
 import dbConnect from '@/backend/dbConnect';
-import Recipe from '@/backend/models/recipe';
+import User from '@/backend/models/user';
 
 const handler = nextConnect();
 
-handler.get<NextApiRequest, NextApiResponse>(async (req, res) => {
+handler.get<NextApiRequest, NextApiResponse>(async (_, res) => {
   try {
     await dbConnect();
 
-    const {
-      query: { userId },
-    } = req;
+    const users = await User.find({});
 
-    const recipes = await Recipe.find({
-      author: userId,
-    }).sort({ name: 1 });
-
-    return res.status(200).json(recipes);
+    return res.status(200).json(JSON.parse(JSON.stringify(users)));
   } catch (error) {
     return res
       .status(500)

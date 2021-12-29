@@ -18,17 +18,13 @@ handler.get<NextApiRequest, NextApiResponse>(async (req, res) => {
   try {
     await dbConnect();
 
-    const {
-      query: { recipeId },
-    } = req;
+    const { query } = req;
 
-    const recipe = await Recipe.findById(recipeId);
+    const recipe = await Recipe.findById(query.recipeId);
 
-    return res.status(200).json(recipe);
+    res.status(200).json(JSON.parse(JSON.stringify(recipe)));
   } catch (error) {
-    return res
-      .status(500)
-      .json({ message: 'Unexpected internal server error.' });
+    res.status(500).json({ message: 'Unexpected internal server error.' });
   }
 });
 
@@ -38,11 +34,7 @@ handler.patch<NextApiRequestExtended, NextApiResponse>(
     try {
       await dbConnect();
 
-      const {
-        body,
-        user,
-        query: { recipeId },
-      } = req;
+      const { body, user, query } = req;
 
       if (user._id.toString() !== body?.author?.toString()) {
         return res
@@ -52,11 +44,15 @@ handler.patch<NextApiRequestExtended, NextApiResponse>(
           );
       }
 
-      const updatedRecipe = await Recipe.findByIdAndUpdate(recipeId, body, {
-        new: true,
-      });
+      const updatedRecipe = await Recipe.findByIdAndUpdate(
+        query.recipeId,
+        body,
+        {
+          new: true,
+        }
+      );
 
-      return res.status(200).json(updatedRecipe);
+      return res.status(200).json(JSON.parse(JSON.stringify(updatedRecipe)));
     } catch (error) {
       return res
         .status(500)
@@ -71,16 +67,13 @@ handler.delete<NextApiRequestExtended, NextApiResponse>(
     try {
       await dbConnect();
 
-      const {
-        user,
-        query: { recipeId },
-      } = req;
+      const { user, query } = req;
 
-      if (typeof recipeId !== 'string') {
+      if (typeof query.recipeId !== 'string') {
         throw new Error('recipeId must be a string');
       }
 
-      const currentRecipe = await Recipe.findById(recipeId);
+      const currentRecipe = await Recipe.findById(query.recipeId);
 
       if (user._id.toString() !== currentRecipe?.author?.toString()) {
         return res
@@ -90,13 +83,13 @@ handler.delete<NextApiRequestExtended, NextApiResponse>(
           );
       }
 
-      await Recipe.findByIdAndDelete(recipeId);
+      await Recipe.findByIdAndDelete(query.recipeId);
 
-      await cloudinary.v2.uploader.destroy(`cook-me-pls/${recipeId}`, {
+      await cloudinary.v2.uploader.destroy(`cook-me-pls/${query.recipeId}`, {
         invalidate: true,
       });
 
-      return res.status(204).send({});
+      return res.status(204).end();
     } catch (error) {
       return res
         .status(500)

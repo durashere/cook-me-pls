@@ -13,7 +13,7 @@ const useRecipeUpdate = (): UseMutationResult<IRecipe, AxiosError, IRecipe> => {
 
   return useMutation(updateRecipe, {
     onSuccess: async () => {
-      await queryClient.invalidateQueries('recipes');
+      await queryClient.invalidateQueries(['recipes', 'list']);
     },
   });
 };

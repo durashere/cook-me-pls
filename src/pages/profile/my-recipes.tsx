@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import Button from '@/components/UI/Button';
 import DeleteModal from '@/components/UI/DeleteModal';
 import useRecipeDelete from '@/hooks/recipes/useRecipeDelete';
-import useUserRecipes from '@/hooks/users/useUserRecipes';
+import useRecipes from '@/hooks/recipes/useRecipes';
 
 interface IMyRecipesPage {
   session: Session;
@@ -59,7 +59,7 @@ const MyRecipesPage = ({
 }: IMyRecipesPage): ReactElement | null => {
   const { push } = useRouter();
 
-  const { data: userRecipes } = useUserRecipes(userId);
+  const { data: userRecipes } = useRecipes({ author: userId });
 
   const handleCreateRecipe = async (): Promise<void> => {
     await push('/recipes/create');
@@ -75,7 +75,7 @@ const MyRecipesPage = ({
         Dodaj przepis
       </Button>
       {userRecipes.map(({ _id, name }) => (
-        <RecipesListItem name={name} recipeId={_id} />
+        <RecipesListItem key={_id} name={name} recipeId={_id} />
       ))}
     </div>
   );

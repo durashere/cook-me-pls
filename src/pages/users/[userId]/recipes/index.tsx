@@ -1,14 +1,14 @@
 import { dehydrate, QueryClient } from 'react-query';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { ReactElement } from 'react';
+import axios from 'axios';
 import ErrorPage from 'next/error';
 
-import dbConnect from '@/backend/dbConnect';
-import Recipe from '@/backend/models/recipe';
+import { IRecipe } from '@/backend/models/recipe';
 import RecipeCard from '@/components/Recipe/Card';
-import User, { IUser } from '@/backend/models/user';
+import { IUser } from '@/backend/models/user';
+import useRecipes from '@/hooks/recipes/useRecipes';
 import useUser from '@/hooks/users/useUser';
-import useUserRecipes from '@/hooks/users/useUserRecipes';
 
 interface IUserRecipesPage {
   params: { userId: string };
@@ -17,11 +17,12 @@ interface IUserRecipesPage {
 const UserRecipesPage = ({
   params: { userId },
 }: IUserRecipesPage): ReactElement | null => {
-  const { data: userRecipes, status: userRecipesStatus } =
-    useUserRecipes(userId);
+  const { data: recipes, status: recipesStatus } = useRecipes({
+    author: userId,
+  });
   const { data: user, status: userStatus } = useUser(userId);
 
-  if (userRecipesStatus === 'loading' || userStatus === 'loading') {
+  if (recipesStatus === 'loading' || userStatus === 'loading') {
     return null;
   }
 
@@ -35,7 +36,7 @@ const UserRecipesPage = ({
         Przepisy użytkownika
         <span className="block font-bold">{user?.name}</span>
       </h1>
-      {userRecipes?.map((recipe) => (
+      {recipes?.map((recipe) => (
         <RecipeCard key={recipe._id} recipe={recipe} />
       ))}
     </div>
@@ -45,26 +46,36 @@ const UserRecipesPage = ({
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const queryClient = new QueryClient();
 
-  const fetchUser = async (): Promise<IUser> => {
-    await dbConnect();
-    const user = await User.findById(params?.userId).lean();
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return JSON.parse(JSON.stringify(user));
+  const getUser = async (): Promise<IUser> => {
+    const dev = process.env.NODE_ENV !== 'production';
+    const { DEV_URL, PROD_URL } = process.env;
+
+    const res = await axios.get<IUser>(
+      `${dev ? DEV_URL : PROD_URL}/api/users/${params?.userId}`
+    );
+
+    return res.data;
   };
 
-  await queryClient.prefetchQuery(['users', params?.userId], () => fetchUser());
+  await queryClient.prefetchQuery(['users', 'detail', params?.userId], () =>
+    getUser()
+  );
 
-  const fetchUserRecipes = async (): Promise<IUser> => {
-    await dbConnect();
-    const recipe = await Recipe.find({ author: params?.userId })
-      .sort({ name: 1 })
-      .lean();
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return JSON.parse(JSON.stringify(recipe));
+  const getRecipes = async (): Promise<IRecipe[]> => {
+    const dev = process.env.NODE_ENV !== 'production';
+    const { DEV_URL, PROD_URL } = process.env;
+
+    const res = await axios.get<IRecipe[]>(
+      `${dev ? DEV_URL : PROD_URL}/api/recipes`,
+      { params: { author: params?.userId } }
+    );
+
+    return res.data;
   };
 
-  await queryClient.prefetchQuery(['userRecipes', params?.userId], () =>
-    fetchUserRecipes()
+  await queryClient.prefetchQuery(
+    ['recipes', 'list', { author: params?.userId }],
+    () => getRecipes()
   );
 
   return {
@@ -76,14 +87,18 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const fetchUsers = async (): Promise<IUser[]> => {
-    await dbConnect();
-    const users = await User.find({}).lean();
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return JSON.parse(JSON.stringify(users));
+  const getUsers = async (): Promise<IUser[]> => {
+    const dev = process.env.NODE_ENV !== 'production';
+    const { DEV_URL, PROD_URL } = process.env;
+
+    const res = await axios.get<IUser[]>(
+      `${dev ? DEV_URL : PROD_URL}/api/users`
+    );
+
+    return res.data;
   };
 
-  const users = await fetchUsers();
+  const users = await getUsers();
 
   const paths = users.map((user) => ({
     params: { userId: user._id.toString() },
