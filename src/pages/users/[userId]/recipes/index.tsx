@@ -48,22 +48,20 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   const getUser = async (): Promise<IUser> => {
     await dbConnect();
-    const user = User.findById(params?.userId);
+    const user = await User.findById(params?.userId);
     return JSON.parse(JSON.stringify(user));
   };
 
-  await queryClient.prefetchQuery(['users', 'detail', params?.userId], () =>
-    getUser()
-  );
+  await queryClient.prefetchQuery(['users', 'detail', params?.userId], getUser);
 
   const getRecipes = async (): Promise<IRecipe[]> => {
-    const recipes = Recipe.find({ author: params?.userId });
+    const recipes = await Recipe.find({ author: params?.userId });
     return JSON.parse(JSON.stringify(recipes));
   };
 
   await queryClient.prefetchQuery(
     ['recipes', 'list', { author: params?.userId }],
-    () => getRecipes()
+    getRecipes
   );
 
   return {
@@ -77,7 +75,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 export const getStaticPaths: GetStaticPaths = async () => {
   const getUsers = async (): Promise<IUser[]> => {
     await dbConnect();
-    const users = User.find({});
+    const users = await User.find({});
     return JSON.parse(JSON.stringify(users));
   };
 
