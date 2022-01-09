@@ -1,48 +1,86 @@
 import classNames from 'classnames';
-import React, { forwardRef, ReactElement } from 'react';
+import { ImSpinner2 } from 'react-icons/im';
+import { ComponentPropsWithoutRef, forwardRef } from 'react';
 
-interface IButton {
-  children?: React.ReactNode;
+interface IButton extends ComponentPropsWithoutRef<'button'> {
   disabled?: boolean;
-  fullWidth?: boolean;
-  htmlType?: 'button' | 'submit' | 'reset';
-  icon?: ReactElement;
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  type?: 'primary' | 'danger';
+  isFullWidth?: boolean;
+  isLoading?: boolean;
+  variant?: 'solid' | 'outline' | 'ghost';
 }
 
 const Button = forwardRef<HTMLButtonElement, IButton>(
   (
-    { children, disabled, fullWidth, htmlType = 'button', icon, onClick, type },
+    {
+      children,
+      className,
+      disabled: buttonDisabled,
+      isFullWidth,
+      isLoading,
+      variant = 'outline',
+      ...rest
+    },
     ref
-  ) => (
-    <button
-      className={classNames(
-        'bg-transparent flex items-center justify-center p-2 transition-all rounded-md shadow outline-none focus:outline-none ring-1 hover:ring-2 whitespace-nowrap focus:ring',
-        {
-          'w-full': fullWidth,
-          'text-gray-500 ring-gray-300 hover:ring-gray-400 focus:ring-gray-400':
-            type === undefined,
-          'text-yellow-500 ring-yellow-300 hover:ring-yellow-400 focus:ring-yellow-400':
-            type === 'primary',
-          'text-red-500 ring-red-300 hover:ring-red-400 focus:ring-red-400':
-            type === 'danger',
-        }
-      )}
-      disabled={disabled}
-      onClick={onClick}
-      ref={ref}
-      // eslint-disable-next-line react/button-has-type
-      type={htmlType}
-    >
-      {icon && icon}
-      {children && (
-        <span className={classNames('font-medium', { 'ml-2': icon })}>
-          {children}
-        </span>
-      )}
-    </button>
-  )
+  ) => {
+    const disabled = isLoading || buttonDisabled;
+
+    return (
+      <button
+        type="button"
+        disabled={disabled}
+        className={classNames(
+          'inline-flex items-center justify-center px-4 h-10 font-semibold rounded-md',
+          'focus:outline-none focus-visible:ring focus-visible:ring-gray-400',
+          'transition-colors duration-300',
+          'shadow',
+          isFullWidth && 'w-full',
+          [
+            variant === 'solid' && [
+              'bg-gray-500 text-white',
+              'hover:bg-gray-600 hover:text-white',
+              'active:bg-gray-500',
+              'disabled:bg-gray-400 disabled:hover:bg-gray-400',
+            ],
+            variant === 'outline' && [
+              'text-gray-500',
+              'border border-gray-500',
+              'hover:bg-gray-50',
+              'active:bg-gray-100',
+              'disabled:bg-gray-100',
+            ],
+            variant === 'ghost' && [
+              'text-gray-500',
+              'shadow-none',
+              'hover:bg-gray-50',
+              'active:bg-gray-100',
+              'disabled:bg-gray-100',
+            ],
+          ],
+          'disabled:cursor-not-allowed',
+          isLoading &&
+            'relative !text-transparent hover:!text-transparent !cursor-wait !transition-none',
+          className
+        )}
+        ref={ref}
+        {...rest}
+      >
+        {isLoading && (
+          <div
+            className={classNames(
+              'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2',
+              {
+                'text-white': variant === 'solid',
+                'text-gray-500': variant !== 'solid',
+              }
+            )}
+          >
+            <ImSpinner2 className="animate-spin" />
+          </div>
+        )}
+        {children}
+      </button>
+    );
+  }
 );
 
 Button.displayName = 'Button';

@@ -2,6 +2,7 @@ import {
   MdOutlineListAlt,
   MdOutlineLogin,
   MdOutlineLogout,
+  MdOutlineMenu,
   MdOutlinePostAdd,
 } from 'react-icons/md';
 import { Menu } from '@headlessui/react';
@@ -13,14 +14,13 @@ import Link from 'next/link';
 import router from 'next/router';
 
 import Button from '@/components/UI/Button';
-import Loader from '@/components/UI/Loader';
 
 const DefaultHeader = (): ReactElement => {
   const { push } = router;
 
   const [loginLoading, setLoginLoading] = useState(false);
 
-  const { data: session, status: sessionStatus } = useSession();
+  const { status: sessionStatus } = useSession();
 
   const handleSignIn = async (): Promise<void> => {
     setLoginLoading(true);
@@ -46,31 +46,21 @@ const DefaultHeader = (): ReactElement => {
         </div>
       </Link>
 
-      {sessionStatus === 'loading' && (
-        <Button icon={<Loader className="w-6 h-6" />} />
-      )}
+      {sessionStatus === 'loading' && <Button className="w-10" isLoading />}
 
       {sessionStatus === 'unauthenticated' && (
-        <Button onClick={handleSignIn}>
+        <Button isLoading={loginLoading} onClick={handleSignIn}>
           <div className="flex items-center gap-2">
             <span className="font-medium">Zaloguj</span>
-            {loginLoading ? <Loader className="w-6 h-6" /> : <MdOutlineLogin />}
+            <MdOutlineLogin />
           </div>
         </Button>
       )}
 
-      {sessionStatus === 'authenticated' && session && (
-        <Menu as="div" className="relative w-10 h-10">
-          <Menu.Button className="overflow-hidden transition-all rounded-md outline-none focus:outline-none hover:ring-2 focus:ring hover:ring-gray-400 focus:ring-gray-400">
-            <div className="relative w-10 h-10 pointer-events-none">
-              <Image
-                alt="Avatar of the user"
-                layout="fill"
-                objectFit="cover"
-                priority
-                src={session.user.image || '/image-placeholder.png'}
-              />
-            </div>
+      {sessionStatus === 'authenticated' && (
+        <Menu as="div">
+          <Menu.Button as={Button} className="w-10 px-0">
+            <MdOutlineMenu />
           </Menu.Button>
           <Menu.Items className="absolute right-0 z-10 flex flex-col items-start w-56 p-2 mt-2 bg-white rounded-md shadow-xl outline-none focus:outline-none">
             <Menu.Item>

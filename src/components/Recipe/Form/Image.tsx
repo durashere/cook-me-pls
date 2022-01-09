@@ -46,11 +46,9 @@ const RecipeFormImage = ({
         </div>
       )}
 
-      <div className="flex gap-4">
-        <Button fullWidth onClick={handleImageUploadButtonClick}>
-          Zmień zdjęcie
-        </Button>
-      </div>
+      <Button isFullWidth onClick={handleImageUploadButtonClick}>
+        Zmień zdjęcie
+      </Button>
 
       <input
         accept="image/*"

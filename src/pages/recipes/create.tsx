@@ -1,11 +1,9 @@
 import { FormProvider, useForm } from 'react-hook-form';
-import { MdOutlineSave } from 'react-icons/md';
 import { ReactElement, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { IRecipe } from '@/backend/models/recipe';
 import Button from '@/components/UI/Button';
-import Loader from '@/components/UI/Loader';
 import RecipeFormDetails from '@/components/Recipe/Form/Details';
 import RecipeFormImage from '@/components/Recipe/Form/Image';
 import RecipeFormIngredients from '@/components/Recipe/Form/Ingredients';
@@ -71,19 +69,20 @@ const RecipeCreatePage = (): ReactElement => {
         <RecipeFormSteps />
 
         <div className="flex justify-between">
-          <Button onClick={handleCancel}>Anuluj</Button>
-          <Button htmlType="submit" type="primary">
-            <div className="flex items-center gap-2">
-              <span className="font-medium">Utwórz</span>
-              {statusRecipeCreate === 'loading' ||
+          <Button onClick={handleCancel} variant="ghost">
+            Anuluj
+          </Button>
+          <Button
+            type="submit"
+            isLoading={
+              statusRecipeCreate === 'loading' ||
               statusRecipeCreate === 'success' ||
               statusRecipeImageUpdate === 'loading' ||
-              statusRecipeImageUpdate === 'success' ? (
-                <Loader color="#F59E0B" className="w-6 h-6" />
-              ) : (
-                <MdOutlineSave />
-              )}
-            </div>
+              statusRecipeImageUpdate === 'success'
+            }
+            variant="solid"
+          >
+            Utwórz
           </Button>
         </div>
       </form>

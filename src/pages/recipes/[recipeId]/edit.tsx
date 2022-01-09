@@ -1,7 +1,6 @@
 import { dehydrate, QueryClient } from 'react-query';
 import { FormProvider, useForm } from 'react-hook-form';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { MdOutlineSave } from 'react-icons/md';
 import { ReactElement, useEffect, useState } from 'react';
 import { Session } from 'next-auth';
 import { useRouter } from 'next/router';
@@ -110,19 +109,20 @@ const RecipeEditPage = ({
         <RecipeFormSteps />
 
         <div className="flex justify-between">
-          <Button onClick={handleCancel}>Anuluj</Button>
-          <Button htmlType="submit" type="primary">
-            <div className="flex items-center gap-2">
-              <span className="font-medium">Zapisz</span>
-              {statusRecipeUpdate === 'loading' ||
+          <Button onClick={handleCancel} variant="ghost">
+            Anuluj
+          </Button>
+          <Button
+            type="submit"
+            isLoading={
+              statusRecipeUpdate === 'loading' ||
               statusRecipeUpdate === 'success' ||
               statusRecipeImageUpdate === 'loading' ||
-              statusRecipeImageUpdate === 'success' ? (
-                <Loader color="#F59E0B" className="w-6 h-6" />
-              ) : (
-                <MdOutlineSave />
-              )}
-            </div>
+              statusRecipeImageUpdate === 'success'
+            }
+            variant="solid"
+          >
+            Zapisz
           </Button>
         </div>
       </form>

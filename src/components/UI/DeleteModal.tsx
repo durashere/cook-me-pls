@@ -1,5 +1,4 @@
 import { Dialog } from '@headlessui/react';
-import { MdOutlineDelete } from 'react-icons/md';
 import { ReactElement, useState } from 'react';
 
 import Button from '@/components/UI/Button';
@@ -23,13 +22,7 @@ const DeleteModal = ({
 
   return (
     <>
-      <Button
-        icon={<MdOutlineDelete />}
-        onClick={handleToggleModal}
-        type="danger"
-      >
-        Usuń
-      </Button>
+      <Button onClick={handleToggleModal}>Usuń</Button>
 
       <Dialog
         as="div"
@@ -45,8 +38,10 @@ const DeleteModal = ({
               {description}
             </Dialog.Description>
             <div className="flex justify-end gap-4 mt-4">
-              <Button onClick={handleToggleModal}>Anuluj</Button>
-              <Button onClick={onSubmit} type="danger">
+              <Button onClick={handleToggleModal} variant="ghost">
+                Anuluj
+              </Button>
+              <Button onClick={onSubmit} variant="solid">
                 Usuń
               </Button>
             </div>

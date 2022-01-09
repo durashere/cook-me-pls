@@ -1,4 +1,3 @@
-import { MdOutlineDelete } from 'react-icons/md';
 import { ReactElement } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
@@ -41,7 +40,7 @@ const RecipeFormIngredient = ({
           required
           {...register(`ingredients.${index}.unit`)}
         />
-        <Button icon={<MdOutlineDelete />} onClick={handleRemoveIngredient} />
+        <Button onClick={handleRemoveIngredient}>Usuń</Button>
       </div>
     </li>
   );
@@ -81,7 +80,7 @@ const RecipeFormIngredients = (): ReactElement => {
           ))}
         </ul>
       )}
-      <Button fullWidth onClick={handleAppendIngredient}>
+      <Button isFullWidth onClick={handleAppendIngredient}>
         Dodaj składnik
       </Button>
     </RecipeFormSection>

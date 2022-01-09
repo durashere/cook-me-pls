@@ -1,4 +1,3 @@
-import { MdOutlineEdit, MdOutlineVisibility } from 'react-icons/md';
 import { ReactElement } from 'react';
 import { Session } from 'next-auth';
 import { useRouter } from 'next/router';
@@ -43,10 +42,8 @@ const RecipesListItem = ({
           onSubmit={handleDeleteRecipe}
           title="Usuń przepis"
         />
-        <Button icon={<MdOutlineEdit />} onClick={handleEditRecipe}>
-          Edytuj
-        </Button>
-        <Button icon={<MdOutlineVisibility />} onClick={handleViewRecipe} />
+        <Button onClick={handleEditRecipe}>Edytuj</Button>
+        <Button onClick={handleViewRecipe}>Pokaż</Button>
       </div>
     </div>
   );
@@ -71,7 +68,7 @@ const MyRecipesPage = ({
 
   return (
     <div className="space-y-4">
-      <Button fullWidth onClick={handleCreateRecipe}>
+      <Button isFullWidth onClick={handleCreateRecipe}>
         Dodaj przepis
       </Button>
       {userRecipes.map(({ _id, name }) => (
