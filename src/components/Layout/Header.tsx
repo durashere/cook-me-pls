@@ -58,9 +58,9 @@ const DefaultHeader = (): ReactElement => {
       )}
 
       {sessionStatus === 'authenticated' && (
-        <Menu as="div">
-          <Menu.Button as={Button} className="w-10 px-0">
-            <MdOutlineMenu />
+        <Menu as="div" className="w-10 h-10">
+          <Menu.Button as={Button} className="w-10 h-10">
+            <MdOutlineMenu className="absolute" />
           </Menu.Button>
           <Menu.Items className="absolute right-0 z-10 flex flex-col items-start w-56 p-2 mt-2 bg-white rounded-md shadow-xl outline-none focus:outline-none">
             <Menu.Item>
