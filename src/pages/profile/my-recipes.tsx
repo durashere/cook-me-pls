@@ -1,6 +1,6 @@
-import { ReactElement } from 'react';
 import { Session } from 'next-auth';
 import { useRouter } from 'next/router';
+import { ReactElement } from 'react';
 
 import Button from '@/components/UI/Button';
 import DeleteModal from '@/components/UI/DeleteModal';

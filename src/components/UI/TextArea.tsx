@@ -1,6 +1,6 @@
-import { FieldValues, UseFormRegister } from 'react-hook-form';
-import { forwardRef } from 'react';
 import classNames from 'classnames';
+import { forwardRef } from 'react';
+import { FieldValues, UseFormRegister } from 'react-hook-form';
 
 interface ITextArea {
   defaultValue?: string | number;

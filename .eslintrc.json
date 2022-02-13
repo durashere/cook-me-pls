@@ -12,7 +12,36 @@
     "plugin:react/jsx-runtime",
     "plugin:prettier/recommended"
   ],
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true,
+        "project": "./tsconfig.json"
+      }
+    }
+  },
   "rules": {
+    "import/order": [
+      "error",
+      {
+        "groups": ["external", "internal", "builtin"],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ],
+    "sort-imports": [
+      "error",
+      {
+        "ignoreCase": true,
+        "ignoreDeclarationSort": true
+      }
+    ],
     "@typescript-eslint/explicit-function-return-type": "error",
     "@typescript-eslint/no-explicit-any": "error",
     "import/prefer-default-export": "off",
@@ -21,6 +50,7 @@
       "error",
       { "namedComponents": "arrow-function" }
     ],
+    "import/no-unresolved": "error",
     "react/jsx-props-no-spreading": "off",
     "react/no-unused-prop-types": "off",
     "react/prop-types": "off",

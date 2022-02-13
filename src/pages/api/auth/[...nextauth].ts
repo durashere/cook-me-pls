@@ -1,10 +1,10 @@
-import { MongoClient } from 'mongodb';
 import { MongoDBAdapter } from '@next-auth/mongodb-adapter';
-import FacebookProvider from 'next-auth/providers/facebook';
+import { MongoClient } from 'mongodb';
 import NextAuth from 'next-auth';
+import FacebookProvider from 'next-auth/providers/facebook';
 
-import User from '@/backend/models/user';
 import dbConnect from '@/backend/dbConnect';
+import User from '@/backend/models/user';
 
 const {
   FACEBOOK_CLIENT_ID,

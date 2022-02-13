@@ -1,6 +1,6 @@
-import { cloneElement, ReactElement } from 'react';
 import { useSession } from 'next-auth/react';
 import ErrorPage from 'next/error';
+import { cloneElement, ReactElement } from 'react';
 
 import Loader from '@/components/UI/Loader';
 

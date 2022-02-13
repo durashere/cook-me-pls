@@ -1,3 +1,10 @@
+import { Menu } from '@headlessui/react';
+import classNames from 'classnames';
+import { signIn, signOut, useSession } from 'next-auth/react';
+import Image from 'next/image';
+import Link from 'next/link';
+import router from 'next/router';
+import { ReactElement, useState } from 'react';
 import {
   MdOutlineListAlt,
   MdOutlineLogin,
@@ -5,13 +12,6 @@ import {
   MdOutlineMenu,
   MdOutlinePostAdd,
 } from 'react-icons/md';
-import { Menu } from '@headlessui/react';
-import { ReactElement, useState } from 'react';
-import { signIn, signOut, useSession } from 'next-auth/react';
-import classNames from 'classnames';
-import Image from 'next/image';
-import Link from 'next/link';
-import router from 'next/router';
 
 import Button from '@/components/UI/Button';
 

@@ -1,5 +1,7 @@
-import { dehydrate, QueryClient } from 'react-query';
 import { GetStaticPaths, GetStaticProps } from 'next';
+import ErrorPage from 'next/error';
+import Image from 'next/image';
+import Link from 'next/link';
 import { ReactElement } from 'react';
 import {
   MdOutlineBarChart,
@@ -8,9 +10,7 @@ import {
   MdOutlinePeopleAlt,
   MdOutlineSchedule,
 } from 'react-icons/md';
-import ErrorPage from 'next/error';
-import Image from 'next/image';
-import Link from 'next/link';
+import { dehydrate, QueryClient } from 'react-query';
 
 import dbConnect from '@/backend/dbConnect';
 import Recipe, { IIngredient, IRecipe, IStep } from '@/backend/models/recipe';

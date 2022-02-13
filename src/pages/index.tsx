@@ -1,15 +1,15 @@
-import { dehydrate, QueryClient } from 'react-query';
-import { GetStaticProps } from 'next';
-import { MdOutlineSearch } from 'react-icons/md';
-import { ReactElement, useState } from 'react';
 import classNames from 'classnames';
+import { GetStaticProps } from 'next';
+import { ReactElement, useState } from 'react';
+import { MdOutlineSearch } from 'react-icons/md';
+import { dehydrate, QueryClient } from 'react-query';
 
 import dbConnect from '@/backend/dbConnect';
-import Input from '@/components/UI/Input';
 import Recipe, { IRecipe } from '@/backend/models/recipe';
 import RecipeCard from '@/components/Recipe/Card';
-import useDebounce from '@/hooks/useDebounce';
+import Input from '@/components/UI/Input';
 import useRecipes from '@/hooks/recipes/useRecipes';
+import useDebounce from '@/hooks/useDebounce';
 
 const RecipesPage = (): ReactElement => {
   const [searchQuery, setSearchQuery] = useState({ name: '' });

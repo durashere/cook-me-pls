@@ -1,5 +1,5 @@
-import { useQuery, UseQueryResult } from 'react-query';
 import axios, { AxiosError } from 'axios';
+import { useQuery, UseQueryResult } from 'react-query';
 
 import { IRecipe } from '@/backend/models/recipe';
 

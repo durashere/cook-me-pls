@@ -1,5 +1,5 @@
-import { forwardRef } from 'react';
 import classNames from 'classnames';
+import { forwardRef } from 'react';
 
 interface ISelect {
   defaultValue?: string | number;

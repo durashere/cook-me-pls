@@ -1,9 +1,9 @@
 import { ReactElement } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { TIMES, DIFFICULTIES } from '@/app/constants';
-import Input from '@/components/UI/Input';
+import { DIFFICULTIES, TIMES } from '@/app/constants';
 import RecipeFormSection from '@/components/Recipe/Form/Section';
+import Input from '@/components/UI/Input';
 import Select from '@/components/UI/Select';
 
 const RecipeFormDetails = (): ReactElement => {

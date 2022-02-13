@@ -1,6 +1,6 @@
-import { ReactElement } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { ReactElement } from 'react';
 
 import { IRecipe } from '@/backend/models/recipe';
 

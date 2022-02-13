@@ -1,6 +1,6 @@
 import classNames from 'classnames';
-import { ImSpinner2 } from 'react-icons/im';
 import { ComponentPropsWithoutRef, forwardRef } from 'react';
+import { ImSpinner2 } from 'react-icons/im';
 
 interface IButton extends ComponentPropsWithoutRef<'button'> {
   disabled?: boolean;

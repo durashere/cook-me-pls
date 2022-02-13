@@ -1,12 +1,12 @@
-import { dehydrate, QueryClient } from 'react-query';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { ReactElement } from 'react';
 import ErrorPage from 'next/error';
+import { ReactElement } from 'react';
+import { dehydrate, QueryClient } from 'react-query';
 
 import dbConnect from '@/backend/dbConnect';
 import Recipe, { IRecipe } from '@/backend/models/recipe';
-import RecipeCard from '@/components/Recipe/Card';
 import User, { IUser } from '@/backend/models/user';
+import RecipeCard from '@/components/Recipe/Card';
 import useRecipes from '@/hooks/recipes/useRecipes';
 import useUser from '@/hooks/users/useUser';
 

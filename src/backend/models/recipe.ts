@@ -1,6 +1,6 @@
 import mongoose, { Model } from 'mongoose';
 
-import { TIMES, DIFFICULTIES, UNITS } from '@/app/constants';
+import { DIFFICULTIES, TIMES, UNITS } from '@/app/constants';
 
 export interface IStep {
   _id: string;

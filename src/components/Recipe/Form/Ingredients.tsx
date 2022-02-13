@@ -2,9 +2,9 @@ import { ReactElement } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import { UNITS } from '@/app/constants';
+import RecipeFormSection from '@/components/Recipe/Form/Section';
 import Button from '@/components/UI/Button';
 import Input from '@/components/UI/Input';
-import RecipeFormSection from '@/components/Recipe/Form/Section';
 import Select from '@/components/UI/Select';
 
 interface IRecipeFormIngredient {
