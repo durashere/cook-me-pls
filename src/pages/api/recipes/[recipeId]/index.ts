@@ -2,10 +2,10 @@ import cloudinary from 'cloudinary';
 import { NextApiRequest, NextApiResponse } from 'next';
 import nextConnect from 'next-connect';
 
-import dbConnect from '@/backend/dbConnect';
-import protect from '@/backend/middleware/protect';
-import Recipe, { IRecipe } from '@/backend/models/recipe';
-import { IUser } from '@/backend/models/user';
+import dbConnect from 'backend/dbConnect';
+import protect from 'backend/middleware/protect';
+import Recipe, { IRecipe } from 'backend/models/recipe';
+import { IUser } from 'backend/models/user';
 
 interface NextApiRequestExtended extends NextApiRequest {
   body: IRecipe;

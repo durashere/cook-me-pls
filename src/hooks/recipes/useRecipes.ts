@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { useQuery, UseQueryResult } from 'react-query';
 
-import { IRecipe } from '@/backend/models/recipe';
+import { IRecipe } from 'backend/models/recipe';
 
 const getRecipes = async ({
   author,

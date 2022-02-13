@@ -6,17 +6,17 @@ import { ReactElement, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { dehydrate, QueryClient } from 'react-query';
 
-import dbConnect from '@/backend/dbConnect';
-import Recipe, { IRecipe } from '@/backend/models/recipe';
-import RecipeFormDetails from '@/components/Recipe/Form/Details';
-import RecipeFormImage from '@/components/Recipe/Form/Image';
-import RecipeFormIngredients from '@/components/Recipe/Form/Ingredients';
-import RecipeFormSteps from '@/components/Recipe/Form/Steps';
-import Button from '@/components/UI/Button';
-import Loader from '@/components/UI/Loader';
-import useRecipe from '@/hooks/recipes/useRecipe';
-import useRecipeImageUpdate from '@/hooks/recipes/useRecipeImageUpdate';
-import useRecipeUpdate from '@/hooks/recipes/useRecipeUpdate';
+import dbConnect from 'backend/dbConnect';
+import Recipe, { IRecipe } from 'backend/models/recipe';
+import RecipeFormDetails from 'components/Recipe/Form/Details';
+import RecipeFormImage from 'components/Recipe/Form/Image';
+import RecipeFormIngredients from 'components/Recipe/Form/Ingredients';
+import RecipeFormSteps from 'components/Recipe/Form/Steps';
+import Button from 'components/UI/Button';
+import Loader from 'components/UI/Loader';
+import useRecipe from 'hooks/recipes/useRecipe';
+import useRecipeImageUpdate from 'hooks/recipes/useRecipeImageUpdate';
+import useRecipeUpdate from 'hooks/recipes/useRecipeUpdate';
 
 interface ISelectedImage {
   image?: File;

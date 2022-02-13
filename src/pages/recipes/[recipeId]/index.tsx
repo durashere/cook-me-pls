@@ -12,12 +12,12 @@ import {
 } from 'react-icons/md';
 import { dehydrate, QueryClient } from 'react-query';
 
-import dbConnect from '@/backend/dbConnect';
-import Recipe, { IIngredient, IRecipe, IStep } from '@/backend/models/recipe';
-import RecipeSection from '@/components/Recipe/Section';
-import useRecipe from '@/hooks/recipes/useRecipe';
-import useServings from '@/hooks/recipes/useServings';
-import useUser from '@/hooks/users/useUser';
+import dbConnect from 'backend/dbConnect';
+import Recipe, { IIngredient, IRecipe, IStep } from 'backend/models/recipe';
+import RecipeSection from 'components/Recipe/Section';
+import useRecipe from 'hooks/recipes/useRecipe';
+import useServings from 'hooks/recipes/useServings';
+import useUser from 'hooks/users/useUser';
 
 interface IRecipePage {
   authorId: string;

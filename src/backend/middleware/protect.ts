@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 import { NextHandler } from 'next-connect';
 
-import User, { IUser } from '@/backend/models/user';
+import User, { IUser } from 'backend/models/user';
 
 interface NextApiRequestExtended extends NextApiRequest {
   user: IUser;

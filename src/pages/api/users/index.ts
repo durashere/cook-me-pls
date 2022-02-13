@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import nextConnect from 'next-connect';
 
-import dbConnect from '@/backend/dbConnect';
-import User from '@/backend/models/user';
+import dbConnect from 'backend/dbConnect';
+import User from 'backend/models/user';
 
 const handler = nextConnect();
 

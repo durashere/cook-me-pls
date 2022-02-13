@@ -1,9 +1,9 @@
 import { ReactElement } from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
-import RecipeFormSection from '@/components/Recipe/Form/Section';
-import Button from '@/components/UI/Button';
-import TextArea from '@/components/UI/TextArea';
+import RecipeFormSection from 'components/Recipe/Form/Section';
+import Button from 'components/UI/Button';
+import TextArea from 'components/UI/TextArea';
 
 interface IRecipeFormStep {
   handleRemoveStep: () => void;

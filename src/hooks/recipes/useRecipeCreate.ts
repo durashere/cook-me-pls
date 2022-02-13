@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { useMutation, UseMutationResult, useQueryClient } from 'react-query';
 
-import { IRecipe } from '@/backend/models/recipe';
+import { IRecipe } from 'backend/models/recipe';
 
 const createRecipe = async (values: IRecipe): Promise<IRecipe> => {
   const res = await axios.post<IRecipe>(`/api/recipes`, values);

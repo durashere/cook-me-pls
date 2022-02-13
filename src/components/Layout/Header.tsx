@@ -13,7 +13,7 @@ import {
   MdOutlinePostAdd,
 } from 'react-icons/md';
 
-import Button from '@/components/UI/Button';
+import Button from 'components/UI/Button';
 
 const DefaultHeader = (): ReactElement => {
   const { push } = router;

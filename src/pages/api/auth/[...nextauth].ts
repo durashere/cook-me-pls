@@ -3,8 +3,8 @@ import { MongoClient } from 'mongodb';
 import NextAuth from 'next-auth';
 import FacebookProvider from 'next-auth/providers/facebook';
 
-import dbConnect from '@/backend/dbConnect';
-import User from '@/backend/models/user';
+import dbConnect from 'backend/dbConnect';
+import User from 'backend/models/user';
 
 const {
   FACEBOOK_CLIENT_ID,

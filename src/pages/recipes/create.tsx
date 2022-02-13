@@ -2,14 +2,14 @@ import { useRouter } from 'next/router';
 import { ReactElement, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 
-import { IRecipe } from '@/backend/models/recipe';
-import RecipeFormDetails from '@/components/Recipe/Form/Details';
-import RecipeFormImage from '@/components/Recipe/Form/Image';
-import RecipeFormIngredients from '@/components/Recipe/Form/Ingredients';
-import RecipeFormSteps from '@/components/Recipe/Form/Steps';
-import Button from '@/components/UI/Button';
-import useRecipeCreate from '@/hooks/recipes/useRecipeCreate';
-import useRecipeImageUpdate from '@/hooks/recipes/useRecipeImageUpdate';
+import { IRecipe } from 'backend/models/recipe';
+import RecipeFormDetails from 'components/Recipe/Form/Details';
+import RecipeFormImage from 'components/Recipe/Form/Image';
+import RecipeFormIngredients from 'components/Recipe/Form/Ingredients';
+import RecipeFormSteps from 'components/Recipe/Form/Steps';
+import Button from 'components/UI/Button';
+import useRecipeCreate from 'hooks/recipes/useRecipeCreate';
+import useRecipeImageUpdate from 'hooks/recipes/useRecipeImageUpdate';
 
 interface ISelectedImage {
   image?: File;

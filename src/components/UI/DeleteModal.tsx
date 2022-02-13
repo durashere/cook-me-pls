@@ -1,7 +1,7 @@
 import { Dialog } from '@headlessui/react';
 import { ReactElement, useState } from 'react';
 
-import Button from '@/components/UI/Button';
+import Button from 'components/UI/Button';
 
 interface IDeleteModal {
   description: string;

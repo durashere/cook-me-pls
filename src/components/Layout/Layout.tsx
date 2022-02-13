@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 
-import DefaultFooter from '@/components/Layout/Footer';
-import DefaultHeader from '@/components/Layout/Header';
+import DefaultFooter from 'components/Layout/Footer';
+import DefaultHeader from 'components/Layout/Header';
 
 interface IDefaultLayout {
   children: React.ReactNode;

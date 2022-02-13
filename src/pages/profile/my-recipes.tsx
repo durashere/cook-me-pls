@@ -2,10 +2,10 @@ import { Session } from 'next-auth';
 import { useRouter } from 'next/router';
 import { ReactElement } from 'react';
 
-import Button from '@/components/UI/Button';
-import DeleteModal from '@/components/UI/DeleteModal';
-import useRecipeDelete from '@/hooks/recipes/useRecipeDelete';
-import useRecipes from '@/hooks/recipes/useRecipes';
+import Button from 'components/UI/Button';
+import DeleteModal from 'components/UI/DeleteModal';
+import useRecipeDelete from 'hooks/recipes/useRecipeDelete';
+import useRecipes from 'hooks/recipes/useRecipes';
 
 interface IMyRecipesPage {
   session: Session;
