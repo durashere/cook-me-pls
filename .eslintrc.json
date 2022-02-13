@@ -5,10 +5,10 @@
     "project": "./tsconfig.json"
   },
   "extends": [
-    "next/core-web-vitals",
     "airbnb",
     "airbnb-typescript",
     "airbnb/hooks",
+    "plugin:@next/next/recommended",
     "plugin:react/jsx-runtime",
     "plugin:prettier/recommended"
   ],
