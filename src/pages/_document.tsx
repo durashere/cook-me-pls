@@ -29,7 +29,7 @@ class CustomDocument extends NextDocument {
             crossOrigin="anonymous"
           />
         </Head>
-        <body className="text-gray-700 bg-gray-100 font-poppins">
+        <body className="font-poppins text-gray-700 bg-gray-100">
           <Main />
           <NextScript />
         </body>

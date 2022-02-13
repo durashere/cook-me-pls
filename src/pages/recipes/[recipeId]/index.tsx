@@ -49,8 +49,8 @@ const RecipePage = ({
   return (
     <div className="space-y-4">
       <div className="space-y-4">
-        <div className="relative overflow-hidden rounded-md shadow-md">
-          <div className="relative aspect-square">
+        <div className="overflow-hidden relative rounded-md shadow-md">
+          <div className="aspect-square relative">
             <Image
               alt="Picture of the dish"
               layout="fill"
@@ -65,7 +65,7 @@ const RecipePage = ({
 
       <div className="grid grid-cols-3 gap-4">
         <RecipeSection>
-          <div className="flex flex-col items-center justify-center">
+          <div className="flex flex-col justify-center items-center">
             <MdOutlineSchedule className="text-yellow-500" size="3rem" />
             <span className="font-bold text-yellow-500">
               {recipe?.cookTime}
@@ -73,9 +73,9 @@ const RecipePage = ({
           </div>
         </RecipeSection>
         <RecipeSection>
-          <div className="flex flex-col items-center justify-center">
+          <div className="flex flex-col justify-center items-center">
             <MdOutlinePeopleAlt className="text-yellow-500" size="3rem" />
-            <div className="flex justify-center w-full gap-4 text-yellow-500">
+            <div className="flex gap-4 justify-center w-full text-yellow-500">
               <button
                 className="outline-none focus:outline-none"
                 onClick={removeServing}
@@ -95,7 +95,7 @@ const RecipePage = ({
           </div>
         </RecipeSection>
         <RecipeSection>
-          <div className="flex flex-col items-center justify-center">
+          <div className="flex flex-col justify-center items-center">
             <MdOutlineBarChart className="text-yellow-500" size="3rem" />
             <span className="font-bold text-yellow-500">
               {recipe?.difficulty}
@@ -109,7 +109,7 @@ const RecipePage = ({
           {recipe?.ingredients.map((ingredient: IIngredient) => (
             <li
               key={ingredient._id}
-              className="flex items-center justify-between py-2 first:pt-0 last:pb-0"
+              className="flex justify-between items-center py-2 first:pt-0 last:pb-0"
             >
               <span className="font-medium text-gray-600 first-letter:capitalize">
                 {ingredient.name}
@@ -129,7 +129,7 @@ const RecipePage = ({
               <p className="text-lg font-medium text-gray-600">
                 Krok {index + 1}
               </p>
-              <p className="px-4 py-2 m-2 text-sm text-gray-500 border-l-2">
+              <p className="py-2 px-4 m-2 text-sm text-gray-500 border-l-2">
                 {step.instruction}
               </p>
             </li>
@@ -137,7 +137,7 @@ const RecipePage = ({
         </ul>
       </RecipeSection>
 
-      <div className="flex items-center justify-center">
+      <div className="flex justify-center items-center">
         <Link href={`/users/${recipe?.author}/recipes`} passHref>
           <div className="flex items-center cursor-pointer">
             <p className="text-lg">

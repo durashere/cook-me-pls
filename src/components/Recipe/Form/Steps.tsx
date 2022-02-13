@@ -18,7 +18,7 @@ const RecipeFormStep = ({
 
   return (
     <li className="flex flex-col gap-4 p-4 bg-white rounded-md shadow-md">
-      <div className="flex items-center justify-between gap-4">
+      <div className="flex gap-4 justify-between items-center">
         <span>Krok {index + 1}</span>
         <Button onClick={handleRemoveStep}>Usuń</Button>
       </div>

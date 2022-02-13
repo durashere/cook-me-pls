@@ -30,14 +30,14 @@ const DeleteModal = ({
         onClose={handleToggleModal}
         open={isOpen}
       >
-        <div className="flex items-center justify-center min-h-screen">
+        <div className="flex justify-center items-center min-h-screen">
           <Dialog.Overlay className="fixed inset-0 bg-black/50" />
-          <div className="relative max-w-sm p-4 overflow-hidden bg-white rounded-md shadow-xl">
+          <div className="overflow-hidden relative p-4 max-w-sm bg-white rounded-md shadow-xl">
             <Dialog.Title className="text-lg font-medium">{title}</Dialog.Title>
             <Dialog.Description className="mt-2 text-sm text-gray-500">
               {description}
             </Dialog.Description>
-            <div className="flex justify-end gap-4 mt-4">
+            <div className="flex gap-4 justify-end mt-4">
               <Button onClick={handleToggleModal} variant="ghost">
                 Anuluj
               </Button>

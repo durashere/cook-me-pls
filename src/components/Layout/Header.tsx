@@ -30,9 +30,9 @@ const DefaultHeader = (): ReactElement => {
   const handleSignOut = (): Promise<void> => signOut();
 
   return (
-    <header className="sticky top-0 z-30 flex items-center justify-between w-full p-4 shadow bg-gray-100/50 backdrop-blur">
+    <header className="flex sticky top-0 z-30 justify-between items-center p-4 w-full bg-gray-100/50 shadow backdrop-blur">
       <Link href="/" passHref>
-        <div className="flex items-center gap-2 select-none">
+        <div className="flex gap-2 items-center select-none">
           <div className="relative w-10 h-10">
             <Image
               alt="Picture of the chicken"
@@ -42,7 +42,7 @@ const DefaultHeader = (): ReactElement => {
               src="/chicken.svg"
             />
           </div>
-          <span className="text-4xl font-lobster">Cook me pls</span>
+          <span className="font-lobster text-4xl">Cook me pls</span>
         </div>
       </Link>
 
@@ -50,7 +50,7 @@ const DefaultHeader = (): ReactElement => {
 
       {sessionStatus === 'unauthenticated' && (
         <Button isLoading={loginLoading} onClick={handleSignIn}>
-          <div className="flex items-center gap-2">
+          <div className="flex gap-2 items-center">
             <span className="font-medium">Zaloguj</span>
             <MdOutlineLogin />
           </div>
@@ -62,7 +62,7 @@ const DefaultHeader = (): ReactElement => {
           <Menu.Button as={Button} className="w-10 h-10">
             <MdOutlineMenu className="absolute" />
           </Menu.Button>
-          <Menu.Items className="absolute right-0 z-10 flex flex-col items-start w-56 p-2 mt-2 bg-white rounded-md shadow-xl outline-none focus:outline-none">
+          <Menu.Items className="flex absolute right-0 z-10 flex-col items-start p-2 mt-2 w-56 bg-white rounded-md outline-none focus:outline-none shadow-xl">
             <Menu.Item>
               {({ active }): ReactElement => (
                 <button

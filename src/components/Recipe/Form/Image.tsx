@@ -35,7 +35,7 @@ const RecipeFormImage = ({
   return (
     <RecipeFormSection label="zdjęcie">
       {selectedImage.url && (
-        <div className="relative overflow-hidden rounded-md aspect-square">
+        <div className="aspect-square overflow-hidden relative rounded-md">
           <Image
             alt="Picture of the dish"
             layout="fill"

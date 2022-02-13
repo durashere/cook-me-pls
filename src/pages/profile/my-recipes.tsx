@@ -34,9 +34,9 @@ const RecipesListItem = ({
   };
 
   return (
-    <div className="p-4 space-y-4 overflow-hidden bg-white rounded-md shadow-md">
+    <div className="overflow-hidden p-4 space-y-4 bg-white rounded-md shadow-md">
       <h1 className="text-2xl font-bold">{name}</h1>
-      <div className="flex items-center justify-end gap-2">
+      <div className="flex gap-2 justify-end items-center">
         <DeleteModal
           description="Czy jesteś pewny, że chcesz usunąć ten przepis? Tej czynności nie można cofnąć."
           onSubmit={handleDeleteRecipe}

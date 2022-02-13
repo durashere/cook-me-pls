@@ -8,9 +8,9 @@ interface IDefaultLayout {
 }
 
 const Layout = ({ children }: IDefaultLayout): ReactElement => (
-  <div className="flex flex-col max-w-xl min-h-screen mx-auto">
+  <div className="flex flex-col mx-auto max-w-xl min-h-screen">
     <DefaultHeader />
-    <main className="flex-1 w-full p-4 overflow-y-auto">{children}</main>
+    <main className="overflow-y-auto flex-1 p-4 w-full">{children}</main>
     <DefaultFooter />
   </div>
 );

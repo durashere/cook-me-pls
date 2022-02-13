@@ -12,8 +12,8 @@ const RecipeCard = ({
   recipe: { _id, cookTime, difficulty, image, name, servings },
 }: IRecipeCard): ReactElement => (
   <Link href={`/recipes/${_id}`} passHref>
-    <div className="relative overflow-hidden rounded-md shadow-md cursor-pointer group">
-      <div className="relative transition-all duration-500 aspect-square group-hover:scale-110">
+    <div className="group overflow-hidden relative rounded-md shadow-md cursor-pointer">
+      <div className="aspect-square relative transition-all duration-500 group-hover:scale-110">
         <Image
           alt="Picture of the dish"
           layout="fill"
@@ -22,19 +22,19 @@ const RecipeCard = ({
           src={image || '/image-placeholder.png'}
         />
       </div>
-      <div className="absolute bottom-0 w-full from-transparent to-black h-3/4 bg-gradient-to-b" />
-      <div className="absolute w-full px-4 space-y-2 bottom-4">
+      <div className="absolute bottom-0 w-full h-3/4 bg-gradient-to-b from-transparent to-black" />
+      <div className="absolute bottom-4 px-4 space-y-2 w-full">
         <h1 className="text-2xl font-bold text-center text-white/70 line-clamp-2">
           {name}
         </h1>
-        <div className="flex flex-wrap justify-center gap-2">
-          <h2 className="px-2 text-sm border rounded-md shadow border-white/50 text-white/50">
+        <div className="flex flex-wrap gap-2 justify-center">
+          <h2 className="px-2 text-sm text-white/50 rounded-md border border-white/50 shadow">
             {cookTime}
           </h2>
-          <h2 className="px-2 text-sm border rounded-md shadow border-white/50 text-white/50">
+          <h2 className="px-2 text-sm text-white/50 rounded-md border border-white/50 shadow">
             {servings} porcja
           </h2>
-          <h2 className="px-2 text-sm border rounded-md shadow text-white/50 border-white/50">
+          <h2 className="px-2 text-sm text-white/50 rounded-md border border-white/50 shadow">
             {difficulty}
           </h2>
         </div>
