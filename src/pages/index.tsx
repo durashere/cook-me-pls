@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import clsx from 'clsx';
 import { GetStaticProps } from 'next';
 import { ReactElement, useState } from 'react';
 import { MdOutlineSearch } from 'react-icons/md';
@@ -33,8 +33,8 @@ const RecipesPage = (): ReactElement => {
           value={searchQuery.name}
         />
         <MdOutlineSearch
-          className={classNames(
-            'absolute top-0 right-2 w-10 h-10 p-2 text-gray-300 pointer-events-none transition-all',
+          className={clsx(
+            'absolute right-2 p-2 w-10 h-10 text-gray-300 transition-all pointer-events-none',
             {
               'opacity-0': searchQuery.name,
               'opacity-100 ': !searchQuery.name,

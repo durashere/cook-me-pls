@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import clsx from 'clsx';
 import { ReactElement } from 'react';
 
 interface ILoader {
@@ -8,7 +8,7 @@ interface ILoader {
 
 const Loader = ({ className, color }: ILoader): ReactElement => (
   <svg
-    className={classNames('h-full w-full', className)}
+    className={clsx('w-full h-full', className)}
     width="44"
     height="44"
     viewBox="0 0 44 44"

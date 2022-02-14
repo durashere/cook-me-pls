@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import clsx from 'clsx';
 import { forwardRef } from 'react';
 
 interface IInput {
@@ -36,14 +36,14 @@ const Input = forwardRef<HTMLInputElement, IInput>(
     },
     ref
   ) => (
-    <div className={classNames({ 'w-full': fullWidth })}>
+    <div className={clsx({ 'w-full': fullWidth })}>
       {label && (
         <label htmlFor={name}>
           <span className="capitalize">{label}</span>
         </label>
       )}
       <input
-        className={classNames('block input', {
+        className={clsx('block input', {
           'mt-1': label,
           'w-full': fullWidth,
         })}

@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import clsx from 'clsx';
 import { forwardRef } from 'react';
 import { FieldValues, UseFormRegister } from 'react-hook-form';
 
@@ -36,14 +36,14 @@ const TextArea = forwardRef<HTMLTextAreaElement, ITextArea>(
     },
     ref
   ) => (
-    <div className={classNames({ 'w-full': fullWidth })}>
+    <div className={clsx({ 'w-full': fullWidth })}>
       {label && (
         <label htmlFor={name}>
           <span className="capitalize">{label}</span>
         </label>
       )}
       <textarea
-        className={classNames('block input', {
+        className={clsx('block input', {
           'mt-1': label,
           'w-full': fullWidth,
         })}

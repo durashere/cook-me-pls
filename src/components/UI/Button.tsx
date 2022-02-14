@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import clsx from 'clsx';
 import { ComponentPropsWithoutRef, forwardRef } from 'react';
 import { ImSpinner2 } from 'react-icons/im';
 
@@ -28,18 +28,18 @@ const Button = forwardRef<HTMLButtonElement, IButton>(
       <button
         type="button"
         disabled={disabled}
-        className={classNames(
-          'inline-flex items-center justify-center px-4 h-10 font-semibold rounded-md',
+        className={clsx(
+          'inline-flex justify-center items-center px-4 h-10 font-semibold rounded-md',
           'focus:outline-none focus-visible:ring focus-visible:ring-gray-400',
           'transition-colors duration-300',
           'shadow',
           isFullWidth && 'w-full',
           [
             variant === 'solid' && [
-              'bg-gray-500 text-white',
-              'hover:bg-gray-600 hover:text-white',
+              'text-white bg-gray-500',
+              'hover:text-white hover:bg-gray-600',
               'active:bg-gray-500',
-              'disabled:bg-gray-400 disabled:hover:bg-gray-400',
+              'disabled:hover:bg-gray-400 disabled:bg-gray-400',
             ],
             variant === 'outline' && [
               'text-gray-500',
@@ -58,7 +58,7 @@ const Button = forwardRef<HTMLButtonElement, IButton>(
           ],
           'disabled:cursor-not-allowed',
           isLoading &&
-            'relative !text-transparent hover:!text-transparent !cursor-wait !transition-none',
+            'relative !text-transparent hover:!text-transparent !transition-none !cursor-wait',
           className
         )}
         ref={ref}
@@ -66,7 +66,7 @@ const Button = forwardRef<HTMLButtonElement, IButton>(
       >
         {isLoading && (
           <div
-            className={classNames(
+            className={clsx(
               'absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2',
               {
                 'text-white': variant === 'solid',

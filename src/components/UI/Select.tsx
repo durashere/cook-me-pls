@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import clsx from 'clsx';
 import { forwardRef } from 'react';
 
 interface ISelect {
@@ -28,14 +28,14 @@ const Select = forwardRef<HTMLSelectElement, ISelect>(
     },
     ref
   ) => (
-    <div className={classNames({ 'w-full': fullWidth })}>
+    <div className={clsx({ 'w-full': fullWidth })}>
       {label && (
         <label htmlFor={name}>
           <span className="capitalize">{label}</span>
         </label>
       )}
       <select
-        className={classNames('input', {
+        className={clsx('input', {
           'mt-1': label,
           'w-full': fullWidth,
         })}

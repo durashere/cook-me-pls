@@ -1,5 +1,5 @@
 import { Menu } from '@headlessui/react';
-import classNames from 'classnames';
+import clsx from 'clsx';
 import { signIn, signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -67,8 +67,8 @@ const DefaultHeader = (): ReactElement => {
               {({ active }): ReactElement => (
                 <button
                   type="button"
-                  className={classNames(
-                    'p-2 w-full flex items-center gap-2 rounded-md transition-all text-gray-500 outline-none focus:outline-none',
+                  className={clsx(
+                    'flex gap-2 items-center p-2 w-full text-gray-500 rounded-md outline-none focus:outline-none transition-all',
                     {
                       'bg-gray-100': active,
                     }
@@ -85,8 +85,8 @@ const DefaultHeader = (): ReactElement => {
               {({ active }): ReactElement => (
                 <button
                   type="button"
-                  className={classNames(
-                    'p-2 w-full flex items-center gap-2 rounded-md transition-all text-gray-500 outline-none focus:outline-none',
+                  className={clsx(
+                    'flex gap-2 items-center p-2 w-full text-gray-500 rounded-md outline-none focus:outline-none transition-all',
                     {
                       'bg-gray-100': active,
                     }
@@ -103,8 +103,8 @@ const DefaultHeader = (): ReactElement => {
               {({ active }): ReactElement => (
                 <button
                   type="button"
-                  className={classNames(
-                    'p-2 w-full flex items-center gap-2 rounded-md transition-all text-red-400 outline-none focus:outline-none',
+                  className={clsx(
+                    'flex gap-2 items-center p-2 w-full text-red-400 rounded-md outline-none focus:outline-none transition-all',
                     {
                       'bg-gray-100': active,
                     }
