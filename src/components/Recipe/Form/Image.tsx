@@ -14,10 +14,10 @@ interface IRecipeFormImage {
   setSelectedImage: React.Dispatch<React.SetStateAction<ISelectedImage>>;
 }
 
-const RecipeFormImage = ({
+function RecipeFormImage({
   selectedImage,
   setSelectedImage,
-}: IRecipeFormImage): ReactElement => {
+}: IRecipeFormImage): ReactElement {
   const imageUploadInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageUploadButtonClick = (): void => {
@@ -59,6 +59,6 @@ const RecipeFormImage = ({
       />
     </RecipeFormSection>
   );
-};
+}
 
 export default RecipeFormImage;

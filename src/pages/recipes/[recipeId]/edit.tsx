@@ -28,10 +28,10 @@ interface IRecipeEditPage {
   session: Session;
 }
 
-const RecipeEditPage = ({
+function RecipeEditPage({
   params: { recipeId },
   session,
-}: IRecipeEditPage): ReactElement => {
+}: IRecipeEditPage): ReactElement {
   const { push } = useRouter();
 
   const { data: recipe, status: statusRecipe } = useRecipe(recipeId);
@@ -128,7 +128,7 @@ const RecipeEditPage = ({
       </form>
     </FormProvider>
   );
-};
+}
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const queryClient = new QueryClient();

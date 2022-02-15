@@ -24,10 +24,10 @@ interface IRecipePage {
   params: { recipeId: string };
 }
 
-const RecipePage = ({
+function RecipePage({
   authorId,
   params: { recipeId },
-}: IRecipePage): ReactElement | null => {
+}: IRecipePage): ReactElement | null {
   const { data: recipe, status: recipeStatus } = useRecipe(recipeId);
   const { data: author, status: authorStatus } = useUser(authorId);
 
@@ -150,7 +150,7 @@ const RecipePage = ({
       </div>
     </div>
   );
-};
+}
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const queryClient = new QueryClient();

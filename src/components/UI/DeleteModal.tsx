@@ -9,11 +9,11 @@ interface IDeleteModal {
   title: string;
 }
 
-const DeleteModal = ({
+function DeleteModal({
   description,
   onSubmit,
   title,
-}: IDeleteModal): ReactElement => {
+}: IDeleteModal): ReactElement {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleToggleModal = (): void => {
@@ -50,6 +50,6 @@ const DeleteModal = ({
       </Dialog>
     </>
   );
-};
+}
 
 export default DeleteModal;

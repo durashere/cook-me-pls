@@ -6,7 +6,7 @@ import RecipeFormSection from 'components/Recipe/Form/Section';
 import Input from 'components/UI/Input';
 import Select from 'components/UI/Select';
 
-const RecipeFormDetails = (): ReactElement => {
+function RecipeFormDetails(): ReactElement {
   const { register } = useFormContext();
 
   return (
@@ -40,6 +40,6 @@ const RecipeFormDetails = (): ReactElement => {
       />
     </RecipeFormSection>
   );
-};
+}
 
 export default RecipeFormDetails;

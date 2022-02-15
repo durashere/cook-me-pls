@@ -11,7 +11,7 @@ import Input from 'components/UI/Input';
 import useRecipes from 'hooks/recipes/useRecipes';
 import useDebounce from 'hooks/useDebounce';
 
-const RecipesPage = (): ReactElement => {
+function RecipesPage(): ReactElement {
   const [searchQuery, setSearchQuery] = useState({ name: '' });
   const searchQueryNameDebounced = useDebounce(searchQuery.name, 300);
 
@@ -47,7 +47,7 @@ const RecipesPage = (): ReactElement => {
       ))}
     </div>
   );
-};
+}
 
 export const getStaticProps: GetStaticProps = async () => {
   const queryClient = new QueryClient();

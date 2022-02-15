@@ -16,7 +16,7 @@ interface ISelectedImage {
   url?: string;
 }
 
-const RecipeCreatePage = (): ReactElement => {
+function RecipeCreatePage(): ReactElement {
   const [selectedImage, setSelectedImage] = useState<ISelectedImage>({
     image: undefined,
     url: undefined,
@@ -88,7 +88,7 @@ const RecipeCreatePage = (): ReactElement => {
       </form>
     </FormProvider>
   );
-};
+}
 
 RecipeCreatePage.protect = true;
 

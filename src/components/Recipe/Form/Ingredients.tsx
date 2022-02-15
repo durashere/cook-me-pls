@@ -12,10 +12,10 @@ interface IRecipeFormIngredient {
   index: number;
 }
 
-const RecipeFormIngredient = ({
+function RecipeFormIngredient({
   handleRemoveIngredient,
   index,
-}: IRecipeFormIngredient): ReactElement => {
+}: IRecipeFormIngredient): ReactElement {
   const { register } = useFormContext();
 
   return (
@@ -44,9 +44,9 @@ const RecipeFormIngredient = ({
       </div>
     </li>
   );
-};
+}
 
-const RecipeFormIngredients = (): ReactElement => {
+function RecipeFormIngredients(): ReactElement {
   const { control } = useFormContext();
 
   const {
@@ -85,6 +85,6 @@ const RecipeFormIngredients = (): ReactElement => {
       </Button>
     </RecipeFormSection>
   );
-};
+}
 
 export default RecipeFormIngredients;

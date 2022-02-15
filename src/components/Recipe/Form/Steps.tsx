@@ -10,10 +10,10 @@ interface IRecipeFormStep {
   index: number;
 }
 
-const RecipeFormStep = ({
+function RecipeFormStep({
   handleRemoveStep,
   index,
-}: IRecipeFormStep): ReactElement => {
+}: IRecipeFormStep): ReactElement {
   const { register } = useFormContext();
 
   return (
@@ -30,9 +30,9 @@ const RecipeFormStep = ({
       />
     </li>
   );
-};
+}
 
-const RecipeFormSteps = (): ReactElement => {
+function RecipeFormSteps(): ReactElement {
   const { control } = useFormContext();
 
   const {
@@ -67,6 +67,6 @@ const RecipeFormSteps = (): ReactElement => {
       </Button>
     </RecipeFormSection>
   );
-};
+}
 
 export default RecipeFormSteps;

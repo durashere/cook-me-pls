@@ -15,7 +15,7 @@ import {
 
 import Button from 'components/UI/Button';
 
-const DefaultHeader = (): ReactElement => {
+function DefaultHeader(): ReactElement {
   const { push } = router;
 
   const [loginLoading, setLoginLoading] = useState(false);
@@ -121,6 +121,6 @@ const DefaultHeader = (): ReactElement => {
       )}
     </header>
   );
-};
+}
 
 export default DefaultHeader;

@@ -20,10 +20,10 @@ type CustomAppProps = AppProps & {
   Component: CustomNextPage;
 };
 
-const CustomApp = ({
+function CustomApp({
   Component,
   pageProps: { session, ...pageProps },
-}: CustomAppProps): ReactElement => {
+}: CustomAppProps): ReactElement {
   const [queryClient] = useState(() => new QueryClient());
 
   return (
@@ -53,6 +53,6 @@ const CustomApp = ({
       </IconContext.Provider>
     </>
   );
-};
+}
 
 export default CustomApp;

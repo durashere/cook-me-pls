@@ -11,13 +11,13 @@ interface IMyRecipesPage {
   session: Session;
 }
 
-const RecipesListItem = ({
+function RecipesListItem({
   name,
   recipeId,
 }: {
   name: string;
   recipeId: string;
-}): ReactElement => {
+}): ReactElement {
   const { push } = useRouter();
   const { mutate: deleteRecipe } = useRecipeDelete();
 
@@ -47,13 +47,13 @@ const RecipesListItem = ({
       </div>
     </div>
   );
-};
+}
 
-const MyRecipesPage = ({
+function MyRecipesPage({
   session: {
     user: { _id: userId },
   },
-}: IMyRecipesPage): ReactElement | null => {
+}: IMyRecipesPage): ReactElement | null {
   const { push } = useRouter();
 
   const { data: userRecipes } = useRecipes({ author: userId });
@@ -76,7 +76,7 @@ const MyRecipesPage = ({
       ))}
     </div>
   );
-};
+}
 
 MyRecipesPage.protect = true;
 

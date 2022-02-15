@@ -14,9 +14,9 @@ interface IUserRecipesPage {
   params: { userId: string };
 }
 
-const UserRecipesPage = ({
+function UserRecipesPage({
   params: { userId },
-}: IUserRecipesPage): ReactElement | null => {
+}: IUserRecipesPage): ReactElement | null {
   const { data: recipes, status: recipesStatus } = useRecipes({
     author: userId,
   });
@@ -41,7 +41,7 @@ const UserRecipesPage = ({
       ))}
     </div>
   );
-};
+}
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const queryClient = new QueryClient();

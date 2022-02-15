@@ -4,7 +4,7 @@ import { cloneElement, ReactElement } from 'react';
 
 import Loader from 'components/UI/Loader';
 
-const Protect = ({ children }: { children: ReactElement }): ReactElement => {
+function Protect({ children }: { children: ReactElement }): ReactElement {
   const { data: session, status: sessionStatus } = useSession();
 
   if (sessionStatus === 'loading') {
@@ -22,6 +22,6 @@ const Protect = ({ children }: { children: ReactElement }): ReactElement => {
   });
 
   return elementWithSession;
-};
+}
 
 export default Protect;
